@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.slideshow.SlideshowFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/notificationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="34dp"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="395dp"
+                    android:layout_marginEnd="265dp"
+                    android:layout_marginRight="265dp"
+                    android:layout_marginBottom="309dp"
+                    android:text="Notification:"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/minutesText"
+                    android:layout_width="156dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="224dp"
+                    android:layout_marginLeft="224dp"
+                    android:layout_marginTop="317dp"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginRight="31dp"
+                    android:layout_marginBottom="373dp"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="MINUTES"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/eventSpinnerYear"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="280dp"
+                    android:layout_marginLeft="280dp"
+                    android:layout_marginTop="262dp"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginRight="31dp"
+                    android:layout_marginBottom="445dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/addEventButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="235dp"
+                    android:layout_marginLeft="235dp"
+                    android:layout_marginTop="656dp"
+                    android:layout_marginEnd="77dp"
+                    android:layout_marginRight="77dp"
+                    android:layout_marginBottom="27dp"
+                    android:text="Add Event"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/notificationSpinner"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginLeft="180dp"
+                    android:layout_marginTop="395dp"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginRight="31dp"
+                    android:layout_marginBottom="312dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/eventSpinnerMonth"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="155dp"
+                    android:layout_marginLeft="155dp"
+                    android:layout_marginTop="262dp"
+                    android:layout_marginEnd="156dp"
+                    android:layout_marginRight="156dp"
+                    android:layout_marginBottom="445dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/eventSpinnerDay"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="262dp"
+                    android:layout_marginEnd="281dp"
+                    android:layout_marginRight="281dp"
+                    android:layout_marginBottom="445dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/addImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="226dp"
+                    android:layout_marginLeft="226dp"
+                    android:layout_marginTop="160dp"
+                    android:layout_marginEnd="87dp"
+                    android:layout_marginRight="87dp"
+                    android:layout_marginBottom="523dp"
+                    android:text="Add Image"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/hourText"
+                    android:layout_width="156dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="317dp"
+                    android:layout_marginEnd="225dp"
+                    android:layout_marginRight="225dp"
+                    android:layout_marginBottom="373dp"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="HOUR"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/prioritySpinner"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginLeft="180dp"
+                    android:layout_marginTop="468dp"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginRight="31dp"
+                    android:layout_marginBottom="239dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="92dp"
+                    android:layout_marginLeft="92dp"
+                    android:layout_marginTop="656dp"
+                    android:layout_marginEnd="231dp"
+                    android:layout_marginRight="231dp"
+                    android:layout_marginBottom="27dp"
+                    android:text="Cancel"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/eventNameText"
+                    android:layout_width="350dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="69dp"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginRight="31dp"
+                    android:layout_marginBottom="622dp"
+                    android:ems="10"
+                    android:hint="Event name"
+                    android:inputType="textPersonName"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/priorityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="34dp"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="465dp"
+                    android:layout_marginEnd="308dp"
+                    android:layout_marginRight="308dp"
+                    android:layout_marginBottom="239dp"
+                    android:text="Priority:"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="143dp"
+                    android:layout_height="118dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="129dp"
+                    android:layout_marginEnd="238dp"
+                    android:layout_marginRight="238dp"
+                    android:layout_marginBottom="484dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_launcher_background"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <EditText
+                    android:id="@+id/descriptionText"
+                    android:layout_width="349dp"
+                    android:layout_height="126dp"
+                    android:layout_marginStart="34dp"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="515dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginRight="28dp"
+                    android:layout_marginBottom="90dp"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/addEventText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="137dp"
+                    android:layout_marginLeft="137dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="138dp"
+                    android:layout_marginRight="138dp"
+                    android:layout_marginBottom="674dp"
+                    android:text="Add Event"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

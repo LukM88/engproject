@@ -20,7 +20,6 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 import com.example.myapplication.R;
-import com.example.myapplication.ui.gallery.GalleryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

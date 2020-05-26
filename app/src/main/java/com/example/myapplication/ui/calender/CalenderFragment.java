@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.slideshow;
+package com.example.myapplication.ui.calender;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,20 +13,20 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
 
-public class SlideshowFragment extends Fragment {
+public class CalenderFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private CalenderViewModel calenderViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_add_event, container, false);
-        //final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        calenderViewModel =
+                ViewModelProviders.of(this).get(CalenderViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_calender, container, false);
+        //final TextView textView = root.findViewById(R.id.text_gallery);
+        calenderViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-         //       textView.setText(s);
+               // textView.setText(s);
             }
         });
         return root;

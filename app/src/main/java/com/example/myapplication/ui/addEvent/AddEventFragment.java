@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.anychart.graphics.vector.Image;
 import com.example.myapplication.R;
 
 public class AddEventFragment extends Fragment {
@@ -42,11 +44,11 @@ public class AddEventFragment extends Fragment {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
+            
+
 
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            imageView.refreshDrawableState();
-            Boolean b= imageView.isShown();
-            //imageView.scale
+
 
         }
     }
@@ -63,6 +65,7 @@ public class AddEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO
+
                 Intent i = new Intent(
                         Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 

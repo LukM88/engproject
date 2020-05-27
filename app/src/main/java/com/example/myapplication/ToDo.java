@@ -14,7 +14,7 @@ public class ToDo {
     private String year;
     private String owner;
     private Boolean state;
-    private Integer photo;
+    private String imgPath;
     ToDo(Date date){
         this.name="ToDo";
         this.description="description";
@@ -113,6 +113,13 @@ public class ToDo {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+    public String getImgPath() {
+        return this.imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }
 

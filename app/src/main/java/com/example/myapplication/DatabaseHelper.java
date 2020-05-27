@@ -30,15 +30,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAB2COL_9 = "month";
     public static final String TAB2COL_10 = "year";
     public static final String TAB2COL_11 = "owner";
-    public static final String[] kolumny = {TAB2COL_1,TAB2COL_2,TAB2COL_3,TAB2COL_4,TAB2COL_5,TAB2COL_6,TAB2COL_7,TAB2COL_8,TAB2COL_9,TAB2COL_10,TAB2COL_11};
+    public static final String TAB2COL_12 = "imgPath";
+    public static final String[] kolumny = {TAB2COL_1,TAB2COL_2,TAB2COL_3,TAB2COL_4,TAB2COL_5,TAB2COL_6,TAB2COL_7,TAB2COL_8,TAB2COL_9,TAB2COL_10,TAB2COL_11,TAB2COL_12};
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE users (ID INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT, hint TEXT)");
-        db.execSQL("CREATE TABLE "+TABLE2+" ("+TAB2COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+TAB2COL_2+" TEXT, "+TAB2COL_3+" TEXT, "+TAB2COL_4+" TEXT, "+TAB2COL_5+" TEXT, "+TAB2COL_6+" TEXT, "+TAB2COL_7+" BOOLEAN, "+TAB2COL_8+" TEXT, "+TAB2COL_9+" TEXT, "+TAB2COL_10+" TEXT, "+TAB2COL_11+" TEXT)");
+        db.execSQL("CREATE TABLE "+TABLE2+" ("+TAB2COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+TAB2COL_2+" TEXT, "+TAB2COL_3+" TEXT, "+TAB2COL_4+" TEXT, "+TAB2COL_5+" TEXT, "+TAB2COL_6+" TEXT, "+TAB2COL_7+" BOOLEAN, "+TAB2COL_8+" TEXT, "+TAB2COL_9+" TEXT, "+TAB2COL_10+" TEXT, "+TAB2COL_11+" TEXT, "+TAB2COL_12+" TEXT)");
     }
 
     @Override
@@ -84,7 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public long addEvent(String name, String description, String HH,String MM,String priority,boolean state,String day,String month,String year,String owner){
+    public long addEvent(String name, String description, String HH,String MM,String priority,boolean state,String day,String month,String year,String owner,String imgPath){
         SQLiteDatabase sqlDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -98,6 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(TAB2COL_9, month);
         contentValues.put(TAB2COL_10, year);
         contentValues.put(TAB2COL_11, owner);
+        contentValues.put(TAB2COL_12, imgPath);
 
         long res = sqlDB.insert(TABLE2, null, contentValues);
         sqlDB.close();
@@ -120,6 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             todo.setMonth(res.getString(res.getColumnIndex("month")));
             todo.setYear(res.getString(res.getColumnIndex("year")));
             todo.setOwner(res.getString(res.getColumnIndex("owner")));
+            todo.setImgPath(res.getString(res.getColumnIndex("imgPath")));
             res.moveToNext();
 
         }
@@ -153,6 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             array_list2.get(i).setMonth(res.getString(res.getColumnIndex("month")));
             array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
             array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
+            array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
             res.moveToNext();
             i++;
         }
@@ -219,6 +223,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             array_list2.get(i).setMonth(res.getString(res.getColumnIndex("month")));
             array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
             array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
+            array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
             res.moveToNext();
 
             i++;
@@ -227,6 +232,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqlDB.close();
         return array_list2;
     }
+
     public ArrayList<ToDo> getToDoes(MyDate date){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
 
@@ -260,6 +266,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             array_list2.get(i).setMonth(res.getString(res.getColumnIndex("month")));
             array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
             array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
+            array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
             res.moveToNext();
 
             i++;

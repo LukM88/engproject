@@ -16,9 +16,17 @@ public class MyDate {
     public MyDate(){
         String currentDateTimeString = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
         String currentDateTimeString2 = DateFormat.getDateInstance(DateFormat.DEFAULT).format(new Date());
-        setDay(currentDateTimeString.substring(currentDateTimeString.length()-5,currentDateTimeString.length()-3));
-        setMonth(currentDateTimeString.substring(0,currentDateTimeString.length()-6));
-        setYear(currentDateTimeString2.substring(currentDateTimeString2.length()-4,currentDateTimeString2.length()));
+        if(currentDateTimeString.equals(currentDateTimeString2)){
+            setDay(currentDateTimeString.substring(0,2));
+            setMonth(currentDateTimeString.substring(4,5));
+            setYear(currentDateTimeString2.substring(currentDateTimeString2.length()-4,currentDateTimeString2.length()));
+            getDate();
+        }else{
+            setDay(currentDateTimeString.substring(currentDateTimeString.length()-5,currentDateTimeString.length()-3));
+            setMonth(currentDateTimeString.substring(0,currentDateTimeString.length()-6));
+            setYear(currentDateTimeString2.substring(currentDateTimeString2.length()-4,currentDateTimeString2.length()));
+        }
+
 
     }
     public void setDay(String day) {

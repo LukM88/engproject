@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
             app:destination="@id/nav_home_second" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
     </fragment>
     <fragment
         android:id="@+id/nav_home_second"
@@ -30,20 +33,33 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_calender"
         android:name="com.example.myapplication.ui.calender.CalenderFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_calender" />
+        tools:layout="@layout/fragment_calender" >
+        <action
+            android:id="@+id/action_nav_calender_to_planForDay"
+            app:destination="@id/planForDay" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.myapplication.ui.addEvent.AddEventFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_add_event" />
+        tools:layout="@layout/fragment_add_event" >
+        <action
+            android:id="@+id/action_nav_toHome"
+            app:destination="@id/nav_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_statistics2"
         android:name="com.example.myapplication.ui.statistics.StatisticsFragment"
         android:label="@string/menu_statistics"
         tools:layout="@layout/fragment_statistics2" />
+    <fragment
+        android:id="@+id/planForDay"
+        android:name="com.example.myapplication.ui.calender.PlanForDay"
+        android:label="fragment_plan_for_day"
+        tools:layout="@layout/fragment_plan_for_day" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.home;
+package com.example.myapplication.ui.calender;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,30 +8,28 @@ import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-
 
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
+import com.example.myapplication.MyDate;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class CustomAdapter extends BaseAdapter {
+public class AdapterForPlan extends BaseAdapter {
     ArrayList<ToDo> names=new ArrayList<ToDo>();
     Context context;
     LayoutInflater inflter;
     String value;
     ListView gridView;
     DatabaseHelper dbHelper;
-
-    public CustomAdapter(Context context) {
+    int focuse=0;
+    public AdapterForPlan(Context context, MyDate date){
         this.context = context;
         inflter = (LayoutInflater.from(context));
         dbHelper = new DatabaseHelper(context);
         //dbHelper.showEvents();
-        names=dbHelper.getToDoes();
+        names=dbHelper.getToDoes(date);
         dbHelper.close();
     }
 
@@ -51,13 +49,12 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View view, ViewGroup parent) {
-        view = inflter.inflate(R.layout.list_items, null);
-        final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
-        final ImageView imageView = view.findViewById(R.id.imageView2);
-        simpleCheckedTextView.setText(names.get(position).getName());
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        convertView = inflter.inflate(R.layout.list_items, null);
 
-        //System.out.println(imageView.isShown());
+        final CheckedTextView simpleCheckedTextView = convertView.findViewById(R.id.simpleCheckedTextView);
+        simpleCheckedTextView.setText(names.get(position).getName());
+        this.focuse=position;
         if (names.get(position).getState()) {
             simpleCheckedTextView.setChecked(true);
             simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
@@ -69,6 +66,7 @@ public class CustomAdapter extends BaseAdapter {
         simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 dbHelper= new DatabaseHelper(context);
 
                 if (names.get(position).getState()) {
@@ -90,19 +88,21 @@ public class CustomAdapter extends BaseAdapter {
                 //names.set(position,dbHelper.getEvent(Integer.parseInt(names.get(position).getID())));
                 dbHelper.close();
 
-                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
             }
         });
         simpleCheckedTextView.setOnLongClickListener (new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(context,names.get(position).getDescription()+" \ntime:"+names.get(position).getTime()  ,Toast.LENGTH_LONG).show();
+
                 return false;
             }
 
 
 
         });
-        return view;
+        return convertView;
+    }
+    public ToDo getDetails(int positione){
+        return names.get(positione);
     }
 }

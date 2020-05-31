@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Organizer</string>
+    <string name="app_name">OrganizerING</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -21,4 +21,7 @@
     <string name="edytuj">Selected todo text</string>
     <string name="Title">Title</string>
     <string name="todo">TODO</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back">Back</string>
 </resources>

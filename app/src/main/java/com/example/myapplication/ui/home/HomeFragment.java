@@ -18,34 +18,42 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 
 import com.example.myapplication.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    private ListView listView;
+    private FloatingActionButton floatingButt;
 
-    String value;
-    String[] superStarNames = {"Simple", "Data", "For", "TODO", "List","","","","","","","","","",""};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        final View root = inflater.inflate(R.layout.fragment_home, container, false);
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(@Nullable String s) {
             }
         });
-        ListView listView = root.findViewById(R.id.listView);
-        ListView listView1 = root.findViewById(R.id.listView2);
-        CustomAdapter customAdapter = new CustomAdapter(getContext(), superStarNames, listView1);
+        listView = root.findViewById(R.id.listView);
+        //ListView listView1 = root.findViewById(R.id.listView2);
+        CustomAdapter customAdapter = new CustomAdapter(getContext());
         listView.setAdapter(customAdapter);
-
+        floatingButt = root.findViewById(R.id.fab);
+        floatingButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(root).navigate(R.id.action_nav_home_to_nav_slideshow);
+            }
+        });
 
 
 

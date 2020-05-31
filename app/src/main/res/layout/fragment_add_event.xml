@@ -90,7 +90,7 @@
                 android:text="Add Image"
                 app:layout_constraintEnd_toStartOf="@+id/imageView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+                app:layout_constraintTop_toBottomOf="@+id/calendarViewAdd" />
 
             <EditText
                 android:id="@+id/hourText"
@@ -178,7 +178,7 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/minutesText"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView"
+                app:layout_constraintTop_toBottomOf="@+id/calendarViewAdd"
                 app:srcCompat="@drawable/check"
                 tools:ignore="VectorDrawableCompat" />
 
@@ -217,7 +217,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <CalendarView
-                android:id="@+id/calendarView"
+                android:id="@+id/calendarViewAdd"
                 android:layout_width="373dp"
                 android:layout_height="330dp"
                 android:layout_marginStart="26dp"

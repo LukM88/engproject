@@ -11,8 +11,6 @@
     <string name="menu_gallery">Calender</string>
     <string name="menu_slideshow">Add Event</string>
     <string name="menu_statistics">Statistics</string>
-
-
     <string name="chartName">Tytuł wykresu</string>
     <string name="home_third">Hello Third</string>
     <string name="contetna">Name</string>
@@ -21,7 +19,10 @@
     <string name="edytuj">Selected todo text</string>
     <string name="Title">Title</string>
     <string name="todo">TODO</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="back">Back</string>
+    <string-array name="priority_array">
+        <item>low</item>
+        <item>medium</item>
+        <item>high</item>
+    </string-array>
 </resources>

@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavAction;
 import androidx.navigation.Navigation;
 
 import com.example.myapplication.DatabaseHelper;
@@ -26,7 +27,7 @@ public class CalenderFragment extends Fragment {
     private Button todoBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             final ViewGroup container, Bundle savedInstanceState) {
          final View root = inflater.inflate(R.layout.fragment_calender, container, false);
 
         DatabaseHelper db = new DatabaseHelper(getContext());
@@ -40,8 +41,13 @@ public class CalenderFragment extends Fragment {
                 date.setDay(String.valueOf(dayOfMonth));
                 date.setMonth( String.valueOf(month + 1));
                 date.setYear(String.valueOf(year));
+
                 String selectedDate = date.getDate();
-                Navigation.findNavController(root).navigate(R.id.action_nav_calender_to_planForDay);
+                Bundle bundle = new Bundle();
+                bundle.putString("day",date.getDay());
+                bundle.putString("month",date.getMonth());
+                bundle.putString("year",date.getYear());
+                Navigation.findNavController(root).navigate(R.id.action_nav_calender_to_planForDay,bundle);
 /*
                 Intent intent = new Intent(getContext(), PlanForDay.class);
                 intent.putExtra("day", date.getDay());

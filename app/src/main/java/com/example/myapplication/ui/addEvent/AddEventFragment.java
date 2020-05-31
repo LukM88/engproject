@@ -12,7 +12,9 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -33,6 +35,8 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 import com.example.myapplication.ui.calender.CalenderFragment;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class AddEventFragment extends Fragment {
 
@@ -44,9 +48,7 @@ public class AddEventFragment extends Fragment {
     private EditText nameText;
     private EditText descriptionText;
 
-    private Spinner day;
-    private Spinner month;
-    private Spinner year;
+    private CalendarView calendar;
     private EditText HH;
     private EditText MM;
     private Spinner notification;
@@ -64,15 +66,33 @@ public class AddEventFragment extends Fragment {
         descriptionText = root.findViewById(R.id.descriptionText);
         HH = root.findViewById(R.id.hourText);
         MM = root.findViewById(R.id.minutesText);
-        MyDate date = new MyDate();
-        final String selectedDay = date.getDay();
-        final String selectedMonth = date.getMonth();
-        final String selectedYear = date.getYear();
+        final String[] selectedDay = new String[1];
+        final String[] selectedMonth= new String[1];
+        final String[] selectedYear= new String[1];
+        if(getArguments().getString("day")==null||getArguments().getString("month")==null||getArguments().getString("year")==null){
+            MyDate date = new MyDate();
+             selectedDay[0] = date.getDay();
+             selectedMonth[0] = date.getMonth();
+             selectedYear[0] = date.getYear();
+             Toast.makeText(getContext(),"Wybrana data to "+date.getDate(),Toast.LENGTH_LONG).show();
+        }else{
+            selectedDay[0] = getArguments().getString("day");
+            selectedMonth[0] = getArguments().getString("month");
+            selectedYear[0] = getArguments().getString("year");
+            MyDate date = new MyDate();
+            date.setYear(selectedYear[0]);
+            date.setMonth(selectedMonth[0]);
+            date.setDay(selectedDay[0]);
+            Toast.makeText(getContext(),"Wybrana data to "+date.getDate(),Toast.LENGTH_LONG).show();
+        }
+        priority = root.findViewById(R.id.prioritySpinner);
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.priority_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        priority.setAdapter(adapter);
         imgButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
                 imageView.setImageBitmap(null);
                 //imageView.setImageResource(R.drawable.check);
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
@@ -92,12 +112,12 @@ public class AddEventFragment extends Fragment {
                 if(MM.getText().equals(null)){
                     MM.setText("00");
                 }
-                //TODO napisanie dodawania eventu do bazy przemyśleć wywalenie spinerów na dizeń
+
                 DatabaseHelper dbHelper = new DatabaseHelper(getContext());
                 if(!nameText.getText().toString().isEmpty()) {
-                    if(!selectedYear.isEmpty()|| !selectedMonth.isEmpty() || !selectedDay.isEmpty()){
+
                         try {
-                            dbHelper.addEvent(nameText.getText().toString(), descriptionText.getText().toString(), HH.getText().toString(), MM.getText().toString(), "low", false, selectedDay, selectedMonth, selectedYear, MainActivity.login,picturePath);
+                            dbHelper.addEvent(nameText.getText().toString(), descriptionText.getText().toString(), HH.getText().toString(), MM.getText().toString(), priority.getSelectedItem().toString(), false, selectedDay[0], selectedMonth[0], selectedYear[0], MainActivity.login,picturePath);
                             dbHelper.showEvents();
                         }catch (Exception e){
                             Toast.makeText(getContext(),"Invalid data type!!",Toast.LENGTH_LONG).show();
@@ -110,14 +130,27 @@ public class AddEventFragment extends Fragment {
                             navController.navigate(R.id.action_nav_toHome);
 
                         }
-                    }else {
-                        Toast.makeText(getContext(),"Event have to have date",Toast.LENGTH_LONG).show();
-                    }
+
 
                 }else{
                     Toast.makeText(getContext(),"Event have to have name!!",Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+        calendar=root.findViewById(R.id.calendarViewAdd);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView,int year, int month, int dayOfMonth) {
+                MyDate date = new MyDate();
+                date.setDay(String.valueOf(dayOfMonth));
+                date.setMonth( String.valueOf(month + 1));
+                date.setYear(String.valueOf(year));
+
+                selectedDay[0]=date.getDay();
+                selectedMonth[0]=date.getMonth();
+                selectedYear[0]=date.getYear();
+                Snackbar.make(root,"Zmieniono datę na "+date.getDate(), BaseTransientBottomBar.LENGTH_SHORT).show();
             }
         });
         cancleButt = root.findViewById(R.id.cancelButton);

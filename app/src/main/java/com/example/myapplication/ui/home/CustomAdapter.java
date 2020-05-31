@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.home;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,12 @@ public class CustomAdapter extends BaseAdapter {
             simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
         } else {
             simpleCheckedTextView.setChecked(false);
+        }
+        if(names.get(position).getPriority().equals("medium")){
+            simpleCheckedTextView.setBackgroundColor(Color.YELLOW);
+        }
+        if(names.get(position).getPriority().equals("high")){
+            simpleCheckedTextView.setBackgroundColor(Color.RED);
         }
 
 // perform on Click Event Listener on CheckedTextView

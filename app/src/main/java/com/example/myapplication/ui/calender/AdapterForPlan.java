@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.calender;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ public class AdapterForPlan extends BaseAdapter {
         this.context = context;
         inflter = (LayoutInflater.from(context));
         dbHelper = new DatabaseHelper(context);
-        //dbHelper.showEvents();
         names=dbHelper.getToDoes(date);
         dbHelper.close();
     }
@@ -90,9 +90,17 @@ public class AdapterForPlan extends BaseAdapter {
 
             }
         });
+        if(names.get(position).getPriority().equals("medium")){
+            simpleCheckedTextView.setBackgroundColor(Color.YELLOW);
+        }
+        if(names.get(position).getPriority().equals("high")){
+            simpleCheckedTextView.setBackgroundColor(Color.RED);
+        }
+
         simpleCheckedTextView.setOnLongClickListener (new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {
+
 
                 return false;
             }

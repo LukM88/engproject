@@ -53,7 +53,7 @@ public class StatisticsFragment extends Fragment {
         sertupChart();
         return root;
     }
-
+//TODO spraw żeby to zadziałało znowu
 
     private void sertupChart() {
         Pie pie = AnyChart.pie();

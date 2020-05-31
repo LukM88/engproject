@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,10 @@ public class PlanForDay extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_plan_for_day, container, false);
+        this.date.setDay(this.getArguments().getString("day"));
+        this.date.setMonth(this.getArguments().getString("month"));
+        this.date.setYear(this.getArguments().getString("year"));
+        final View root = inflater.inflate(R.layout.fragment_plan_for_day, container, false);
 
 
         //date.setDay());
@@ -49,28 +53,20 @@ public class PlanForDay extends Fragment {
 
 
         description = root.findViewById(R.id.textView2);
-        time = root.findViewById(R.id.HHtext);
-        backButt = root.findViewById(R.id.backButton);
-        backButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+
+
         addButt = root.findViewById(R.id.fab2);
         addButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String selectedDate = date.getDate();
-
-                   /* Intent intent = new Intent(getBaseContext(), AddEventActivity.class);
-                    intent.putExtra("day", date.getDay());
-                    intent.putExtra("month", date.getMonth());
-                    intent.putExtra("year", date.getYear());
-                    startActivity(intent);
-                    */
-                Toast.makeText(getContext(), selectedDate, Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("day",date.getDay());
+                bundle.putString("month",date.getMonth());
+                bundle.putString("year",date.getYear());
+                Navigation.findNavController(root).navigate(R.id.addPlanForDay,bundle);
             }
         });
         return root;

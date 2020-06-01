@@ -5,22 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Scroller;
-import android.widget.TableLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 
+import com.example.myapplication.DetailsFragment;
 import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -33,7 +32,7 @@ public class HomeFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, final Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -47,6 +46,7 @@ public class HomeFragment extends Fragment {
         //ListView listView1 = root.findViewById(R.id.listView2);
         CustomAdapter customAdapter = new CustomAdapter(getContext());
         listView.setAdapter(customAdapter);
+        
         floatingButt = root.findViewById(R.id.fab);
         floatingButt.setOnClickListener(new View.OnClickListener() {
             @Override

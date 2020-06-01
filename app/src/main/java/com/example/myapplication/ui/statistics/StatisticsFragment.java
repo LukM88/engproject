@@ -26,14 +26,14 @@ import java.util.List;
 
 public class StatisticsFragment extends Fragment {
     private AnyChartView chart;
-    private String[] groups = {"Sen","Studia","Praca"};
-    private int[] values = {6,10,8};
+    private String[] groups = {"Wykonane","Nie Wykonane"};
+    private int[] wykonaneValues = {6,10};
 
     private StatisticsViewModel mViewModel;
 
-    //public static StatisticsFragment newInstance() {
-    //    return new StatisticsFragment();
-    //}
+    public static StatisticsFragment newInstance() {
+       return new StatisticsFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -55,10 +55,11 @@ public class StatisticsFragment extends Fragment {
     }
 
     private void sertupChart() {
+        //TODO zrób dane pobierane z bazy
         Pie pie = AnyChart.pie();
         List<DataEntry> dataEntries = new ArrayList<DataEntry>();
         for(int i = 0; i<groups.length; i++) {
-            dataEntries.add(new ValueDataEntry(groups[i],values[i]));
+            dataEntries.add(new ValueDataEntry(groups[i], wykonaneValues[i]));
         }
         pie.data(dataEntries);
         chart.setChart(pie);

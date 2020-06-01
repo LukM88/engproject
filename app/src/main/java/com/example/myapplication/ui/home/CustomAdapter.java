@@ -54,7 +54,6 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(final int position, View view, ViewGroup parent) {
         view = inflter.inflate(R.layout.list_items, null);
         final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
-        final ImageView imageView = view.findViewById(R.id.imageView2);
         simpleCheckedTextView.setText(names.get(position).getName());
 
         //System.out.println(imageView.isShown());

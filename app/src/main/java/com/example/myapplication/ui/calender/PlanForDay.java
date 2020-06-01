@@ -52,7 +52,6 @@ public class PlanForDay extends Fragment {
         lista.setAdapter(adapter);
 
 
-        description = root.findViewById(R.id.textView2);
 
 
 

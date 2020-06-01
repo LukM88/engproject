@@ -54,7 +54,6 @@ public class SearchAdapter extends BaseAdapter {
     public View getView(final int position, View view, ViewGroup parent) {
         view = inflter.inflate(R.layout.list_items, null);
         final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
-        final ImageView imageView = view.findViewById(R.id.imageView2);
         simpleCheckedTextView.setText(names.get(position).getName()+" "+names.get(position).getDate());
         simpleCheckedTextView.setTextColor(Color.WHITE);
         //System.out.println(imageView.isShown());
@@ -66,6 +65,7 @@ public class SearchAdapter extends BaseAdapter {
         }
         if(names.get(position).getPriority().equals("medium")){
             simpleCheckedTextView.setBackgroundColor(Color.YELLOW);
+            simpleCheckedTextView.setTextColor(Color.WHITE);
         }
         if(names.get(position).getPriority().equals("high")){
             simpleCheckedTextView.setBackgroundColor(Color.RED);

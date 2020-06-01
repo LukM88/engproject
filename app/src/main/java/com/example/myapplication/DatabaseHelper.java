@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    public static int lastCheck = 0;
     public static final String DATABASE_NAME = "organizer.db";
     public static final String TABLE_NAME = "users";
     public static final String COL_1 = "ID";
@@ -167,13 +168,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void chceck(ToDo toDo) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         showEvents();
         ContentValues cv = new ContentValues();
         cv.put(TAB2COL_7,!toDo.getState());
         long res = db.update(TABLE2,cv,TAB2COL_1+"="+toDo.getID(),null);
         showEvents();
         db.close();
+        try{
+            this.lastCheck = Integer.parseInt(toDo.getID());
+        }catch (NumberFormatException e ){
+            e.printStackTrace();
+        }
     }
 
     public void showEvents(){
@@ -313,5 +318,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqlDB.close();
         System.out.println(array_list2.size());
         return array_list2;
+    }
+    public int lastChceck() {
+        return this.lastChceck();
     }
 }

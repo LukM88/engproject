@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
+                listaWynikow.setVisibility(View.VISIBLE);
+                listaWynikow.setAdapter(new SearchAdapter(getBaseContext(),s));
 
                 return false;
             }

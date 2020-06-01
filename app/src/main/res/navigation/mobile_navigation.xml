@@ -41,6 +41,9 @@
             android:id="@+id/action_nav_calender_to_planForDay"
             app:destination="@id/planForDay"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_nav_calender_to_todo"
+            app:destination="@id/nav_home" />
     </fragment>
 
     <fragment
@@ -88,4 +91,5 @@
         android:name="com.example.myapplication.ui.statistics.StatisticsFragment"
         android:label="fragment_statistics2"
         tools:layout="@layout/fragment_statistics2" />
+    <action android:id="@+id/goToDay" app:destination="@id/planForDay" />
 </navigation>

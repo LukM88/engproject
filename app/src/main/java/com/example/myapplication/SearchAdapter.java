@@ -1,25 +1,24 @@
-package com.example.myapplication.ui.home;
+package com.example.myapplication;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
-import com.example.myapplication.DatabaseHelper;
-import com.example.myapplication.R;
-import com.example.myapplication.ToDo;
+import androidx.core.view.ViewParentCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class CustomAdapter extends BaseAdapter {
+public class SearchAdapter extends BaseAdapter {
     ArrayList<ToDo> names=new ArrayList<ToDo>();
     Context context;
     LayoutInflater inflter;
@@ -27,11 +26,12 @@ public class CustomAdapter extends BaseAdapter {
     ListView gridView;
     DatabaseHelper dbHelper;
 
-    public CustomAdapter(Context context) {
+
+    public SearchAdapter(Context context,String name) {
         this.context = context;
         inflter = (LayoutInflater.from(context));
         dbHelper = new DatabaseHelper(context);
-        names=dbHelper.getToDoes();
+        names=dbHelper.getEventsWithName(name);
         dbHelper.close();
     }
 
@@ -55,8 +55,8 @@ public class CustomAdapter extends BaseAdapter {
         view = inflter.inflate(R.layout.list_items, null);
         final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
         final ImageView imageView = view.findViewById(R.id.imageView2);
-        simpleCheckedTextView.setText(names.get(position).getName());
-
+        simpleCheckedTextView.setText(names.get(position).getName()+" "+names.get(position).getDate());
+        simpleCheckedTextView.setTextColor(Color.WHITE);
         //System.out.println(imageView.isShown());
         if (names.get(position).getState()) {
             simpleCheckedTextView.setChecked(true);
@@ -72,31 +72,11 @@ public class CustomAdapter extends BaseAdapter {
         }
 
 // perform on Click Event Listener on CheckedTextView
+
         simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbHelper= new DatabaseHelper(context);
-
-                if (names.get(position).getState()) {
-// set cheek mark drawable and set checked property to false
-                    value = "un-Checked";
-                    dbHelper.chceck(names.get(position));
-                    names.get(position).setState(false);
-                    simpleCheckedTextView.setCheckMarkDrawable(null);
-                    simpleCheckedTextView.setChecked(false);
-                } else {
-                    dbHelper.chceck(names.get(position));
-// set cheek mark drawable and set checked property to true
-
-                    value = "Checked";
-                    simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
-                    simpleCheckedTextView.setChecked(true);
-                    names.get(position).setState(true);
-                }
-                //names.set(position,dbHelper.getEvent(Integer.parseInt(names.get(position).getID())));
-                dbHelper.close();
-
-                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
+                //TODO przejście w formie hiperłącza
             }
         });
         simpleCheckedTextView.setOnLongClickListener (new View.OnLongClickListener(){

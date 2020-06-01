@@ -48,14 +48,15 @@ public class CalenderFragment extends Fragment {
                 bundle.putString("month",date.getMonth());
                 bundle.putString("year",date.getYear());
                 Navigation.findNavController(root).navigate(R.id.action_nav_calender_to_planForDay,bundle);
-/*
-                Intent intent = new Intent(getContext(), PlanForDay.class);
-                intent.putExtra("day", date.getDay());
-                intent.putExtra("month", date.getMonth());
-                intent.putExtra("year", date.getYear());
-                startActivity(intent);
-*/
+
                 Toast.makeText(getContext(), selectedDate, Toast.LENGTH_LONG).show();
+
+            }
+        });
+        todoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(root).navigate(R.id.action_nav_calender_to_todo);
 
             }
         });

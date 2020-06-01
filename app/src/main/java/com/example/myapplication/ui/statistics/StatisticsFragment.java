@@ -25,15 +25,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsFragment extends Fragment {
-    private AnyChartView wykres;
+    private AnyChartView chart;
     private String[] groups = {"Sen","Studia","Praca"};
     private int[] values = {6,10,8};
 
     private StatisticsViewModel mViewModel;
 
-    public static StatisticsFragment newInstance() {
-        return new StatisticsFragment();
-    }
+    //public static StatisticsFragment newInstance() {
+    //    return new StatisticsFragment();
+    //}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -49,11 +49,10 @@ public class StatisticsFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        wykres = root.findViewById(R.id.wykres);
+        chart = root.findViewById(R.id.wykres);
         sertupChart();
         return root;
     }
-//TODO spraw żeby to zadziałało znowu
 
     private void sertupChart() {
         Pie pie = AnyChart.pie();
@@ -62,7 +61,7 @@ public class StatisticsFragment extends Fragment {
             dataEntries.add(new ValueDataEntry(groups[i],values[i]));
         }
         pie.data(dataEntries);
-        wykres.setChart(pie);
+        chart.setChart(pie);
     }
 
 

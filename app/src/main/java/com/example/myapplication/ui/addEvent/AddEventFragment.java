@@ -71,6 +71,7 @@ public class AddEventFragment extends Fragment {
         final String[] selectedYear= new String[1];
         if(getArguments().getString("day")==null||getArguments().getString("month")==null||getArguments().getString("year")==null){
             MyDate date = new MyDate();
+            date.getDate();
              selectedDay[0] = date.getDay();
              selectedMonth[0] = date.getMonth();
              selectedYear[0] = date.getYear();

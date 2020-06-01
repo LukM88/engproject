@@ -121,5 +121,14 @@ public class ToDo {
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
+
+    public String getDate(){
+        MyDate myDate = new MyDate();
+        myDate.setYear(getYear());
+        myDate.setMonth(getMonth());
+        myDate.setDay(getDay());
+
+        return myDate.getDate();
+    }
 }
 

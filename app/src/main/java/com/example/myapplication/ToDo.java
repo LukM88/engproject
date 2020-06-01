@@ -15,6 +15,7 @@ public class ToDo {
     private String owner;
     private Boolean state;
     private String imgPath;
+    private String notification;
     ToDo(Date date){
         this.name="ToDo";
         this.description="description";
@@ -120,6 +121,13 @@ public class ToDo {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public void setNotification(String notification){
+        this.notification=notification;
+    }
+    public String getNotification(){
+        return this.notification;
     }
 
     public String getDate(){

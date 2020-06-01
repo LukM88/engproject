@@ -65,10 +65,12 @@ public class SearchAdapter extends BaseAdapter {
         }
         if(names.get(position).getPriority().equals("medium")){
             simpleCheckedTextView.setBackgroundColor(Color.YELLOW);
-            simpleCheckedTextView.setTextColor(Color.WHITE);
+            simpleCheckedTextView.setTextColor(Color.BLACK);
         }
         if(names.get(position).getPriority().equals("high")){
             simpleCheckedTextView.setBackgroundColor(Color.RED);
+
+
         }
 
 // perform on Click Event Listener on CheckedTextView

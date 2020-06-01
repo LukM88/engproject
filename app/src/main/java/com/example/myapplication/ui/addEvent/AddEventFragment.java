@@ -66,6 +66,8 @@ public class AddEventFragment extends Fragment {
         descriptionText = root.findViewById(R.id.descriptionText);
         HH = root.findViewById(R.id.hourText);
         MM = root.findViewById(R.id.minutesText);
+        priority = root.findViewById(R.id.prioritySpinner);
+        notification = root.findViewById(R.id.notificationSpinner);
         final String[] selectedDay = new String[1];
         final String[] selectedMonth= new String[1];
         final String[] selectedYear= new String[1];
@@ -86,11 +88,15 @@ public class AddEventFragment extends Fragment {
             date.setDay(selectedDay[0]);
             Toast.makeText(getContext(),"Wybrana data to "+date.getDate(),Toast.LENGTH_LONG).show();
         }
-        priority = root.findViewById(R.id.prioritySpinner);
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.priority_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         priority.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(), R.array.notification_array, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        notification.setAdapter(adapter2);
+
         imgButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,29 +119,42 @@ public class AddEventFragment extends Fragment {
                 if(MM.getText().equals(null)){
                     MM.setText("00");
                 }
+                try {
+                    int H = Integer.parseInt(HH.getText().toString());
+                    int M = Integer.parseInt(HH.getText().toString());
+                    if(H>24 || H<=0 || M>24 || M<=0){
+                        Toast.makeText(getContext(),"Błędny format godziny",Toast.LENGTH_SHORT);
+                    }else{
+                        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+                        if(!nameText.getText().toString().isEmpty()) {
+                            String[] data = {nameText.getText().toString(), descriptionText.getText().toString(), HH.getText().toString(), MM.getText().toString(), priority.getSelectedItem().toString(),"", selectedDay[0], selectedMonth[0], selectedYear[0], MainActivity.login,picturePath,notification.getSelectedItem().toString()};
 
-                DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-                if(!nameText.getText().toString().isEmpty()) {
+                            try {
+                                dbHelper.addEvent(data);
+                                dbHelper.showEvents();
+                            }catch (Exception e){
+                                Toast.makeText(getContext(),"Invalid data type!!",Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }finally {
+                                dbHelper.close();
+                                Toast.makeText(getContext(),"Event added",Toast.LENGTH_LONG).show();
 
-                        try {
-                            dbHelper.addEvent(nameText.getText().toString(), descriptionText.getText().toString(), HH.getText().toString(), MM.getText().toString(), priority.getSelectedItem().toString(), false, selectedDay[0], selectedMonth[0], selectedYear[0], MainActivity.login,picturePath);
-                            dbHelper.showEvents();
-                        }catch (Exception e){
-                            Toast.makeText(getContext(),"Invalid data type!!",Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }finally {
-                            dbHelper.close();
-                            Toast.makeText(getContext(),"Event added",Toast.LENGTH_LONG).show();
+                                final NavController navController = Navigation.findNavController(root);
+                                navController.navigate(R.id.action_nav_toHome);
 
-                            final NavController navController = Navigation.findNavController(root);
-                            navController.navigate(R.id.action_nav_toHome);
+                            }
 
+
+                        }else{
+                            Toast.makeText(getContext(),"Event have to have name!!",Toast.LENGTH_LONG).show();
                         }
-
-
-                }else{
-                    Toast.makeText(getContext(),"Event have to have name!!",Toast.LENGTH_LONG).show();
+                    }
+                }catch (NumberFormatException e){
+                    Toast.makeText(getContext(),"Błędny format godziny",Toast.LENGTH_SHORT);
+                    e.printStackTrace();
                 }
+
+
 
             }
         });

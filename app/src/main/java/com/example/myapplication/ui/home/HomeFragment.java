@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         //ListView listView1 = root.findViewById(R.id.listView2);
         CustomAdapter customAdapter = new CustomAdapter(getContext());
         listView.setAdapter(customAdapter);
-        
+
         floatingButt = root.findViewById(R.id.fab);
         floatingButt.setOnClickListener(new View.OnClickListener() {
             @Override

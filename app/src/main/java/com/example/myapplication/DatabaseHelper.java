@@ -32,15 +32,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAB2COL_10 = "year";
     public static final String TAB2COL_11 = "owner";
     public static final String TAB2COL_12 = "imgPath";
-    public static final String[] kolumny = {TAB2COL_1,TAB2COL_2,TAB2COL_3,TAB2COL_4,TAB2COL_5,TAB2COL_6,TAB2COL_7,TAB2COL_8,TAB2COL_9,TAB2COL_10,TAB2COL_11,TAB2COL_12};
+    public static final String TAB2COL_13 = "notification";
+    public static final String[] kolumny = {TAB2COL_1,TAB2COL_2,TAB2COL_3,TAB2COL_4,TAB2COL_5,TAB2COL_6,TAB2COL_7,TAB2COL_8,TAB2COL_9,TAB2COL_10,TAB2COL_11,TAB2COL_12,TAB2COL_13};
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE users (ID INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT, hint TEXT)");
-        db.execSQL("CREATE TABLE "+TABLE2+" ("+TAB2COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+TAB2COL_2+" TEXT, "+TAB2COL_3+" TEXT, "+TAB2COL_4+" TEXT, "+TAB2COL_5+" TEXT, "+TAB2COL_6+" TEXT, "+TAB2COL_7+" BOOLEAN, "+TAB2COL_8+" TEXT, "+TAB2COL_9+" TEXT, "+TAB2COL_10+" TEXT, "+TAB2COL_11+" TEXT, "+TAB2COL_12+" TEXT)");
+        db.execSQL("CREATE TABLE "+TABLE2+" ("+TAB2COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+TAB2COL_2+" TEXT, "+TAB2COL_3+" TEXT, "+TAB2COL_4+" TEXT, "+TAB2COL_5+" TEXT, "+TAB2COL_6+" TEXT, "+TAB2COL_7+" BOOLEAN, "+TAB2COL_8+" TEXT, "+TAB2COL_9+" TEXT, "+TAB2COL_10+" TEXT, "+TAB2COL_11+" TEXT, "+TAB2COL_12+" TEXT, "+TAB2COL_13+" TEXT)");
     }
 
     @Override
@@ -86,10 +87,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public long addEvent(String name, String description, String HH,String MM,String priority,boolean state,String day,String month,String year,String owner,String imgPath){
+    public long addEvent(String[] data){
         SQLiteDatabase sqlDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        for(int i=0;i< data.length;i++){
+            if(i != 5){
+                contentValues.put(kolumny[i+1], data[i]);
+            }else{
+                contentValues.put(kolumny[i+1], false);
+            }
 
+        }
+        /*
         contentValues.put(TAB2COL_2, name);
         contentValues.put(TAB2COL_3, description);
         contentValues.put(TAB2COL_4, HH);
@@ -101,7 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(TAB2COL_10, year);
         contentValues.put(TAB2COL_11, owner);
         contentValues.put(TAB2COL_12, imgPath);
-
+        contentValues.put(TAB2COL_13, notification);
+*/
         long res = sqlDB.insert(TABLE2, null, contentValues);
         sqlDB.close();
         return res;
@@ -124,6 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             todo.setYear(res.getString(res.getColumnIndex("year")));
             todo.setOwner(res.getString(res.getColumnIndex("owner")));
             todo.setImgPath(res.getString(res.getColumnIndex("imgPath")));
+            todo.setNotification(res.getString(res.getColumnIndex("notification")));
             res.moveToNext();
 
         }
@@ -158,6 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
             array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
             array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
+            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
             res.moveToNext();
             i++;
         }
@@ -229,6 +241,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
             array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
             array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
+            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
             res.moveToNext();
 
             i++;
@@ -272,6 +285,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
             array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
             array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
+            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
             res.moveToNext();
 
             i++;
@@ -310,6 +324,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
             array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
             array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
+            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
             res.moveToNext();
 
             i++;

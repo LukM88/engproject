@@ -51,10 +51,6 @@ public class PlanForDay extends Fragment {
 
         lista.setAdapter(adapter);
 
-
-
-
-
         addButt = root.findViewById(R.id.fab2);
         addButt.setOnClickListener(new View.OnClickListener() {
             @Override

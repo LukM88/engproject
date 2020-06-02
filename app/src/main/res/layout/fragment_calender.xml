@@ -34,7 +34,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="139dp"
         android:layout_marginBottom="653dp"
-        android:text="Kalendarz"
+        android:text="@string/calender"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

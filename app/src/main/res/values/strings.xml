@@ -11,7 +11,7 @@
     <string name="menu_gallery">Calender</string>
     <string name="menu_slideshow">Add Event</string>
     <string name="menu_statistics">Statistics</string>
-    <string name="chartName">Tytuł wykresu</string>
+    <string name="chartName">Char title</string>
     <string name="home_third">Hello Third</string>
     <string name="contetna">Name</string>
     <string name="configure">Configure</string>
@@ -24,6 +24,9 @@
     <string name="date">Date:</string>
     <string name="notification">Notification:</string>
     <string name="priority">Priority:</string>
+    <string name="calender">Calender</string>
+    <string name="planFor">Plan for a day</string>
+    <string name="detales">Details</string>
     <string-array name="priority_array">
         <item>low</item>
         <item>medium</item>

@@ -74,8 +74,8 @@
     <fragment
         android:id="@+id/planForDay"
         android:name="com.example.myapplication.ui.calender.PlanForDay"
-        android:label="fragment_plan_for_day"
-        tools:layout="@layout/fragment_plan_for_day" >
+        android:label="@string/planFor"
+        tools:layout="@layout/fragment_plan_for_day">
         <argument
             android:name="day"
             app:argType="string" />
@@ -95,12 +95,12 @@
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.example.myapplication.ui.statistics.StatisticsFragment"
-        android:label="fragment_statistics2"
+        android:label="@string/menu_statistics"
         tools:layout="@layout/fragment_statistics2" />
     <action android:id="@+id/goToDay" app:destination="@id/planForDay" />
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.myapplication.ui.details.DetailsFragment"
-        android:label="fragment_details"
+        android:label="@string/detales"
         tools:layout="@layout/fragment_details" />
 </navigation>

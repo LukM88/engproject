@@ -2,6 +2,7 @@ package com.example.myapplication.ui.addEvent;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,9 +11,11 @@ import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.InputEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -38,6 +41,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.ui.calender.CalenderFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class AddEventFragment extends Fragment {
 
@@ -178,6 +183,7 @@ public class AddEventFragment extends Fragment {
         cancleButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 final NavController navController = Navigation.findNavController(root);
                 navController.navigate(R.id.action_nav_toHome);
             }

@@ -27,7 +27,7 @@ import java.util.List;
 public class StatisticsFragment extends Fragment {
     private AnyChartView chart;
     private String[] groups = {"Wykonane","Nie Wykonane"};
-    private int[] wykonaneValues = {6,10};
+    private int[] wykonaneValues = {1,4};
 
     private StatisticsViewModel mViewModel;
 

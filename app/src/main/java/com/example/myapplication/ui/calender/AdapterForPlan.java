@@ -57,7 +57,7 @@ public class AdapterForPlan extends BaseAdapter {
         convertView = inflter.inflate(R.layout.list_items, null);
 
         final CheckedTextView simpleCheckedTextView = convertView.findViewById(R.id.simpleCheckedTextView);
-        simpleCheckedTextView.setText(names.get(position).getName());
+        simpleCheckedTextView.setText(names.get(position).getName()+" "+names.get(position).getTime());
         this.focuse=position;
         if (names.get(position).getState()) {
             simpleCheckedTextView.setChecked(true);

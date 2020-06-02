@@ -132,7 +132,7 @@ public class AddEventFragment extends Fragment {
                         Toast.makeText(getContext(),"Błędny format godziny",Toast.LENGTH_SHORT);
                     }else{
                         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-                        if(!nameText.getText().toString().isEmpty()) {
+                        if(!nameText.getText().toString().isEmpty() && nameText.getText().toString().length()!=1) {
                             String[] data = {nameText.getText().toString(), descriptionText.getText().toString(), HH.getText().toString(), MM.getText().toString(), priority.getSelectedItem().toString(),"", selectedDay[0], selectedMonth[0], selectedYear[0], MainActivity.login,picturePath,notification.getSelectedItem().toString()};
 
                             try {

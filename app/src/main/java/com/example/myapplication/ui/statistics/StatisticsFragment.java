@@ -19,6 +19,8 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
+import com.example.myapplication.DatabaseHelper;
+import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -26,8 +28,8 @@ import java.util.List;
 
 public class StatisticsFragment extends Fragment {
     private AnyChartView chart;
-    private String[] groups = {"Wykonane","Nie Wykonane"};
-    private int[] wykonaneValues = {1,4};
+    private String[] groups = {"Nie Wykonane","Wykonane"};
+    private int[] wykonaneValues;
 
     private StatisticsViewModel mViewModel;
 
@@ -42,6 +44,8 @@ public class StatisticsFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(StatisticsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_statistics2, container, false);
         final TextView textView = root.findViewById(R.id.textView);
+        DatabaseHelper db = new DatabaseHelper(getContext());
+        wykonaneValues=db.getDoneCount(new MyDate());
         mViewModel.getText().observe(getViewLifecycleOwner(),new Observer<String>(){
 
             @Override
@@ -61,6 +65,7 @@ public class StatisticsFragment extends Fragment {
         for(int i = 0; i<groups.length; i++) {
             dataEntries.add(new ValueDataEntry(groups[i], wykonaneValues[i]));
         }
+
         pie.data(dataEntries);
         chart.setChart(pie);
     }

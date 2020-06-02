@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-       // DatabaseHelper db = new DatabaseHelper(getBaseContext());
-       // db.showEvents();
-       // db.close();
+       //atabaseHelper db = new DatabaseHelper(getBaseContext());
+       //db.showEvents();
+       //db.close();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);

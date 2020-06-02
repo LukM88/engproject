@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static int lastCheck = 0;
     public static final String DATABASE_NAME = "organizer.db";
     public static final String TABLE_NAME = "users";
     public static final String COL_1 = "ID";
@@ -186,11 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long res = db.update(TABLE2,cv,TAB2COL_1+"="+toDo.getID(),null);
         showEvents();
         db.close();
-        try{
-            this.lastCheck = Integer.parseInt(toDo.getID());
-        }catch (NumberFormatException e ){
-            e.printStackTrace();
-        }
+
     }
 
     public void showEvents(){
@@ -334,7 +329,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         System.out.println(array_list2.size());
         return array_list2;
     }
-    public int lastChceck() {
-        return this.lastChceck();
+
+    public int[] getDoneCount(MyDate date){
+        int done = 0;
+        int all = 0;
+        SQLiteDatabase sqlDB = this.getReadableDatabase();
+        Cursor res = sqlDB.rawQuery( "select count() AS 'all' from "+TABLE2+" where day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"'", null );
+        res.moveToFirst();
+        all = Integer.parseInt(res.getString(res.getColumnIndex("all")));
+        res = sqlDB.rawQuery( "select count() AS 'done' from "+TABLE2+" where day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"' AND state = 1", null );
+        res.moveToFirst();
+        done = Integer.parseInt(res.getString(res.getColumnIndex("done")));
+
+        int[] data = {all-done,done};
+        return data;
     }
+
 }

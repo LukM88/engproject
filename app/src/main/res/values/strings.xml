@@ -27,6 +27,7 @@
     <string name="calender">Calender</string>
     <string name="planFor">Plan for a day</string>
     <string name="detales">Details</string>
+    <string name="description">Description:</string>
     <string-array name="priority_array">
         <item>low</item>
         <item>medium</item>

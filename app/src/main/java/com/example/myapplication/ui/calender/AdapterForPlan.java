@@ -2,6 +2,7 @@ package com.example.myapplication.ui.calender;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import androidx.navigation.Navigation;
 
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.R;
@@ -97,11 +100,17 @@ public class AdapterForPlan extends BaseAdapter {
             simpleCheckedTextView.setBackgroundColor(Color.RED);
         }
 
+        final View finalConvertView = convertView;
         simpleCheckedTextView.setOnLongClickListener (new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {
-
-
+                Bundle bundle = new Bundle();
+                try{
+                    bundle.putInt("id",Integer.parseInt(names.get(position).getID()));
+                    Navigation.findNavController(finalConvertView).navigate(R.id.detailsFromPlan,bundle);
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
+                }
                 return false;
             }
 
@@ -110,7 +119,5 @@ public class AdapterForPlan extends BaseAdapter {
         });
         return convertView;
     }
-    public ToDo getDetails(int positione){
-        return names.get(positione);
-    }
+
 }

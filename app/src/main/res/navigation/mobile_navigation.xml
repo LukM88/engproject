@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_slideshow"
             app:destination="@id/navAddEvent" />
+        <action
+            android:id="@+id/detailsFromHome"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_home_second"
@@ -85,6 +88,9 @@
         <action
             android:id="@+id/addPlanForDay"
             app:destination="@id/navAddEvent" />
+        <action
+            android:id="@+id/detailsFromPlan"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -92,4 +98,9 @@
         android:label="fragment_statistics2"
         tools:layout="@layout/fragment_statistics2" />
     <action android:id="@+id/goToDay" app:destination="@id/planForDay" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.myapplication.ui.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" />
 </navigation>

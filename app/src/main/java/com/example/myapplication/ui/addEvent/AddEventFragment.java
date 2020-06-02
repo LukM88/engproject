@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -113,16 +114,16 @@ public class AddEventFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(HH.getText().equals(null)){
+                if(HH.getText().toString().equals("")){
                     HH.setText("12");
                 }
-                if(MM.getText().equals(null)){
+                if(MM.getText().toString().equals("")){
                     MM.setText("00");
                 }
                 try {
                     int H = Integer.parseInt(HH.getText().toString());
-                    int M = Integer.parseInt(HH.getText().toString());
-                    if(H>24 || H<=0 || M>24 || M<=0){
+                    int M = Integer.parseInt(MM.getText().toString());
+                    if(H>24 || H<=0 || M>59 || M<0){
                         Toast.makeText(getContext(),"Błędny format godziny",Toast.LENGTH_SHORT);
                     }else{
                         DatabaseHelper dbHelper = new DatabaseHelper(getContext());

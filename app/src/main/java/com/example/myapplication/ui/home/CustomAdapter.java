@@ -2,6 +2,7 @@ package com.example.myapplication.ui.home;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import androidx.navigation.Navigation;
 
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.R;
@@ -98,10 +101,17 @@ public class CustomAdapter extends BaseAdapter {
                 Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
             }
         });
+        final View finalView = view;
         simpleCheckedTextView.setOnLongClickListener (new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(context,names.get(position).getDescription()+" \ntime:"+names.get(position).getTime()  ,Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                try{
+                    bundle.putInt("id",Integer.parseInt(names.get(position).getID()));
+                    Navigation.findNavController(finalView).navigate(R.id.detailsFromHome,bundle);
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
+                }
                 return false;
             }
 

@@ -13,12 +13,14 @@ import com.example.myapplication.R;
 
 public class DetailsFragment extends Fragment {
 
-
+    int id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         final View root = inflater.inflate(R.layout.fragment_details, container, false);
-        //TODO oprogramuj detale
+        id= getArguments().getInt("id");//działa
+        System.out.println(id);
         return root;
     }
 }

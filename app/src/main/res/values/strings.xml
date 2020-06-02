@@ -20,6 +20,10 @@
     <string name="Title">Title</string>
     <string name="todo">TODO</string>
     <string name="back">Back</string>
+    <string name="time">Time:</string>
+    <string name="date">Date:</string>
+    <string name="notification">Notification:</string>
+    <string name="priority">Priority:</string>
     <string-array name="priority_array">
         <item>low</item>
         <item>medium</item>

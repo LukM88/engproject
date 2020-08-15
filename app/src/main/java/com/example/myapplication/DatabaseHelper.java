@@ -18,21 +18,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "password";
     public static final String COL_4 = "hint";
 
-    public static final String TABLE2 = "events";
-    public static final String TAB2COL_1 = "ID";
-    public static final String TAB2COL_2 = "name";
-    public static final String TAB2COL_3 = "descriptions";
-    public static final String TAB2COL_4 = "HH";
-    public static final String TAB2COL_5 = "MM";
-    public static final String TAB2COL_6 = "priority";
-    public static final String TAB2COL_7 = "state";
-    public static final String TAB2COL_8 = "day";
-    public static final String TAB2COL_9 = "month";
-    public static final String TAB2COL_10 = "year";
-    public static final String TAB2COL_11 = "owner";
-    public static final String TAB2COL_12 = "imgPath";
-    public static final String TAB2COL_13 = "notification";
-    public static final String[] kolumny = {TAB2COL_1,TAB2COL_2,TAB2COL_3,TAB2COL_4,TAB2COL_5,TAB2COL_6,TAB2COL_7,TAB2COL_8,TAB2COL_9,TAB2COL_10,TAB2COL_11,TAB2COL_12,TAB2COL_13};
+    private static final String TABLE2 = "events";
+    private final String[] kolumny = { "ID",
+                                       "name",
+                                       "descriptions",
+                                       "HH",
+                                       "MM",
+                                       "priority",
+                                       "state",
+                                       "day",
+                                       "month",
+                                       "year",
+                                       "owner",
+                                       "imgPath",
+                                       "notification"};
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 2);
     }
@@ -40,7 +39,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE users (ID INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT, hint TEXT)");
-        db.execSQL("CREATE TABLE "+TABLE2+" ("+TAB2COL_1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+TAB2COL_2+" TEXT, "+TAB2COL_3+" TEXT, "+TAB2COL_4+" TEXT, "+TAB2COL_5+" TEXT, "+TAB2COL_6+" TEXT, "+TAB2COL_7+" BOOLEAN, "+TAB2COL_8+" TEXT, "+TAB2COL_9+" TEXT, "+TAB2COL_10+" TEXT, "+TAB2COL_11+" TEXT, "+TAB2COL_12+" TEXT, "+TAB2COL_13+" TEXT)");
+        db.execSQL("CREATE TABLE "+
+                    TABLE2 + " ("
+                                + kolumny[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                + kolumny[1] + " TEXT, "
+                                + kolumny[2] + " TEXT, "
+                                + kolumny[3] + " TEXT, "
+                                + kolumny[4] + " TEXT, "
+                                + kolumny[5] + " TEXT, "
+                                + kolumny[6] + " BOOLEAN, "
+                                + kolumny[7] + " TEXT, "
+                                + kolumny[8] + " TEXT, "
+                                + kolumny[9] + " TEXT, "
+                                + kolumny[10] + " TEXT, "
+                                + kolumny[11] + " TEXT, "
+                                + kolumny[12] + " TEXT)");
     }
 
     @Override
@@ -89,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long addEvent(String[] data){
         SQLiteDatabase sqlDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        for(int i=0;i< data.length;i++){
+        for(int i=0; i < data.length; i++){
             if(i != 5){
                 contentValues.put(kolumny[i+1], data[i]);
             }else{
@@ -117,177 +130,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ToDo getEvent(int id){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        ToDo todo=new ToDo();
-        Cursor res = sqlDB.rawQuery( "select * from "+TABLE2+" WHERE "+TAB2COL_1+"="+id, null );
+        final Cursor res = sqlDB.rawQuery( "SELECT * " +
+                        "                       FROM " + TABLE2 +
+                                              " WHERE " + kolumny[0] + " = " + id,
+                                   null );
         res.moveToFirst();
-
-        while(res.isAfterLast() == false) {
-            todo.setID(res.getString(res.getColumnIndex("ID")));
-            todo.setName(res.getString(res.getColumnIndex("name")));
-            todo.setDescription(res.getString(res.getColumnIndex("descriptions")));
-            todo.setHH(res.getString(res.getColumnIndex("HH")));
-            todo.setMM(res.getString(res.getColumnIndex("MM")));
-            todo.setPriority(res.getString(res.getColumnIndex("priority")));
-            todo.setDay(res.getString(res.getColumnIndex("day")));
-            todo.setMonth(res.getString(res.getColumnIndex("month")));
-            todo.setYear(res.getString(res.getColumnIndex("year")));
-            todo.setOwner(res.getString(res.getColumnIndex("owner")));
-            todo.setImgPath(res.getString(res.getColumnIndex("imgPath")));
-            todo.setNotification(res.getString(res.getColumnIndex("notification")));
-            res.moveToNext();
-
-        }
         sqlDB.close();
-        return todo;
+        return new ToDo(){{
+                           setID(res.getString(res.getColumnIndex("ID")));
+                           setName(res.getString(res.getColumnIndex("name")));
+                           setDescription(res.getString(res.getColumnIndex("descriptions")));
+                           setHH(res.getString(res.getColumnIndex("HH")));
+                           setMM(res.getString(res.getColumnIndex("MM")));
+                           setPriority(res.getString(res.getColumnIndex("priority")));
+                           setDay(res.getString(res.getColumnIndex("day")));
+                           setMonth(res.getString(res.getColumnIndex("month")));
+                           setYear(res.getString(res.getColumnIndex("year")));
+                           setOwner(res.getString(res.getColumnIndex("owner")));
+                           setImgPath(res.getString(res.getColumnIndex("imgPath")));
+                           setNotification(res.getString(res.getColumnIndex("notification")));
+                           }};
     }
     public ArrayList<ToDo> getEvents(){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-
-        ArrayList<String> array_list = new ArrayList<String>();
         ArrayList<ToDo> array_list2 = new ArrayList<ToDo>();
-        Cursor res = sqlDB.rawQuery( "select * from "+TABLE2, null );
+        final Cursor res = sqlDB.rawQuery( "select * from "+TABLE2, null );
         res.moveToFirst();
-        int i=0;
         while(res.isAfterLast() == false) {
-            array_list2.add(new ToDo());
-            array_list2.get(i).setID(res.getString(res.getColumnIndex("ID")));
-            array_list2.get(i).setName(res.getString(res.getColumnIndex("name")));
-            array_list2.get(i).setDescription(res.getString(res.getColumnIndex("descriptions")));
-            array_list2.get(i).setHH(res.getString(res.getColumnIndex("HH")));
-            array_list2.get(i).setMM(res.getString(res.getColumnIndex("MM")));
-            array_list2.get(i).setPriority(res.getString(res.getColumnIndex("priority")));
-            if(res.getInt(res.getColumnIndex("state")) == 1 )
-            {
-                array_list2.get(i).setState(true);
-            }
-            else {
-                array_list2.get(i).setState(false);
-            }
-            array_list2.get(i).setDay(res.getString(res.getColumnIndex("day")));
-            array_list2.get(i).setMonth(res.getString(res.getColumnIndex("month")));
-            array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
-            array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
-            array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
-            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
+            array_list2.add(new ToDo(){{
+                                        setID(res.getString(res.getColumnIndex("ID")));
+                                        setName(res.getString(res.getColumnIndex("name")));
+                                        setDescription(res.getString(res.getColumnIndex("descriptions")));
+                                        setHH(res.getString(res.getColumnIndex("HH")));
+                                        setMM(res.getString(res.getColumnIndex("MM")));
+                                        setPriority(res.getString(res.getColumnIndex("priority")));
+                                        setState(res.getInt(res.getColumnIndex("state")) == 1);
+                                        setDay(res.getString(res.getColumnIndex("day")));
+                                        setMonth(res.getString(res.getColumnIndex("month")));
+                                        setYear(res.getString(res.getColumnIndex("year")));
+                                        setOwner(res.getString(res.getColumnIndex("owner")));
+                                        setImgPath(res.getString(res.getColumnIndex("imgPath")));
+                                        setNotification(res.getString(res.getColumnIndex("notification")));
+                                        }});
             res.moveToNext();
-            i++;
         }
-
         sqlDB.close();
         return array_list2;
     }
 
-    public void chceck(ToDo toDo) {
+    public void updateTodoStatus(ToDo toDo) {
         SQLiteDatabase db = this.getWritableDatabase();
-        showEvents();
         ContentValues cv = new ContentValues();
-        cv.put(TAB2COL_7,!toDo.getState());
-        long res = db.update(TABLE2,cv,TAB2COL_1+"="+toDo.getID(),null);
-        showEvents();
+        cv.put(kolumny[6], !toDo.getState());
+        db.update(TABLE2, cv, kolumny[0] + " = " + toDo.getID(), null);
         db.close();
-
     }
 
     public void showEvents(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor kursor = db.query(TABLE2,kolumny,null,null,null,null,null);
+        Cursor kursor = db.query(TABLE2, kolumny,null,null,null,null,null);
         kursor.moveToFirst();
         while(kursor.isAfterLast() == false) {
-            for(int i = 0 ;i<kolumny.length;i++){
-                System.out.print(kursor.getString(kursor.getColumnIndex(kolumny[i]))+"\n");
+            for(int i = 0 ; i < kolumny.length; i++){
+                System.out.print(kursor.getString(kursor.getColumnIndex(kolumny[i])) + "\n");
             }
-
             kursor.moveToNext();
         }
-
     }
+
     public ArrayList<ToDo> getToDoes(){
-        SQLiteDatabase sqlDB = this.getReadableDatabase();
-
-        ArrayList<String> array_list = new ArrayList<String>();
-        ArrayList<ToDo> array_list2 = new ArrayList<ToDo>();
-        MyDate date = new MyDate();
-
-        String day = date.getDay();
-        String month = date.getMonth();
-        String year =  date.getYear();
-
-
-        Cursor res = sqlDB.rawQuery( "select * from "+TABLE2+" where day='"+day+"' AND year='"+year+"' AND month='"+month+"'", null );
-        res.moveToFirst();
-        int i=0;
-        while(res.isAfterLast() == false) {
-            array_list2.add(new ToDo());
-            array_list2.get(i).setID(res.getString(res.getColumnIndex("ID")));
-            array_list2.get(i).setName(res.getString(res.getColumnIndex("name")));
-            array_list2.get(i).setDescription(res.getString(res.getColumnIndex("descriptions")));
-            array_list2.get(i).setHH(res.getString(res.getColumnIndex("HH")));
-            array_list2.get(i).setMM(res.getString(res.getColumnIndex("MM")));
-            array_list2.get(i).setPriority(res.getString(res.getColumnIndex("priority")));
-            if(res.getInt(res.getColumnIndex("state")) == 1 )
-            {
-                array_list2.get(i).setState(true);
-            }
-            else {
-                array_list2.get(i).setState(false);
-            }
-            array_list2.get(i).setDay(res.getString(res.getColumnIndex("day")));
-            array_list2.get(i).setMonth(res.getString(res.getColumnIndex("month")));
-            array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
-            array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
-            array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
-            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
-            res.moveToNext();
-
-            i++;
-        }
-
-        sqlDB.close();
-        return array_list2;
+        return getToDoes(new MyDate());
     }
 
     public ArrayList<ToDo> getToDoes(MyDate date){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-
-        ArrayList<String> array_list = new ArrayList<String>();
-        ArrayList<ToDo> array_list2 = new ArrayList<ToDo>();
-
-        String day = date.getDay();
-        String month = date.getMonth();
-        String year =  date.getYear();
-
-
-        Cursor res = sqlDB.rawQuery( "select * from "+TABLE2+" where day='"+day+"' AND year='"+year+"' AND month='"+month+"'", null );
+        ArrayList<ToDo> listOfTodos = new ArrayList<ToDo>();
+        final Cursor res = sqlDB.rawQuery( "SELECT * " +
+                                                "FROM " + TABLE2 + " " +
+                                                "WHERE day = '" + date.getDay() + "' " +
+                                                    "AND year = '" + date.getYear() +
+                                                    "'AND month = '" + date.getMonth() +"'", null );
         res.moveToFirst();
-        int i=0;
         while(res.isAfterLast() == false) {
-            array_list2.add(new ToDo());
-            array_list2.get(i).setID(res.getString(res.getColumnIndex("ID")));
-            array_list2.get(i).setName(res.getString(res.getColumnIndex("name")));
-            array_list2.get(i).setDescription(res.getString(res.getColumnIndex("descriptions")));
-            array_list2.get(i).setHH(res.getString(res.getColumnIndex("HH")));
-            array_list2.get(i).setMM(res.getString(res.getColumnIndex("MM")));
-            array_list2.get(i).setPriority(res.getString(res.getColumnIndex("priority")));
-            if(res.getInt(res.getColumnIndex("state")) == 1 )
-            {
-                array_list2.get(i).setState(true);
-            }
-            else {
-                array_list2.get(i).setState(false);
-            }
-            array_list2.get(i).setDay(res.getString(res.getColumnIndex("day")));
-            array_list2.get(i).setMonth(res.getString(res.getColumnIndex("month")));
-            array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
-            array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
-            array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
-            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
+            listOfTodos.add(new ToDo(){{
+                setID(res.getString(res.getColumnIndex("ID")));
+                setName(res.getString(res.getColumnIndex("name")));
+                setDescription(res.getString(res.getColumnIndex("descriptions")));
+                setHH(res.getString(res.getColumnIndex("HH")));
+                setMM(res.getString(res.getColumnIndex("MM")));
+                setPriority(res.getString(res.getColumnIndex("priority")));
+                setState(res.getInt(res.getColumnIndex("state")) == 1);
+                setDay(res.getString(res.getColumnIndex("day")));
+                setMonth(res.getString(res.getColumnIndex("month")));
+                setYear(res.getString(res.getColumnIndex("year")));
+                setOwner(res.getString(res.getColumnIndex("owner")));
+                setImgPath(res.getString(res.getColumnIndex("imgPath")));
+                setNotification(res.getString(res.getColumnIndex("notification")));
+            }});
             res.moveToNext();
-
-            i++;
         }
-
         sqlDB.close();
-        return array_list2;
+        return listOfTodos;
     }
 
     public ArrayList<ToDo> getEventsWithName(String name){
@@ -326,18 +269,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         sqlDB.close();
-        System.out.println(array_list2.size());
         return array_list2;
     }
+    private ArrayList<ToDo> getToDoListFromCursor(final Cursor res){
+        ArrayList<ToDo> todoList = new ArrayList<ToDo>();
+        res.moveToFirst();
+        while(res.isAfterLast() == false) {
+            todoList.add(new ToDo(){{
+                setID(res.getString(res.getColumnIndex("ID")));
+                setName(res.getString(res.getColumnIndex("name")));
+                setDescription(res.getString(res.getColumnIndex("descriptions")));
+                setHH(res.getString(res.getColumnIndex("HH")));
+                setMM(res.getString(res.getColumnIndex("MM")));
+                setPriority(res.getString(res.getColumnIndex("priority")));
+                setState(res.getInt(res.getColumnIndex("state")) == 1);
+                setDay(res.getString(res.getColumnIndex("day")));
+                setMonth(res.getString(res.getColumnIndex("month")));
+                setYear(res.getString(res.getColumnIndex("year")));
+                setOwner(res.getString(res.getColumnIndex("owner")));
+                setImgPath(res.getString(res.getColumnIndex("imgPath")));
+                setNotification(res.getString(res.getColumnIndex("notification")));
+            }});
+            res.moveToNext();
+        }
+        return todoList;
+    }
 
-    public int[] getDoneCount(MyDate date){
+    public int[] getDoneEventsStsts(MyDate date){
         int done = 0;
         int all = 0;
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        Cursor res = sqlDB.rawQuery( "select count() AS 'all' from "+TABLE2+" where day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"'", null );
+        Cursor res = sqlDB.rawQuery( "SELECT count() AS 'all' FROM "+TABLE2+" WHERE day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"'", null );
         res.moveToFirst();
         all = Integer.parseInt(res.getString(res.getColumnIndex("all")));
-        res = sqlDB.rawQuery( "select count() AS 'done' from "+TABLE2+" where day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"' AND state = 1", null );
+        res = sqlDB.rawQuery( "SELECT count() AS 'done' FROM "+TABLE2+" WHERE day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"' AND state = 1", null );
         res.moveToFirst();
         done = Integer.parseInt(res.getString(res.getColumnIndex("done")));
 

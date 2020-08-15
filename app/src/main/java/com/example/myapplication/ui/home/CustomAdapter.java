@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,7 +19,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class CustomAdapter extends BaseAdapter {
     ArrayList<ToDo> names=new ArrayList<ToDo>();
@@ -82,12 +80,12 @@ public class CustomAdapter extends BaseAdapter {
                 if (names.get(position).getState()) {
 // set cheek mark drawable and set checked property to false
                     value = "un-Checked";
-                    dbHelper.chceck(names.get(position));
+                    dbHelper.updateTodoStatus(names.get(position));
                     names.get(position).setState(false);
                     simpleCheckedTextView.setCheckMarkDrawable(null);
                     simpleCheckedTextView.setChecked(false);
                 } else {
-                    dbHelper.chceck(names.get(position));
+                    dbHelper.updateTodoStatus(names.get(position));
 // set cheek mark drawable and set checked property to true
 
                     value = "Checked";

@@ -3,13 +3,11 @@ package com.example.myapplication.ui.calender;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.navigation.Navigation;
@@ -76,12 +74,12 @@ public class AdapterForPlan extends BaseAdapter {
                 if (names.get(position).getState()) {
 // set cheek mark drawable and set checked property to false
                     value = "un-Checked";
-                    dbHelper.chceck(names.get(position));
+                    dbHelper.updateTodoStatus(names.get(position));
                     names.get(position).setState(false);
                     simpleCheckedTextView.setCheckMarkDrawable(null);
                     simpleCheckedTextView.setChecked(false);
                 } else {
-                    dbHelper.chceck(names.get(position));
+                    dbHelper.updateTodoStatus(names.get(position));
 // set cheek mark drawable and set checked property to true
 
                     value = "Checked";

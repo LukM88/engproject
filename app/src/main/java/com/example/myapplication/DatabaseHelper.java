@@ -103,27 +103,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqlDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         for(int i=0; i < data.length; i++){
-            if(i != 5){
+            if (i != 5){
                 contentValues.put(kolumny[i+1], data[i]);
-            }else{
+            } else{
                 contentValues.put(kolumny[i+1], false);
             }
-
         }
-        /*
-        contentValues.put(TAB2COL_2, name);
-        contentValues.put(TAB2COL_3, description);
-        contentValues.put(TAB2COL_4, HH);
-        contentValues.put(TAB2COL_5, MM);
-        contentValues.put(TAB2COL_6, priority);
-        contentValues.put(TAB2COL_7, state);
-        contentValues.put(TAB2COL_8, day);
-        contentValues.put(TAB2COL_9, month);
-        contentValues.put(TAB2COL_10, year);
-        contentValues.put(TAB2COL_11, owner);
-        contentValues.put(TAB2COL_12, imgPath);
-        contentValues.put(TAB2COL_13, notification);
-*/
         long res = sqlDB.insert(TABLE2, null, contentValues);
         sqlDB.close();
         return res;
@@ -153,27 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<ToDo> getEvents(){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        ArrayList<ToDo> array_list2 = new ArrayList<ToDo>();
-        final Cursor res = sqlDB.rawQuery( "select * from "+TABLE2, null );
-        res.moveToFirst();
-        while(res.isAfterLast() == false) {
-            array_list2.add(new ToDo(){{
-                                        setID(res.getString(res.getColumnIndex("ID")));
-                                        setName(res.getString(res.getColumnIndex("name")));
-                                        setDescription(res.getString(res.getColumnIndex("descriptions")));
-                                        setHH(res.getString(res.getColumnIndex("HH")));
-                                        setMM(res.getString(res.getColumnIndex("MM")));
-                                        setPriority(res.getString(res.getColumnIndex("priority")));
-                                        setState(res.getInt(res.getColumnIndex("state")) == 1);
-                                        setDay(res.getString(res.getColumnIndex("day")));
-                                        setMonth(res.getString(res.getColumnIndex("month")));
-                                        setYear(res.getString(res.getColumnIndex("year")));
-                                        setOwner(res.getString(res.getColumnIndex("owner")));
-                                        setImgPath(res.getString(res.getColumnIndex("imgPath")));
-                                        setNotification(res.getString(res.getColumnIndex("notification")));
-                                        }});
-            res.moveToNext();
-        }
+        ArrayList<ToDo> array_list2 = getToDoListFromCursor(sqlDB.rawQuery( "SELECT * FROM "+TABLE2, null ));
         sqlDB.close();
         return array_list2;
     }
@@ -204,72 +169,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ToDo> getToDoes(MyDate date){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        ArrayList<ToDo> listOfTodos = new ArrayList<ToDo>();
-        final Cursor res = sqlDB.rawQuery( "SELECT * " +
-                                                "FROM " + TABLE2 + " " +
-                                                "WHERE day = '" + date.getDay() + "' " +
-                                                    "AND year = '" + date.getYear() +
-                                                    "'AND month = '" + date.getMonth() +"'", null );
-        res.moveToFirst();
-        while(res.isAfterLast() == false) {
-            listOfTodos.add(new ToDo(){{
-                setID(res.getString(res.getColumnIndex("ID")));
-                setName(res.getString(res.getColumnIndex("name")));
-                setDescription(res.getString(res.getColumnIndex("descriptions")));
-                setHH(res.getString(res.getColumnIndex("HH")));
-                setMM(res.getString(res.getColumnIndex("MM")));
-                setPriority(res.getString(res.getColumnIndex("priority")));
-                setState(res.getInt(res.getColumnIndex("state")) == 1);
-                setDay(res.getString(res.getColumnIndex("day")));
-                setMonth(res.getString(res.getColumnIndex("month")));
-                setYear(res.getString(res.getColumnIndex("year")));
-                setOwner(res.getString(res.getColumnIndex("owner")));
-                setImgPath(res.getString(res.getColumnIndex("imgPath")));
-                setNotification(res.getString(res.getColumnIndex("notification")));
-            }});
-            res.moveToNext();
-        }
+        ArrayList<ToDo> listOfTodos =  getToDoListFromCursor(sqlDB.rawQuery( "SELECT * " +
+                                                                                  "FROM " + TABLE2 + " " +
+                                                                                  "WHERE day = '" + date.getDay() + "' " +
+                                                                                        "AND year = '" + date.getYear() +
+                                                                                        "'AND month = '" + date.getMonth() +"'",
+                                                                    null ));
         sqlDB.close();
         return listOfTodos;
     }
 
     public ArrayList<ToDo> getEventsWithName(String name){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-
-        ArrayList<String> array_list = new ArrayList<String>();
-        ArrayList<ToDo> array_list2 = new ArrayList<ToDo>();
-
-        Cursor res = sqlDB.rawQuery( "select * from "+TABLE2+" where name like '%"+name+"%'", null );
-        res.moveToFirst();
-        int i=0;
-        while(res.isAfterLast() == false) {
-            array_list2.add(new ToDo());
-            array_list2.get(i).setID(res.getString(res.getColumnIndex("ID")));
-            array_list2.get(i).setName(res.getString(res.getColumnIndex("name")));
-            array_list2.get(i).setDescription(res.getString(res.getColumnIndex("descriptions")));
-            array_list2.get(i).setHH(res.getString(res.getColumnIndex("HH")));
-            array_list2.get(i).setMM(res.getString(res.getColumnIndex("MM")));
-            array_list2.get(i).setPriority(res.getString(res.getColumnIndex("priority")));
-            if(res.getInt(res.getColumnIndex("state")) == 1 )
-            {
-                array_list2.get(i).setState(true);
-            }
-            else {
-                array_list2.get(i).setState(false);
-            }
-            array_list2.get(i).setDay(res.getString(res.getColumnIndex("day")));
-            array_list2.get(i).setMonth(res.getString(res.getColumnIndex("month")));
-            array_list2.get(i).setYear(res.getString(res.getColumnIndex("year")));
-            array_list2.get(i).setOwner(res.getString(res.getColumnIndex("owner")));
-            array_list2.get(i).setImgPath(res.getString(res.getColumnIndex("imgPath")));
-            array_list2.get(i).setNotification(res.getString(res.getColumnIndex("notification")));
-            res.moveToNext();
-
-            i++;
-        }
-
+        ArrayList<ToDo> todoList = getToDoListFromCursor(sqlDB.rawQuery( "select * from "+TABLE2+" where name like '%"+name+"%'", null ));
         sqlDB.close();
-        return array_list2;
+        return todoList;
     }
     private ArrayList<ToDo> getToDoListFromCursor(final Cursor res){
         ArrayList<ToDo> todoList = new ArrayList<ToDo>();

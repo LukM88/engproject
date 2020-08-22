@@ -95,7 +95,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] projections = {COL_4};
         String selection = COL_2 + " LIKE ?";
         String[] selection_args = {login};
-        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, projections, selection, selection_args, null,null,null);
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME,
+                                             projections,
+                                             selection,
+                                             selection_args,
+                                            null,
+                                            null,
+                                            null);
         return cursor;
     }
 
@@ -138,7 +144,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<ToDo> getEvents(){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        ArrayList<ToDo> array_list2 = getToDoListFromCursor(sqlDB.rawQuery( "SELECT * FROM "+TABLE2, null ));
+        ArrayList<ToDo> array_list2 = getToDoListFromCursor(sqlDB.rawQuery( "SELECT * FROM "+TABLE2,
+                                                                    null ));
         sqlDB.close();
         return array_list2;
     }
@@ -153,7 +160,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void showEvents(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor kursor = db.query(TABLE2, kolumny,null,null,null,null,null);
+        Cursor kursor = db.query(TABLE2,
+                                 kolumny,
+                       null,
+                   null,
+                       null,
+                         null,
+                       null);
         kursor.moveToFirst();
         while(kursor.isAfterLast() == false) {
             for(int i = 0 ; i < kolumny.length; i++){
@@ -181,7 +194,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ToDo> getEventsWithName(String name){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        ArrayList<ToDo> todoList = getToDoListFromCursor(sqlDB.rawQuery( "select * from "+TABLE2+" where name like '%"+name+"%'", null ));
+        ArrayList<ToDo> todoList = getToDoListFromCursor(sqlDB.rawQuery( "SELECT * " +
+                                                                              "FROM " + TABLE2 +
+                                                                              " WHERE name LIKE '%" + name + "%'",
+                                                                 null ));
         sqlDB.close();
         return todoList;
     }
@@ -213,15 +229,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int done = 0;
         int all = 0;
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        Cursor res = sqlDB.rawQuery( "SELECT count() AS 'all' FROM "+TABLE2+" WHERE day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"'", null );
+        Cursor res = sqlDB.rawQuery( "SELECT count() AS 'all' " +
+                                          "FROM " + TABLE2 +
+                                          " WHERE day = '" + date.getDay() + "' " +
+                                                "AND year = '" + date.getYear() + "' " +
+                                                "AND month = '" + date.getMonth() + "'",
+                                    null );
         res.moveToFirst();
         all = Integer.parseInt(res.getString(res.getColumnIndex("all")));
-        res = sqlDB.rawQuery( "SELECT count() AS 'done' FROM "+TABLE2+" WHERE day='"+date.getDay()+"' AND year='"+date.getYear()+"' AND month='"+date.getMonth()+"' AND state = 1", null );
+        res = sqlDB.rawQuery( "SELECT count() AS 'done' " +
+                                   "FROM " + TABLE2 + " " +
+                                   "WHERE day = '" + date.getDay() + "' " +
+                                        "AND year = '" + date.getYear() + "' " +
+                                        "AND month = '" + date.getMonth() + "' " +
+                                        "AND state = 1",
+                                    null );
         res.moveToFirst();
         done = Integer.parseInt(res.getString(res.getColumnIndex("done")));
 
-        int[] data = {all-done,done};
-        return data;
+        int[] progresInDaylyTasks = {all - done, done};
+        return progresInDaylyTasks;
     }
 
 }

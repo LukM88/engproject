@@ -27,9 +27,9 @@ public class MyDate {
             getDate();*/
       //  }else{
 
-            setDay(currentDateTimeString.substring(0,2));
-            setMonth(currentDateTimeString.substring(3,5));
-            setYear(currentDateTimeString.substring(currentDateTimeString.length()-4));
+            setDay(currentDateTimeString.substring(0, 2));
+            setMonth(currentDateTimeString.substring(3, 5));
+            setYear(currentDateTimeString.substring(currentDateTimeString.length() - 4));
 
        // }
 
@@ -38,13 +38,12 @@ public class MyDate {
     public void setDay(String day) {
         try {
             if (Integer.parseInt(day) <= 31 && Integer.parseInt(day) > 0) {
-                if(Integer.parseInt(day) < 10 && day.length()==1){
-                    this.day = 0+day;
-                }else{
+                if (Integer.parseInt(day) < 10 && day.length() == 1){
+                    this.day = 0 + day;
+                } else{
                     this.day = day;
                 }
-                setDate();
-
+                setDateFormatAsPrefered();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -54,11 +53,11 @@ public class MyDate {
     public void setMonth(String month) {
         try {
             if (Integer.parseInt(month) <= 12 && Integer.parseInt(month) > 0) {
-                if(Integer.parseInt(month) < 10 && month.length()==1){
-                    this.month= 0+month;
+                if(Integer.parseInt(month) < 10 && month.length() == 1){
+                    this.month = 0 + month;
                 }else{
-                    this.month= month;
-                    setDate();
+                    this.month = month;
+                    setDateFormatAsPrefered();
                 }
             }
         }catch (Exception e){
@@ -67,38 +66,35 @@ public class MyDate {
 
     }
 
-    private void setDate() {
+    private void setDateFormatAsPrefered() {
         String date;
         String separator;
-        format=format.toUpperCase();
-        if(format.lastIndexOf("Y")==format.length()-1){
-            separator=format.substring (format.lastIndexOf("Y")-4,format.lastIndexOf("Y")-3);
-            if(format.lastIndexOf("M")<format.lastIndexOf("D")){
-                date=month+separator+day+separator+year;
-            }else{
-                date=day+separator+month+separator+year;
-            }
-        }else if (format.lastIndexOf("D")==format.length()-1){
-            separator=format.substring (format.lastIndexOf("D")-2,format.lastIndexOf("D")-1);
-            if(format.lastIndexOf("M")<format.lastIndexOf("Y")){
-                date=month+separator+year+separator+day;
-            }else{
-                date=year+separator+month+separator+day;
-            }
-        }else if(format.lastIndexOf("M")==format.length()-1){
-            separator=format.substring (format.lastIndexOf("M")-2,format.lastIndexOf("M")-1);
-            if(format.lastIndexOf("Y")<format.lastIndexOf("D")){
-                date=year+separator+day+separator+month;
-            }else{
-                date=day+separator+year+separator+month;
-            }
-        }else{
-            separator="/";
-            date=day+separator+month+separator+year;
+        format = format.toUpperCase();
+        if(!format.contains("M")
+                || !format.contains("Y")
+                || !format.contains("D")){
+            format = "dd/mm/yyyy";
+            setDateFormatAsPrefered();
         }
-
-
-
+        if (format.indexOf("Y") > format.indexOf("M")){
+            separator = format.substring(format.indexOf("Y") - 1, format.indexOf("Y"));
+            if (format.indexOf("M") > format.indexOf("D")){
+                date = day + separator + month + separator + year;
+            } else if(format.indexOf("Y") > format.indexOf("D")){
+                date = month + separator + day + separator + year;
+            } else{
+                date = month + separator + year + separator + day;
+            }
+        } else{
+            separator = format.substring(format.indexOf("M") - 1, format.indexOf("M"));
+            if (format.indexOf("M") < format.indexOf("D")){
+                date = year + separator + month + separator + day;
+            } else if(format.indexOf("M") > format.indexOf("D")){
+                date = year + separator + day + separator + month;
+            } else{
+                date = day + separator + year + separator + month;
+            }
+        }
         this.date = date;
     }
 
@@ -106,43 +102,43 @@ public class MyDate {
         try {
             Integer.parseInt(year);
             this.year=year;
-            setDate();
+            setDateFormatAsPrefered();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void setDate(String day,String month,String year) {
+    public void setDateFormatAsPrefered(String day, String month, String year) {
         setDay(day);
         setMonth(month);
         setYear(year);
         String date;
         String separator;
-        format=format.toUpperCase();
-            if(format.lastIndexOf("Y")==format.length()-1){
-                separator=format.substring (format.lastIndexOf("Y")-4,format.lastIndexOf("Y")-3);
-                if(format.lastIndexOf("M")<format.lastIndexOf("D")){
-                    date=month+separator+day+separator+year;
-                }else{
-                    date=day+separator+month+separator+year;
+        format = format.toUpperCase();
+            if (format.lastIndexOf("Y") == format.length() - 1){
+                separator=format.substring (format.lastIndexOf("Y") - 4,format.lastIndexOf("Y") - 3);
+                if (format.lastIndexOf("M") < format.lastIndexOf("D")){
+                    date = month + separator + day + separator + year;
+                } else{
+                    date = day + separator + month + separator + year;
                 }
-            }else if (format.lastIndexOf("D")==format.length()-1){
-                separator=format.substring (format.lastIndexOf("D")-2,format.lastIndexOf("D")-1);
-                if(format.lastIndexOf("M")<format.lastIndexOf("Y")){
-                    date=month+separator+year+separator+day;
-                }else{
-                    date=year+separator+month+separator+day;
+            } else if (format.lastIndexOf("D") == format.length() - 1){
+                separator = format.substring(format.lastIndexOf("D") - 2, format.lastIndexOf("D") - 1);
+                if(format.lastIndexOf("M") < format.lastIndexOf("Y")){
+                    date = month+separator+year + separator + day;
+                } else{
+                    date = year + separator + month + separator + day;
                 }
-            }else if(format.lastIndexOf("M")==format.length()-1){
-                separator=format.substring (format.lastIndexOf("M")-2,format.lastIndexOf("M")-1);
-                if(format.lastIndexOf("Y")<format.lastIndexOf("D")){
-                    date=year+separator+day+separator+month;
-                }else{
-                    date=day+separator+year+separator+month;
+            } else if(format.lastIndexOf("M") == format.length() - 1){
+                separator = format.substring(format.lastIndexOf("M") - 2, format.lastIndexOf("M") - 1);
+                if (format.lastIndexOf("Y") < format.lastIndexOf("D")){
+                    date = year + separator + day + separator + month;
+                } else{
+                    date = day + separator + year + separator + month;
                 }
-            }else{
-                separator="/";
-                date=day+separator+month+separator+year;
+            } else{
+                separator = "/";
+                date = day + separator + month + separator + year;
             }
 
 
@@ -172,7 +168,7 @@ public class MyDate {
 
     public void setFormat(String format) {
         this.format = format;
-        setDate(this.day,this.month,this.year);
+        setDateFormatAsPrefered(this.day,this.month,this.year);
     }
 
 

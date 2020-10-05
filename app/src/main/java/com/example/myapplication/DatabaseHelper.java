@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -19,19 +21,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_4 = "hint";
 
     private static final String TABLE2 = "events";
-    private final String[] kolumny = { "ID",
-                                       "name",
-                                       "descriptions",
-                                       "HH",
-                                       "MM",
-                                       "priority",
-                                       "state",
-                                       "day",
-                                       "month",
-                                       "year",
-                                       "owner",
-                                       "imgPath",
-                                       "notification"};
+
+    private final Map<String, String> kolumny = new HashMap<String, String>() {{
+        put("ID", "ID");
+        put("name", "name");
+        put("descriptions", "descriptions");
+        put("HH", "HH");
+        put("MM", "MM");
+        put("priority", "priority");
+        put("state", "state");
+        put("day", "day");
+        put("month", "month");
+        put("year", "year");
+        put("owner", "owner");
+        put("imgPath", "imgPath");
+        put("notification", "notification");
+    }};
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 2);
     }
@@ -41,19 +46,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE users (ID INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT, hint TEXT)");
         db.execSQL("CREATE TABLE "+
                     TABLE2 + " ("
-                                + kolumny[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                + kolumny[1] + " TEXT, "
-                                + kolumny[2] + " TEXT, "
-                                + kolumny[3] + " TEXT, "
-                                + kolumny[4] + " TEXT, "
-                                + kolumny[5] + " TEXT, "
-                                + kolumny[6] + " BOOLEAN, "
-                                + kolumny[7] + " TEXT, "
-                                + kolumny[8] + " TEXT, "
-                                + kolumny[9] + " TEXT, "
-                                + kolumny[10] + " TEXT, "
-                                + kolumny[11] + " TEXT, "
-                                + kolumny[12] + " TEXT)");
+                                + kolumny.get("ID") + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                + kolumny.get("name") + " TEXT, "
+                                + kolumny.get("descriptions") + " TEXT, "
+                                + kolumny.get("HH") + " TEXT, "
+                                + kolumny.get("MM") + " TEXT, "
+                                + kolumny.get("priority") + " TEXT, "
+                                + kolumny.get("state") + " BOOLEAN, "
+                                + kolumny.get("day") + " TEXT, "
+                                + kolumny.get("month") + " TEXT, "
+                                + kolumny.get("year") + " TEXT, "
+                                + kolumny.get("owner") + " TEXT, "
+                                + kolumny.get("imgPath") + " TEXT, "
+                                + kolumny.get("notification") + " TEXT)");
     }
 
     @Override
@@ -105,14 +110,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public long addEvent(String[] data){
+    public long addEvent(Map<String, String> data){
         SQLiteDatabase sqlDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        for(int i=0; i < data.length; i++){
-            if (i != 5){
-                contentValues.put(kolumny[i+1], data[i]);
+        for(String column : kolumny.keySet()){
+            if (column == "state"){
+                contentValues.put(column, false);
+                ;
             } else{
-                contentValues.put(kolumny[i+1], false);
+                contentValues.put(column, data.get(column));
             }
         }
         long res = sqlDB.insert(TABLE2, null, contentValues);
@@ -120,10 +126,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
     public ToDo getEvent(int id){
+        System.out.println("weszło");
         SQLiteDatabase sqlDB = this.getReadableDatabase();
         final Cursor res = sqlDB.rawQuery( "SELECT * " +
                         "                       FROM " + TABLE2 +
-                                              " WHERE " + kolumny[0] + " = " + id,
+                                              " WHERE " + kolumny.get("ID") + " = " + id,
                                    null );
         res.moveToFirst();
         sqlDB.close();
@@ -153,26 +160,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateTodoStatus(ToDo toDo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(kolumny[6], !toDo.getState());
-        db.update(TABLE2, cv, kolumny[0] + " = " + toDo.getID(), null);
+        cv.put(kolumny.get("state"), !toDo.getState());
+        db.update(TABLE2, cv, kolumny.get("ID") + " = " + toDo.getID(), null);
         db.close();
     }
 
     public void showEvents(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor kursor = db.query(TABLE2,
-                                 kolumny,
+        Cursor queryResult = db.query(TABLE2,
+                            (String[]) kolumny.values().toArray(),
                        null,
                    null,
                        null,
                          null,
                        null);
-        kursor.moveToFirst();
-        while(kursor.isAfterLast() == false) {
-            for(int i = 0 ; i < kolumny.length; i++){
-                System.out.print(kursor.getString(kursor.getColumnIndex(kolumny[i])) + "\n");
+        queryResult.moveToFirst();
+        while(queryResult.isAfterLast() == false) {
+            for (String column : kolumny.keySet()) {
+                System.out.print(queryResult.getString(queryResult.getColumnIndex(column)) + "\n");
             }
-            kursor.moveToNext();
+            queryResult.moveToNext();
         }
     }
 
@@ -182,14 +189,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ToDo> getToDoes(MyDate date){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
-        ArrayList<ToDo> listOfTodos =  getToDoListFromCursor(sqlDB.rawQuery( "SELECT * " +
+        ArrayList<ToDo> listOfTodoes =  getToDoListFromCursor(sqlDB.rawQuery( "SELECT * " +
                                                                                   "FROM " + TABLE2 + " " +
                                                                                   "WHERE day = '" + date.getDay() + "' " +
                                                                                         "AND year = '" + date.getYear() +
                                                                                         "'AND month = '" + date.getMonth() +"'",
                                                                     null ));
         sqlDB.close();
-        return listOfTodos;
+        return listOfTodoes;
     }
 
     public ArrayList<ToDo> getEventsWithName(String name){
@@ -225,7 +232,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return todoList;
     }
 
-    public int[] getDoneEventsStsts(MyDate date){
+    public int[] getDoneEventsStatistics(MyDate date){
         int done = 0;
         int all = 0;
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -247,8 +254,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         res.moveToFirst();
         done = Integer.parseInt(res.getString(res.getColumnIndex("done")));
 
-        int[] progresInDaylyTasks = {all - done, done};
-        return progresInDaylyTasks;
+        return new int[]{all - done, done};
     }
 
 }

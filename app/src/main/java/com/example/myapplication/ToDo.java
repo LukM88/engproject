@@ -120,7 +120,7 @@ public class ToDo {
     }
 
     public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+        this.imgPath = imgPath == null ? new String() : imgPath;
     }
 
     public void setNotification(String notification){

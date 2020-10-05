@@ -42,6 +42,9 @@ import com.example.myapplication.ui.calender.CalenderFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static androidx.core.content.ContextCompat.getSystemService;
 
 public class AddEventFragment extends Fragment {
@@ -133,7 +136,21 @@ public class AddEventFragment extends Fragment {
                     }else{
                         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
                         if(!nameText.getText().toString().isEmpty() && nameText.getText().toString().length()!=1) {
-                            String[] data = {nameText.getText().toString(), descriptionText.getText().toString(), HH.getText().toString(), MM.getText().toString(), priority.getSelectedItem().toString(),"", selectedDay[0], selectedMonth[0], selectedYear[0], MainActivity.login,picturePath,notification.getSelectedItem().toString()};
+                            Map<String, String> data = new HashMap<String, String>(){{
+                                put("name", nameText.getText().toString());
+                                put("description", descriptionText.getText().toString());
+                                put("HH", HH.getText().toString());
+                                put("MM", MM.getText().toString());
+                                put("priority", priority.getSelectedItem().toString());
+                                put("state", "");
+                                put("day", selectedDay[0]);
+                                put("month", selectedMonth[0]);
+                                put("year", selectedYear[0]);
+                                put("owner", MainActivity.login);
+                                put("picturePath", picturePath);
+                                put("notification", notification.getSelectedItem().toString());
+                            }};
+
 
                             try {
                                 dbHelper.addEvent(data);

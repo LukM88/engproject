@@ -45,7 +45,7 @@ public class StatisticsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_statistics2, container, false);
         final TextView textView = root.findViewById(R.id.textView);
         DatabaseHelper db = new DatabaseHelper(getContext());
-        wykonaneValues=db.getDoneEventsStsts(new MyDate());
+        wykonaneValues=db.getDoneEventsStatistics(new MyDate());
         mViewModel.getText().observe(getViewLifecycleOwner(),new Observer<String>(){
 
             @Override

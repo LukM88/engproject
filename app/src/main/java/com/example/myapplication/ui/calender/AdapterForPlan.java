@@ -20,7 +20,7 @@ import com.example.myapplication.MyDate;
 import java.util.ArrayList;
 
 public class AdapterForPlan extends BaseAdapter {
-    ArrayList<ToDo> names=new ArrayList<ToDo>();
+    ArrayList<ToDo> names = new ArrayList<ToDo>();
     Context context;
     LayoutInflater inflter;
     String value;
@@ -63,8 +63,6 @@ public class AdapterForPlan extends BaseAdapter {
         } else {
             simpleCheckedTextView.setChecked(false);
         }
-
-// perform on Click Event Listener on CheckedTextView
         simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +70,6 @@ public class AdapterForPlan extends BaseAdapter {
                 dbHelper= new DatabaseHelper(context);
 
                 if (names.get(position).getState()) {
-// set cheek mark drawable and set checked property to false
                     value = "un-Checked";
                     dbHelper.updateTodoStatus(names.get(position));
                     names.get(position).setState(false);
@@ -80,7 +77,6 @@ public class AdapterForPlan extends BaseAdapter {
                     simpleCheckedTextView.setChecked(false);
                 } else {
                     dbHelper.updateTodoStatus(names.get(position));
-// set cheek mark drawable and set checked property to true
 
                     value = "Checked";
                     simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);

@@ -58,9 +58,9 @@ public class PlanForDay extends Fragment {
 
                 String selectedDate = date.getDate();
                 Bundle bundle = new Bundle();
-                bundle.putString("day",date.getDay());
-                bundle.putString("month",date.getMonth());
-                bundle.putString("year",date.getYear());
+                bundle.putString("day", date.getDay());
+                bundle.putString("month", date.getMonth());
+                bundle.putString("year", date.getYear());
                 Navigation.findNavController(root).navigate(R.id.addPlanForDay,bundle);
             }
         });

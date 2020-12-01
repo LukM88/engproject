@@ -35,7 +35,7 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_details, container, false);
-        id= getArguments().getInt("id");
+        id = getArguments().getInt("id");
         DatabaseHelper db = new DatabaseHelper(getContext());
         event = db.getEvent(id);
         db.close();

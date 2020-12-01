@@ -12,7 +12,6 @@ public class ToDo {
     private String day;
     private String month;
     private String year;
-    private String owner;
     private Boolean state;
     private String imgPath;
     private String notification;
@@ -100,13 +99,6 @@ public class ToDo {
         return getHH()+":"+getMM();
     }
 
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 
     public String getID() {
         return this.ID;

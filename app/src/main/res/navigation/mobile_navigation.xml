@@ -12,27 +12,11 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
-        <action
             android:id="@+id/action_nav_home_to_nav_slideshow"
             app:destination="@id/navAddEvent" />
         <action
             android:id="@+id/detailsFromHome"
             app:destination="@id/detailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.example.myapplication.ui.home.HomeSecondFragment"
-        android:label="@string/chartName"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
     </fragment>
 
     <fragment
@@ -107,4 +91,9 @@
         android:name="com.example.myapplication.MainActivity"
         android:label="app_bar_main"
         tools:layout="@layout/app_bar_main" />
+    <fragment
+        android:id="@+id/planForWeek"
+        android:name="com.example.myapplication.ui.planForWeek.PlanForWeek"
+        android:label="fragment_plan_for_week"
+        tools:layout="@layout/fragment_plan_for_week" />
 </navigation>

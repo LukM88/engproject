@@ -56,7 +56,7 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(final int position, View view, ViewGroup parent) {
         view = inflter.inflate(R.layout.list_items, null);
         final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
-        names = orderTodoes(names);
+        names = dbHelper.orderTodoes(names);
         simpleCheckedTextView.setText(names.get(position).getName());
 
         if (names.get(position).getState()) {
@@ -116,97 +116,5 @@ public class CustomAdapter extends BaseAdapter {
         return view;
     }
 
-    private ArrayList<ToDo> orderTodoes(ArrayList<ToDo> data){
-        ArrayList<ToDo> high = new ArrayList<ToDo>();
-        ArrayList<ToDo> medium = new ArrayList<ToDo>();
-        ArrayList<ToDo> low = new ArrayList<ToDo>();
-        for (ToDo todo : data) {
-            boolean added = false;
-            switch(todo.getPriority()){
-                case "high":
-                    if(high.isEmpty()){
-                        high.add(todo);
-                    } else{
-                        for(int j = 0; j < high.size(); j++){
-                            if(high.get(j).getHH().equals(todo.getHH())){
-                                if(Integer.parseInt(high.get(j).getMM()) > Integer.parseInt(todo.getMM())){
-                                    high.add(j, todo);
-                                    added = true;
-                                    break;
-                                }
-                            } else{
-                                if(Integer.parseInt(high.get(j).getHH()) > Integer.parseInt(todo.getHH())){
-                                    high.add(j, todo);
-                                    added = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if(!added){
-                            high.add(todo);
-                        }
-                    }
-                    break;
-                case "medium":
-                    if(medium.isEmpty()){
-                        medium.add(todo);
-                    } else{
-                        for(int j = 0; j < medium.size(); j++){
-                            if(medium.get(j).getHH().equals(todo.getHH())){
-                                if(Integer.parseInt(medium.get(j).getMM()) > Integer.parseInt(todo.getMM())){
-                                    medium.add(j, todo);
-                                    added = true;
-                                    break;
-                                }
-                            } else{
-                                if(Integer.parseInt(medium.get(j).getHH()) > Integer.parseInt(todo.getHH())){
-                                    medium.add(j, todo);
-                                    added = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if(!added){
-                            medium.add(todo);
-                        }
-                    }
-                    break;
-                default:
-                    if(low.isEmpty()){
-                        low.add(todo);
-                    } else{
-                        for(int j = 0; j < low.size(); j++){
-                            if(low.get(j).getHH().equals(todo.getHH())){
-                                if(Integer.parseInt(low.get(j).getMM()) > Integer.parseInt(todo.getMM())){
-                                    low.add(j, todo);
-                                    added = true;
-                                    break;
-                                }
-                            } else{
-                                if(Integer.parseInt(low.get(j).getHH()) > Integer.parseInt(todo.getHH())){
-                                    low.add(j, todo);
-                                    added = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if(!added){
-                            low.add(todo);
-                        }
-                    }
-            }
-        }
-        for (int i = 0; i < data.size(); i++){
-            if(i < high.size()){
-                data.set(i, high.get(i));
-            }
-            if(i >= high.size() && i-high.size() < medium.size()){
-                data.set(i , medium.get(i - high.size()));
-            }
-            if(i >= high.size() + medium.size()){
-                data.set(i, low.get(i - (high.size() + medium.size())));
-            }
-        }
-        return data;
-    }
+
 }

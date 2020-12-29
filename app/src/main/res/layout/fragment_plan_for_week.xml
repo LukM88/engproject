@@ -6,20 +6,9 @@
     android:orientation="vertical"
     tools:context=".ui.planForWeek.PlanForWeek">
 
-    <ScrollView
+    <com.anychart.AnyChartView
+        android:id="@+id/plan"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent" />
 
 </FrameLayout>

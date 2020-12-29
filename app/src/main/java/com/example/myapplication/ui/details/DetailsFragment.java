@@ -28,6 +28,7 @@ public class DetailsFragment extends Fragment {
     TextView time;
     TextView priority;
     TextView notification;
+    TextView durationOutput;
     ImageView img;
 
     @Override
@@ -46,11 +47,13 @@ public class DetailsFragment extends Fragment {
         priority = root.findViewById(R.id.priorityText);
         notification = root.findViewById(R.id.notificationText);
         img = root.findViewById(R.id.imageView2);
+        durationOutput = root.findViewById(R.id.durationOutput);
 
         name.setText(event.getName());
         description.setText(event.getDescription());
         date.setText(event.getDate());
         time.setText(event.getTime());
+        durationOutput.setText(event.getDurationInMinutes() + " min");
         priority.setText(event.getPriority());
         notification.setText(event.getNotification());
         //Ciężka operacja

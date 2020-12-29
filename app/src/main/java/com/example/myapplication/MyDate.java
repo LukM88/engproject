@@ -9,7 +9,7 @@ public class MyDate {
     private String month;
     private String year;
     private String date;
-    private String format = "dd/mm/yyyy";
+    private String format = "yyyy-mm-dd";
 
 
 
@@ -73,7 +73,7 @@ public class MyDate {
         if(!format.contains("M")
                 || !format.contains("Y")
                 || !format.contains("D")){
-            format = "dd/mm/yyyy";
+            format = "yyyy-mm-dd";
             setDateFormatAsPrefered();
         }
         if (format.indexOf("Y") > format.indexOf("M")){
@@ -137,7 +137,7 @@ public class MyDate {
                     date = day + separator + year + separator + month;
                 }
             } else{
-                separator = "/";
+                separator = "-";
                 date = day + separator + month + separator + year;
             }
 

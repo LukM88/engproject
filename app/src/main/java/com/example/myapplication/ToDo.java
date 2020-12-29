@@ -15,6 +15,7 @@ public class ToDo {
     private Boolean state;
     private String imgPath;
     private String notification;
+    private String durationInMinutes;
     ToDo(Date date){
         this.name="ToDo";
         this.description="description";
@@ -113,6 +114,13 @@ public class ToDo {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath == null ? new String() : imgPath;
+    }
+    public String getDurationInMinutes() {
+        return durationInMinutes;
+    }
+
+    public void setDurationInMinutes(String duration) {
+        this.durationInMinutes = duration;
     }
 
     public void setNotification(String notification){

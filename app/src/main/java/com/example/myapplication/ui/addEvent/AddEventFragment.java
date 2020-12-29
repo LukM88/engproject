@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,37 +34,36 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.myapplication.DatabaseHelper;
-import com.example.myapplication.MainActivity;
-import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class AddEventFragment extends Fragment {
 
 
-    private int RESULT_LOAD_IMAGE = 1;
+    private final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageView;
     private Button addButton;
     private Button cancelButt;
-    private EditText nameText;
-    private EditText descriptionText;
-    private TextView dateView;
-    private TextView timeView;
+    private Spinner category;
     private ImageButton dateButt;
-    private ImageButton timeButt;
     private DatePickerDialog datePicker;
-    private TimePickerDialog timePicker;
+    private TextView dateView;
+    private EditText descriptionText;
+    private EditText durationText;
+    private EditText nameText;
     private Spinner notification;
-    private Spinner priority;
     private String picturePath = "";
+    private Spinner priority;
     private Map<String, Integer> selectedDate = new HashMap<String, Integer>();
+    private ImageButton timeButt;
+    private TimePickerDialog timePicker;
+    private TextView timeView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +74,7 @@ public class AddEventFragment extends Fragment {
         nameText = root.findViewById(R.id.eventNameText);
         imageView = root.findViewById(R.id.imageView);
         descriptionText = root.findViewById(R.id.descriptionText);
+        durationText = root.findViewById(R.id.durationValue);
         dateButt = root.findViewById(R.id.datePickButt);
         dateButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,13 +138,13 @@ public class AddEventFragment extends Fragment {
         if(getArguments().getString("day") != null){
             dateView.setText(selectedDate.get("day") + "/" + selectedDate.get("month") + "/" + selectedDate.get("year"));
         } else{
-            dateView.setText("dd/mm/yyyy");
+            dateView.setText("yyyy-mm-dd");
             timeView.setText("hh:mm");
         }
 
         priority = root.findViewById(R.id.prioritySpinner);
         notification = root.findViewById(R.id.notificationSpinner);
-
+        category = root.findViewById(R.id.categorySpinber);
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.priority_array, android.R.layout.simple_spinner_item);
@@ -155,6 +153,11 @@ public class AddEventFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(), R.array.notification_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         notification.setAdapter(adapter2);
+        List<String> categories =new DatabaseHelper(getContext()).getCategories();
+        categories.add(0, "None");
+        ArrayAdapter<String> adapter3 = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, categories);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setAdapter(adapter3);
 
         imgButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,43 +176,44 @@ public class AddEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    System.out.println(selectedDate.values());
-                        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-                        if(!nameText.getText().toString().isEmpty() 
-                                && nameText.getText().toString().length()!=1 
-                                && !selectedDate.isEmpty()) {
-                            Map<String, String> data = new HashMap<String, String>(){{
-                                put("name", nameText.getText().toString());
-                                put("description", descriptionText.getText().toString());
-                                put("HH", selectedDate.get("hour").toString());
-                                if (selectedDate.get("minute")<10){
-                                    put("MM", 0 + selectedDate.get("minute").toString());
-                                } else{
-                                    put("MM", selectedDate.get("minute").toString());
-                                }
-                                put("priority", priority.getSelectedItem().toString());
-                                put("state", "");
+                    DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+                    if(!nameText.getText().toString().isEmpty()
+                            && nameText.getText().toString().length()!=1
+                            && !selectedDate.isEmpty()
+                            && selectedDate.keySet().contains("hour")) {
+                        Map<String, String> data = new HashMap<String, String>(){{
+                            put("name", nameText.getText().toString());
+                            put("description", descriptionText.getText().toString());
+                            put("HH", selectedDate.get("hour").toString());
+                            if (selectedDate.get("minute")<10 && selectedDate.get("minute") != 0){
+                                put("MM", 0 + selectedDate.get("minute").toString());
+                            } else{
+                                put("MM", selectedDate.get("minute").toString());
+                            }
+                            put("duration", durationText.getText().toString());
+                            put("priority", priority.getSelectedItem().toString());
+                            put("state", "");
 
-                                if (selectedDate.get("day")<10){
-                                    put("day", 0 + selectedDate.get("day").toString());
-                                } else{
-                                    put("day", selectedDate.get("day").toString());
-                                }
+                            if (selectedDate.get("day") < 10){
+                                put("day", 0 + selectedDate.get("day").toString());
+                            } else{
+                                put("day", selectedDate.get("day").toString());
+                            }
 
-                                if (selectedDate.get("month")<10){
-                                    put("month", 0 + selectedDate.get("month").toString());
-                                } else{
-                                    put("month", selectedDate.get("month").toString());
-                                }
+                            if (selectedDate.get("month")<10){
+                                put("month", 0 + selectedDate.get("month").toString());
+                            } else{
+                                put("month", selectedDate.get("month").toString());
+                            }
 
-                                put("year", selectedDate.get("year").toString());
-                                put("imgPath", picturePath);
-                                put("notification", notification.getSelectedItem().toString());
+                            put("year", selectedDate.get("year").toString());
+                            put("imgPath", picturePath);
+                            put("notification", notification.getSelectedItem().toString());
+                            put("category", category.getSelectedItem().toString());
                             }};
-                            System.out.println(data);
-
+                        if(data.get("duration").isEmpty()) data.put("duration", "00");
                             try {
-                                dbHelper.addEvent(data);
+                                dbHelper.insertEvent(data);
                                 dbHelper.showEvents();
                             }catch (Exception e){
                                 Toast.makeText(getContext(),"Invalid data type!",Toast.LENGTH_LONG).show();
@@ -223,11 +227,11 @@ public class AddEventFragment extends Fragment {
 
                             }
                         }else{
-                            Toast.makeText(getContext(),"Event have to have name!!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(),"Required data is missing!!",Toast.LENGTH_LONG).show();
                         }
 
                 }catch (NumberFormatException e){
-                    Toast.makeText(getContext(),"Wrong time format",Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(),"An error during insertion ",Toast.LENGTH_SHORT);
                     e.printStackTrace();
                 }
 
@@ -235,21 +239,6 @@ public class AddEventFragment extends Fragment {
 
             }
         });
-//        calendar=root.findViewById(R.id.calendarViewAdd);
-//        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//            @Override
-//            public void onSelectedDayChange(@NonNull CalendarView calendarView,int year, int month, int dayOfMonth) {
-//                MyDate date = new MyDate();
-//                date.setDay(String.valueOf(dayOfMonth));
-//                date.setMonth( String.valueOf(month + 1));
-//                date.setYear(String.valueOf(year));
-//
-//                selectedDay[0]=date.getDay();
-//                selectedMonth[0]=date.getMonth();
-//                selectedYear[0]=date.getYear();
-//                Snackbar.make(root,"Zmieniono datę na "+date.getDate(), BaseTransientBottomBar.LENGTH_SHORT).show();
-//            }
-//        });
         cancelButt = root.findViewById(R.id.cancelButton);
         cancelButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,10 +248,6 @@ public class AddEventFragment extends Fragment {
                 navController.navigate(R.id.action_nav_toHome);
             }
         });
-
-
-
-
         return root;
     }
     @Override
@@ -308,21 +293,6 @@ public class AddEventFragment extends Fragment {
                 }
             }
             imageView.setImageBitmap(bitmap2);
-
-            /*if(bitmap.getHeight()<4000||bitmap.getWidth()<4000){
-                if(bitmap.getHeight()<4000 && bitmap.getWidth()<4000){
-                    bitmap2 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                }else if(bitmap.getWidth()<4000){
-                    bitmap2 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),4000,null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                }
-                else{
-                    bitmap2 = Bitmap.createBitmap(bitmap,0,0,4000,bitmap.getHeight(),null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                }
-            }
-            else{
-                bitmap2 = Bitmap.createBitmap(bitmap,0,0,4000,4000,null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-
-            }*/
         }
     }
 

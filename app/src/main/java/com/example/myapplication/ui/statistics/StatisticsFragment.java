@@ -29,7 +29,7 @@ import java.util.List;
 public class StatisticsFragment extends Fragment {
     private AnyChartView chart;
     private String[] groups = {"Nie Wykonane","Wykonane"};
-    private int[] wykonaneValues;
+    private int[] complited;
 
     private StatisticsViewModel mViewModel;
 
@@ -45,7 +45,7 @@ public class StatisticsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_statistics2, container, false);
         final TextView textView = root.findViewById(R.id.textView);
         DatabaseHelper db = new DatabaseHelper(getContext());
-        wykonaneValues=db.getDoneEventsStatistics(new MyDate());
+        complited = db.getDoneEventsStatistics(new MyDate());
         mViewModel.getText().observe(getViewLifecycleOwner(),new Observer<String>(){
 
             @Override
@@ -59,11 +59,10 @@ public class StatisticsFragment extends Fragment {
     }
 
     private void sertupChart() {
-        //TODO zrób dane pobierane z bazy
         Pie pie = AnyChart.pie();
         List<DataEntry> dataEntries = new ArrayList<DataEntry>();
         for(int i = 0; i<groups.length; i++) {
-            dataEntries.add(new ValueDataEntry(groups[i], wykonaneValues[i]));
+            dataEntries.add(new ValueDataEntry(groups[i], complited[i]));
         }
 
         pie.data(dataEntries);

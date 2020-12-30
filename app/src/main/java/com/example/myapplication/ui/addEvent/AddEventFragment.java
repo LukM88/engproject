@@ -76,6 +76,7 @@ public class AddEventFragment extends Fragment {
         descriptionText = root.findViewById(R.id.descriptionText);
         durationText = root.findViewById(R.id.durationValue);
         dateButt = root.findViewById(R.id.datePickButt);
+
         dateButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +134,6 @@ public class AddEventFragment extends Fragment {
             selectedDate.put("day", Integer.parseInt(getArguments().getString("day")));
             selectedDate.put("month", Integer.parseInt(getArguments().getString("month")));
             selectedDate.put("year", Integer.parseInt(getArguments().getString("year")));
-            System.out.println(selectedDate.values());
         }
         if(getArguments().getString("day") != null){
             dateView.setText(selectedDate.get("day") + "/" + selectedDate.get("month") + "/" + selectedDate.get("year"));
@@ -185,7 +185,7 @@ public class AddEventFragment extends Fragment {
                             put("name", nameText.getText().toString());
                             put("description", descriptionText.getText().toString());
                             put("HH", selectedDate.get("hour").toString());
-                            if (selectedDate.get("minute")<10 && selectedDate.get("minute") != 0){
+                            if (selectedDate.get("minute")<10){
                                 put("MM", 0 + selectedDate.get("minute").toString());
                             } else{
                                 put("MM", selectedDate.get("minute").toString());

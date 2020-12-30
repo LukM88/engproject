@@ -9,18 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
-
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.HeatDataEntry;
-import com.anychart.charts.HeatMap;
 import com.anychart.charts.Resource;
 import com.anychart.enums.AvailabilityPeriod;
-import com.anychart.enums.SelectionMode;
 import com.anychart.enums.TimeTrackingMode;
-import com.anychart.graphics.vector.SolidFill;
 import com.anychart.scales.calendar.Availability;
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.MyDate;
@@ -28,7 +22,10 @@ import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class PlanForWeek extends Fragment {
 
@@ -67,7 +64,6 @@ public class PlanForWeek extends Fragment {
         resource.zoomLevel(1d)
                 .timeTrackingMode(TimeTrackingMode.ACTIVITY_PER_CHART)
                 .currentStartDate(new MyDate().getDate());
-        System.out.println(new MyDate().getDate());
 
         resource.resourceListWidth(120);
 
@@ -78,21 +74,65 @@ public class PlanForWeek extends Fragment {
                 new Availability(AvailabilityPeriod.WEEK, (Double) null, (Double) null, false, 6d, (Double) null, 18d)
         });
         DatabaseHelper db = new DatabaseHelper(getContext());
-        ArrayList<ToDo> ToDoes = db.getToDoes(new MyDate());
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ResourceDataEntry(
-                                "8:00",
-                new Activity[]{
-                        new Activity(
-                                "name",
-                                new Interval[]{
-                                        new Interval(new MyDate().getDate(), new MyDate().getDate(), 60)
-                                                },
-                                "#62BEC1")
-
-                                }));
 
 
+        List<ToDo> toDos = db.getToDoesForWeek(new MyDate());
+        Map<Integer, List<ToDo>> todoHourMap = new HashMap<Integer, List<ToDo>>();
+        for(ToDo todo : toDos){
+            Integer hour = Integer.parseInt(todo.getHH());
+            if(todoHourMap.keySet().contains(hour)){
+                for(int i = 0; i < todoHourMap.get(hour).size(); i++){
+                    if(Integer.parseInt(todoHourMap.get(hour).get(i).getMM()) > Integer.parseInt(todo.getMM())){
+                        todoHourMap.get(hour).add(i, todo);
+                    }
+                }
+                if(!todoHourMap.get(hour).contains(todo)){
+                    todoHourMap.get(hour).add(todo);
+                }
+            } else{
+                todoHourMap.put(hour, new ArrayList<ToDo>());
+                todoHourMap.get(hour).add(todo);
+            }
+        }
+        for(int i = 0; i < 24; i++){
+            Activity[] activities;
+            if(todoHourMap.keySet().contains(i)){
+                activities = new Activity[todoHourMap.get(i).size()];
+            } else {
+                activities = new Activity[]{};
+            }
+
+            int j = 0;
+            if(todoHourMap.keySet().contains(i)){
+                for (ToDo todo : todoHourMap.get(i)){
+                    activities[j] = new Activity(todo.getName() + " " + todo.getTime(),
+                            new Interval[]{new Interval(todo.getDate(),
+                                    todo.getDate(),
+                                    Integer.parseInt(todo.getDurationInMinutes()))},
+                            db.getColorForCategory(todo.getID()));
+                    j++;
+                }
+            }
+            db.close();
+            data.add(new ResourceDataEntry(
+                    i+":00",
+                    activities));
+        }
+
+        //TODO wykorzystać interwały do zdarzeń cyklicznych
+
+
+//                new Activity[]{
+//                        new Activity(
+//                                "name",
+////                                new Interval[]{
+////                                        new Interval(new MyDate().getDate(), new MyDate().getDate(), 60),
+////                                        new Interval(new MyDate().getDate(), new MyDate().getDate(), 60)
+////                                                }TODO,
+//                                "#62BEC1")
+//
+//                                }));
 
         resource.data(data);
 

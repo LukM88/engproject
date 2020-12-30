@@ -43,7 +43,7 @@ public class MyDate {
                 } else{
                     this.day = day;
                 }
-                setDateFormatAsPrefered();
+                setDate();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class MyDate {
                     this.month = 0 + month;
                 }else{
                     this.month = month;
-                    setDateFormatAsPrefered();
+                    setDate();
                 }
             }
         }catch (Exception e){
@@ -66,7 +66,7 @@ public class MyDate {
 
     }
 
-    private void setDateFormatAsPrefered() {
+    private void setDate() {
         String date;
         String separator;
         format = format.toUpperCase();
@@ -74,7 +74,7 @@ public class MyDate {
                 || !format.contains("Y")
                 || !format.contains("D")){
             format = "yyyy-mm-dd";
-            setDateFormatAsPrefered();
+            setDate();
         }
         if (format.indexOf("Y") > format.indexOf("M")){
             separator = format.substring(format.indexOf("Y") - 1, format.indexOf("Y"));
@@ -102,13 +102,13 @@ public class MyDate {
         try {
             Integer.parseInt(year);
             this.year=year;
-            setDateFormatAsPrefered();
+            setDate();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void setDateFormatAsPrefered(String day, String month, String year) {
+    public void setDate(String day, String month, String year) {
         setDay(day);
         setMonth(month);
         setYear(year);
@@ -168,7 +168,7 @@ public class MyDate {
 
     public void setFormat(String format) {
         this.format = format;
-        setDateFormatAsPrefered(this.day,this.month,this.year);
+        setDate(this.day,this.month,this.year);
     }
 
 

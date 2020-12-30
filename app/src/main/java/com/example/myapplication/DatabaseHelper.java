@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final Map<String, String> CATEGORIES_COLUMNS = new HashMap<String, String>() {{
         put("ID", "ID");
         put("name", "name");
+        put("color", "color");
     }};
 
     private static final String EVENT_CATEGORIES = "event_categories";
@@ -45,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         put("notification", "notification");
     }};
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
@@ -53,15 +55,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " +
                 CATEGORIES_TABLE_NAME + "("
                     + CATEGORIES_COLUMNS.get("ID") + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + CATEGORIES_COLUMNS.get("name") +" TEXT)");
+                    + CATEGORIES_COLUMNS.get("name") + " TEXT, "
+                    + CATEGORIES_COLUMNS.get("color") + " TEXT)");
         ContentValues values = new ContentValues();
         values.put(CATEGORIES_COLUMNS.get("name"), "praca");
-        db.insert(CATEGORIES_TABLE_NAME, null, values);
-        values.put(CATEGORIES_COLUMNS.get("name"), "sen");
+        values.put(CATEGORIES_COLUMNS.get("color"), "#62BEC1");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
         values.put(CATEGORIES_COLUMNS.get("name"), "relaks");
+        values.put(CATEGORIES_COLUMNS.get("color"), "#843CA9");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
         values.put(CATEGORIES_COLUMNS.get("name"), "sport");
+        values.put(CATEGORIES_COLUMNS.get("color"), "#110000");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
         db.execSQL("CREATE TABLE " +
                 EVENTS_TABLE + "("
@@ -200,6 +204,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                                                     null ));
         sqlDB.close();
         return listOfTodoes;
+    }
+    public List<ToDo> getToDoesForWeek(MyDate date){
+        List<ToDo> todoes = new ArrayList<ToDo>();
+        for(int i = 0; i < 7; i++){
+            Calendar d = Calendar.getInstance();
+            if(i > 0){
+                d.set(Integer.parseInt(date.getYear()),
+                        Integer.parseInt(date.getMonth())-1,
+                        Integer.parseInt(date.getDay())+1);
+            } else{
+                d.set(Integer.parseInt(date.getYear()),
+                        Integer.parseInt(date.getMonth())-1,
+                        Integer.parseInt(date.getDay()));
+            }
+            date.setDate(Integer.toString(d.get(Calendar.DAY_OF_MONTH)),
+                                         Integer.toString(d.get(Calendar.MONTH)+1),
+                                         Integer.toString(d.get(Calendar.YEAR)));
+            for(ToDo todo : getToDoes(date)){
+                todoes.add(todo);
+            }
+            System.out.println(date.getDate());
+        }
+
+        return todoes;
     }
 
     public ArrayList<ToDo> getEventsWithName(String name){
@@ -364,5 +392,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             res.moveToNext();
         }
         return categories;
+    }
+    public String getColorForCategory(String id){
+        SQLiteDatabase sqlDB = this.getReadableDatabase();
+        Cursor res = sqlDB.rawQuery( "SELECT color " +
+                        "FROM " + CATEGORIES_TABLE_NAME +
+                        " WHERE id = (SELECT categoryID FROM " + EVENT_CATEGORIES + " WHERE eventID = " + id + ");",
+                null );
+        String color = null;
+        res.moveToFirst();
+        while(res.isAfterLast() == false) {
+            color = res.getString(res.getColumnIndex("color"));
+            res.moveToNext();
+        }
+        sqlDB.close();
+        if(color == null){
+            color = "#000000";
+        }
+        return color;
     }
 }

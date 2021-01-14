@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 
+import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -39,7 +40,11 @@ public class HomeFragment extends Fragment {
         floatingButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(root).navigate(R.id.action_nav_home_to_nav_slideshow);
+                Bundle bundle = new Bundle();
+                bundle.putString("day", new MyDate().getDay());
+                bundle.putString("month", new MyDate().getMonth());
+                bundle.putString("year", new MyDate().getYear());
+                Navigation.findNavController(root).navigate(R.id.action_nav_home_to_nav_slideshow, bundle);
             }
         });
 

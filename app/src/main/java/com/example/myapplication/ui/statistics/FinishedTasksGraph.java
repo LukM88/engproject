@@ -1,9 +1,5 @@
 package com.example.myapplication.ui.statistics;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,40 +22,31 @@ import com.example.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatisticsFragment extends Fragment {
+public class FinishedTasksGraph extends Fragment {
     private AnyChartView chart;
-    private String[] groups = {"Nie Wykonane","Wykonane"};
+    private String[] groups = {"Not Done","Done"};
     private int[] complited;
 
-    private StatisticsViewModel mViewModel;
-
-    public static StatisticsFragment newInstance() {
-       return new StatisticsFragment();
+    public static FinishedTasksGraph newInstance() {
+       return new FinishedTasksGraph();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mViewModel = ViewModelProviders.of(this).get(StatisticsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_statistics2, container, false);
+        View root = inflater.inflate(R.layout.fragment_done_tasks, container, false);
         final TextView textView = root.findViewById(R.id.textView);
         DatabaseHelper db = new DatabaseHelper(getContext());
         complited = db.getDoneEventsStatistics(new MyDate());
-        mViewModel.getText().observe(getViewLifecycleOwner(),new Observer<String>(){
-
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         chart = root.findViewById(R.id.wykres);
-        sertupChart();
+        setupChart();
         return root;
     }
 
-    private void sertupChart() {
+    private void setupChart() {
         Pie pie = AnyChart.pie();
+        pie.title("Done tasks for taday");
         List<DataEntry> dataEntries = new ArrayList<DataEntry>();
         for(int i = 0; i<groups.length; i++) {
             dataEntries.add(new ValueDataEntry(groups[i], complited[i]));

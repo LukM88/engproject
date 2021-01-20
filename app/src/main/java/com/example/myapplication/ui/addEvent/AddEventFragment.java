@@ -153,7 +153,7 @@ public class AddEventFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(), R.array.notification_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         notification.setAdapter(adapter2);
-        List<String> categories =new DatabaseHelper(getContext()).getCategories();
+        List<String> categories =new DatabaseHelper(getContext()).getCategoriesNames();
         categories.add(0, "None");
         ArrayAdapter<String> adapter3 = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, categories);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -163,7 +163,6 @@ public class AddEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 imageView.setImageBitmap(null);
-                //imageView.setImageResource(R.drawable.check);
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
                 Intent i = new Intent(
                         Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.details.DetailsFragment" >
 
-    <!-- TODO: Zrób layout detali -->
-
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout2"
         android:layout_width="208dp"

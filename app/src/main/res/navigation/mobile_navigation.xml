@@ -78,9 +78,9 @@
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.myapplication.ui.statistics.StatisticsFragment"
+        android:name="com.example.myapplication.ui.statistics.FinishedTasksGraph"
         android:label="@string/menu_statistics"
-        tools:layout="@layout/fragment_statistics2" />
+        tools:layout="@layout/fragment_done_tasks" />
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.myapplication.ui.details.DetailsFragment"
@@ -94,6 +94,23 @@
     <fragment
         android:id="@+id/planForWeek"
         android:name="com.example.myapplication.ui.planForWeek.PlanForWeek"
-        android:label="fragment_plan_for_week"
+        android:label="Plan for this week"
         tools:layout="@layout/fragment_plan_for_week" />
+    <fragment
+        android:id="@+id/statisticsSelector"
+        android:name="com.example.myapplication.ui.statistics.StatisticsSelector"
+        android:label="@string/menu_statistics"
+        tools:layout="@layout/fragment_statistics_selector" >
+        <action
+            android:id="@+id/action_statisticsSelector_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_statisticsSelector_to_freeTimeChart"
+            app:destination="@id/freeTimeChart" />
+    </fragment>
+    <fragment
+        android:id="@+id/freeTimeChart"
+        android:name="com.example.myapplication.ui.statistics.FreeTimeChart"
+        android:label="@string/freeTimePerDayChartTitle"
+        tools:layout="@layout/fragment_free_time_chart" />
 </navigation>

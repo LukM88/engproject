@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import com.example.myapplication.ui.calender.CalenderFragment;
+
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -170,6 +173,36 @@ public class MyDate {
         this.format = format;
         setDate(this.day,this.month,this.year);
     }
-
-
+    private Calendar getCurrentDate(){
+        return Calendar.getInstance();
+    }
+    public MyDate getLastWeekDayDate(String dayOfWeek) {
+        Calendar date = Calendar.getInstance();
+        switch(dayOfWeek){
+            case "mo":
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.MONDAY);
+                break;
+            case "tu":
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.TUESDAY);
+                break;
+            case "we":
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.WEDNESDAY);
+                break;
+            case "th":
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.THURSDAY);
+                break;
+            case "fr":
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.FRIDAY);
+                break;
+            case "sa":
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.SATURDAY);
+                break;
+            case "su":
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + 8);
+                break;
+        }
+        MyDate mydate = new MyDate();
+        mydate.setDate(Integer.toString(date.get(Calendar.DATE)), Integer.toString(date.get(Calendar.MONTH)), Integer.toString(date.get(Calendar.YEAR)));
+        return mydate;
+    }
 }

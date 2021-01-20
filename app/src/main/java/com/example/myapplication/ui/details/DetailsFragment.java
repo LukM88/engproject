@@ -65,7 +65,7 @@ public class DetailsFragment extends Fragment {
                 bitmap2 = Bitmap.createScaledBitmap(bitmap, 4000, 4000, false);
 
             } catch (OutOfMemoryError e) {
-                Toast.makeText(getContext(), "Nie właściwy plik graficzny", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Invalid graphic file", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
                 if (bitmap.getHeight() < 4000 || bitmap.getWidth() < 4000) {
                     if (bitmap.getHeight() < 4000 && bitmap.getWidth() < 4000) {

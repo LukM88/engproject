@@ -2,9 +2,7 @@ package com.example.myapplication.ui.planForWeek;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class PlanForWeek extends Fragment {
 
@@ -81,7 +78,7 @@ public class PlanForWeek extends Fragment {
         Map<Integer, List<ToDo>> todoHourMap = new HashMap<Integer, List<ToDo>>();
         for(ToDo todo : toDos){
             Integer hour = Integer.parseInt(todo.getHH());
-            if(todoHourMap.keySet().contains(hour)){
+            if(todoHourMap.containsKey(hour)){
                 for(int i = 0; i < todoHourMap.get(hour).size(); i++){
                     if(Integer.parseInt(todoHourMap.get(hour).get(i).getMM()) > Integer.parseInt(todo.getMM())){
                         todoHourMap.get(hour).add(i, todo);
@@ -97,14 +94,14 @@ public class PlanForWeek extends Fragment {
         }
         for(int i = 0; i < 24; i++){
             Activity[] activities;
-            if(todoHourMap.keySet().contains(i)){
+            if(todoHourMap.containsKey(i)){
                 activities = new Activity[todoHourMap.get(i).size()];
             } else {
                 activities = new Activity[]{};
             }
 
             int j = 0;
-            if(todoHourMap.keySet().contains(i)){
+            if(todoHourMap.containsKey(i)){
                 for (ToDo todo : todoHourMap.get(i)){
                     activities[j] = new Activity(todo.getName() + " " + todo.getTime(),
                             new Interval[]{new Interval(todo.getDate(),

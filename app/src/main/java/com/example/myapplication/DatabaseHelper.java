@@ -58,14 +58,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + CATEGORIES_COLUMNS.get("name") + " TEXT, "
                     + CATEGORIES_COLUMNS.get("color") + " TEXT)");
         ContentValues values = new ContentValues();
-        values.put(CATEGORIES_COLUMNS.get("name"), "praca");
+        values.put(CATEGORIES_COLUMNS.get("name"), "work");
         values.put(CATEGORIES_COLUMNS.get("color"), "#62BEC1");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
-        values.put(CATEGORIES_COLUMNS.get("name"), "relaks");
+        values.put(CATEGORIES_COLUMNS.get("name"), "relax");
         values.put(CATEGORIES_COLUMNS.get("color"), "#843CA9");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
         values.put(CATEGORIES_COLUMNS.get("name"), "sport");
-        values.put(CATEGORIES_COLUMNS.get("color"), "#110000");
+        values.put(CATEGORIES_COLUMNS.get("color"), "#8DFC19");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
         db.execSQL("CREATE TABLE " +
                 EVENTS_TABLE + "("
@@ -102,7 +102,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for(String column : COLUMNS.keySet()){
             if (column == "state"){
                 contentValues.put(column, false);
-                ;
             } else{
                 contentValues.put(column, data.get(column));
             }
@@ -111,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(!data.get("category").equals("None")){
             contentValues.clear();
             contentValues.put(EVENT_CATEGORIES_COLUMNS.get("eventID"), res);
-            contentValues.put(EVENT_CATEGORIES_COLUMNS.get("categoryID"), getCategoriesNames().indexOf(data.get("category")));
+            contentValues.put(EVENT_CATEGORIES_COLUMNS.get("categoryID"), getCategoriesNames().indexOf(data.get("category")) + 1);
             res = sqlDB.insert(EVENT_CATEGORIES, null, contentValues);
             showEventCategories();
         }
@@ -407,22 +406,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return categories;
     }
     public String getColorForCategory(String id){
-        SQLiteDatabase sqlDB = this.getReadableDatabase();
-        Cursor res = sqlDB.rawQuery( "SELECT color " +
-                        "FROM " + CATEGORIES_TABLE_NAME +
-                        " WHERE id = (SELECT categoryID FROM " + EVENT_CATEGORIES + " WHERE eventID = " + id + ");",
-                null );
-        String color = null;
-        res.moveToFirst();
-        while(res.isAfterLast() == false) {
-            color = res.getString(res.getColumnIndex("color"));
-            res.moveToNext();
+        Category category = getTodoCategory(id);
+        if(category.getColor() == null){
+            category.setColor("#000000");
         }
-        sqlDB.close();
-        if(color == null){
-            color = "#000000";
-        }
-        return color;
+        return category.getColor();
     }
 
     public List<ToDo>getTodoesWithCategoryForDate(String categoryName, MyDate date){
@@ -449,7 +437,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "                              WHERE ID IN (SELECT " + EVENT_CATEGORIES_COLUMNS.get("categoryID") +
                 "                                                   FROM " + EVENT_CATEGORIES + " " +
                 "                                                   WHERE eventID = " + toDoId + ");", null);
-        //błąd
         if(queryResult.moveToNext()){
             return new Category(queryResult.getInt(queryResult.getColumnIndex("ID")),
                     queryResult.getString(queryResult.getColumnIndex("name")),
@@ -460,20 +447,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
     public Number getCategoryDayleDuration(String categoryName, MyDate date){
-        //TODO FIXUJ TO
         List<ToDo> todoes = getTodoesWithCategoryForDate(categoryName, date);
         float duration = 0;
         if(!todoes.isEmpty()){
             for(ToDo todo : todoes) {
-                System.out.println(todoes.size());
-                System.out.println(categoryName);
-                System.out.println(todo.getDurationInMinutes());
-                System.out.println(Float.parseFloat(todo.getDurationInMinutes())/60);
                 duration += Float.parseFloat(todo.getDurationInMinutes())/60;
-                System.out.println(duration);
             }
         }
-
         return duration;
     }
 }

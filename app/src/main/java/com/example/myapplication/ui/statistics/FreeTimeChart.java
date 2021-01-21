@@ -26,7 +26,9 @@ import com.example.myapplication.Category;
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
+import com.example.myapplication.ToDo;
 
+import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,13 +60,11 @@ private AnyChartView freeTimeChart;
                                                     new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("mo")),
                                                     new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("mo")),
                                                    null,
-                                                   null,
                                                    null));
                 seriesData.add(new CustomDataEntry("Tu", 8,
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("tu")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("tu")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("tu")),
-                        null,
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("We", 8,
@@ -72,13 +72,11 @@ private AnyChartView freeTimeChart;
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("we")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("we")),
                         null,
-                        null,
                         null));
                 seriesData.add(new CustomDataEntry("Th", 8,
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("th")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("th")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("th")),
-                        null,
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("Fr", 8,
@@ -86,13 +84,11 @@ private AnyChartView freeTimeChart;
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("fr")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("fr")),
                         null,
-                        null,
                         null));
                 seriesData.add(new CustomDataEntry("Sa", 8,
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("sa")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("sa")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("sa")),
-                        null,
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("Su", 8,
@@ -100,44 +96,15 @@ private AnyChartView freeTimeChart;
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("su")),
                         new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("su")),
                         null,
-                        null,
                         null));
                 break;
             case 4:
-                seriesData.add(new CustomDataEntry("Mo", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Tu", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("We", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Th", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Fr", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Sa", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Su", 8, null, null, null, null, null, null));
                 break;
             case 5:
-                seriesData.add(new CustomDataEntry("Mo", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Tu", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("We", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Th", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Fr", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Sa", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Su", 8, null, null, null, null, null, null));
                 break;
             case 6:
-                seriesData.add(new CustomDataEntry("Mo", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Tu", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("We", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Th", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Fr", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Sa", 8, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Su", 8, null, null, null, null, null, null));
                 break;
             default:
-                seriesData.add(new CustomDataEntry("Mo", null, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Tu", null, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("We", null, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Th", null, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Fr", null, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Sa", null, null, null, null, null, null, null));
-                seriesData.add(new CustomDataEntry("Su", null, null, null, null, null, null, null));
                 break;
 
         }
@@ -145,6 +112,7 @@ private AnyChartView freeTimeChart;
         Set set = Set.instantiate();
         set.data(seriesData);
         Mapping series1Data = set.mapAs("{ x: 'x', value: 'value' }");
+        Mapping series2Data = set.mapAs("{ x: 'x', value: 'freeTime' }");
         //
 
         int i = 2;
@@ -163,6 +131,12 @@ private AnyChartView freeTimeChart;
         series.fill(new SolidFill("#FFFFFF", 1d));
         series.stroke("1 #f7f3f3");
         series.hovered().stroke("3 #f7f3f3");
+
+        Column3d series2 = column3d.column(series2Data);
+        series2.name("free time");
+        series2.fill(new SolidFill("#00ff00", 1d));
+        series2.stroke("1 #f7f3f3");
+        series2.hovered().stroke("3 #f7f3f3");
 
         column3d.legend().enabled(true);
         column3d.legend().fontSize(13d);
@@ -195,14 +169,27 @@ private AnyChartView freeTimeChart;
     }
 
     private class CustomDataEntry extends ValueDataEntry {
-        CustomDataEntry(String x, Number sen, Number praca, Number relaks, Number sport, Number value5, Number value6, Number value7) {
-            super(x, sen);
-            setValue("value2", praca);
-            setValue("value3", relaks);
+        CustomDataEntry(String dayOfWeek, Number sleep, Number work, Number relax, Number sport, Number value5, Number value6) {
+            super(dayOfWeek, sleep);
+            setValue("value2", work);
+            setValue("value3", relax);
             setValue("value4", sport);
             setValue("value5", value5);
             setValue("value6", value6);
-            setValue("value7", value7);
+            setValue("freeTime", getFreeTime(dayOfWeek));
+        }
+    }
+
+    private Number getFreeTime(String dayName) {
+        List<ToDo> todoes = new DatabaseHelper(getContext()).getToDoes(new MyDate().getLastWeekDayDate(dayName.toLowerCase()));
+        float tusksDuration = 0;
+        for(ToDo todo : todoes){
+            tusksDuration += Float.parseFloat(todo.getDurationInMinutes())/60;
+        }
+        if ((24 - tusksDuration - 8) < 1){
+            return 0;
+        } else{
+            return 24 - tusksDuration - 8;
         }
     }
 }

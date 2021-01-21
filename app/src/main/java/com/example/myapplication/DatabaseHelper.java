@@ -223,7 +223,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(ToDo todo : getToDoes(date)){
                 todoes.add(todo);
             }
-            System.out.println(date.getDate());
         }
 
         return todoes;

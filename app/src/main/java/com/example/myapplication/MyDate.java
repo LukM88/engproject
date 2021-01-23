@@ -12,57 +12,41 @@ public class MyDate {
     private String month;
     private String year;
     private String date;
-    private String format = "yyyy-mm-dd";
-
-
-
+    private final String format = "yyyy-mm-dd";
 
     public MyDate(){
-        String currentDateTimeString = DateFormat.getDateInstance(DateFormat.SHORT, Locale.UK).format(new Date());
-       // String currentDateTimeString2 = DateFormat.getDateInstance(DateFormat.DEFAULT,Locale.UK).format(new Date());
-       /* if(currentDateTimeString.equals(currentDateTimeString2)){
-            //TODO na windzie napraw to do nwego formaty
-            System.out.println(currentDateTimeString);
-            System.out.println(currentDateTimeString.substring(0,2));
-            setDay(currentDateTimeString.substring(0,2));
-            setMonth(currentDateTimeString.substring(4,5));
-            setYear(currentDateTimeString2.substring(currentDateTimeString2.length()-4,currentDateTimeString2.length()));
-            getDate();*/
-      //  }else{
-
-            setDay(currentDateTimeString.substring(0, 2));
-            setMonth(currentDateTimeString.substring(3, 5));
-            setYear(currentDateTimeString.substring(currentDateTimeString.length() - 4));
-
-       // }
-
-
+        this.day = Calendar.getInstance().get(Calendar.DATE) < 10 ? 0 + String.valueOf(Calendar.getInstance().get(Calendar.DATE))
+                                                                  : String.valueOf(Calendar.getInstance().get(Calendar.DATE));
+        this.month = Calendar.getInstance().get(Calendar.MONTH) < 10 ? 0 + String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1)
+                                                                     : String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1);
+        this.year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        setDate();
     }
     public void setDay(String day) {
+        Calendar calendar = Calendar.getInstance();
         try {
-            if (Integer.parseInt(day) <= 31 && Integer.parseInt(day) > 0) {
-                if (Integer.parseInt(day) < 10 && day.length() == 1){
-                    this.day = 0 + day;
-                } else{
-                    this.day = day;
-                }
-                setDate();
+            calendar.set(Calendar.DATE, Integer.parseInt(day));
+            if (calendar.get(Calendar.DATE) < 10 && !day.contains("0")){
+                this.day = 0 + day;
+            } else{
+                this.day = day;
             }
+                setDate();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     public void setMonth(String month) {
+        Calendar calendar = Calendar.getInstance();
         try {
-            if (Integer.parseInt(month) <= 12 && Integer.parseInt(month) > 0) {
-                if(Integer.parseInt(month) < 10 && month.length() == 1){
-                    this.month = 0 + month;
-                }else{
-                    this.month = month;
-                    setDate();
-                }
+            calendar.set(Calendar.MONTH, Integer.parseInt(month));
+            if (calendar.get(Calendar.MONTH) < 10 && !month.contains("0")){
+                this.month = 0 + month;
+            } else{
+                this.month = month;
             }
+            setDate();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -70,35 +54,10 @@ public class MyDate {
     }
 
     private void setDate() {
-        String date;
-        String separator;
-        format = format.toUpperCase();
-        if(!format.contains("M")
-                || !format.contains("Y")
-                || !format.contains("D")){
-            format = "yyyy-mm-dd";
-            setDate();
-        }
-        if (format.indexOf("Y") > format.indexOf("M")){
-            separator = format.substring(format.indexOf("Y") - 1, format.indexOf("Y"));
-            if (format.indexOf("M") > format.indexOf("D")){
-                date = day + separator + month + separator + year;
-            } else if(format.indexOf("Y") > format.indexOf("D")){
-                date = month + separator + day + separator + year;
-            } else{
-                date = month + separator + year + separator + day;
-            }
-        } else{
-            separator = format.substring(format.indexOf("M") - 1, format.indexOf("M"));
-            if (format.indexOf("M") < format.indexOf("D")){
-                date = year + separator + month + separator + day;
-            } else if(format.indexOf("M") > format.indexOf("D")){
-                date = year + separator + day + separator + month;
-            } else{
-                date = day + separator + year + separator + month;
-            }
-        }
-        this.date = date;
+        this.date = format;
+        this.date = this.date.replace("yyyy", year);
+        this.date = this.date.replace("mm", month);
+        this.date = this.date.replace("dd", day);
     }
 
     public void setYear(String year) {
@@ -115,38 +74,7 @@ public class MyDate {
         setDay(day);
         setMonth(month);
         setYear(year);
-        String date;
-        String separator;
-        format = format.toUpperCase();
-            if (format.lastIndexOf("Y") == format.length() - 1){
-                separator=format.substring (format.lastIndexOf("Y") - 4,format.lastIndexOf("Y") - 3);
-                if (format.lastIndexOf("M") < format.lastIndexOf("D")){
-                    date = month + separator + day + separator + year;
-                } else{
-                    date = day + separator + month + separator + year;
-                }
-            } else if (format.lastIndexOf("D") == format.length() - 1){
-                separator = format.substring(format.lastIndexOf("D") - 2, format.lastIndexOf("D") - 1);
-                if(format.lastIndexOf("M") < format.lastIndexOf("Y")){
-                    date = month+separator+year + separator + day;
-                } else{
-                    date = year + separator + month + separator + day;
-                }
-            } else if(format.lastIndexOf("M") == format.length() - 1){
-                separator = format.substring(format.lastIndexOf("M") - 2, format.lastIndexOf("M") - 1);
-                if (format.lastIndexOf("Y") < format.lastIndexOf("D")){
-                    date = year + separator + day + separator + month;
-                } else{
-                    date = day + separator + year + separator + month;
-                }
-            } else{
-                separator = "-";
-                date = day + separator + month + separator + year;
-            }
-
-
-
-        this.date = date;
+        setDate();
     }
 
     public String getDay() {
@@ -164,45 +92,33 @@ public class MyDate {
     public String getDate() {
         return date;
     }
-
-    public String getFormat() {
-        return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
-        setDate(this.day,this.month,this.year);
-    }
-    private Calendar getCurrentDate(){
-        return Calendar.getInstance();
-    }
     public MyDate getLastWeekDayDate(String dayOfWeek) {
         Calendar date = Calendar.getInstance();
         switch(dayOfWeek){
             case "mo":
-                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.MONDAY);
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.MONDAY);
                 break;
             case "tu":
-                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.TUESDAY);
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.TUESDAY);
                 break;
             case "we":
-                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.WEDNESDAY);
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.WEDNESDAY);
                 break;
             case "th":
-                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.THURSDAY);
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.THURSDAY);
                 break;
             case "fr":
-                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.FRIDAY);
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.FRIDAY);
                 break;
             case "sa":
-                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + date.SATURDAY);
+                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.SATURDAY);
                 break;
             case "su":
                 date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + 8);
                 break;
         }
         MyDate mydate = new MyDate();
-        mydate.setDate(Integer.toString(date.get(Calendar.DATE)), Integer.toString(date.get(Calendar.MONTH)), Integer.toString(date.get(Calendar.YEAR)));
+        mydate.setDate(Integer.toString(date.get(Calendar.DATE)), Integer.toString(date.get(Calendar.MONTH) + 1), Integer.toString(date.get(Calendar.YEAR)));
         return mydate;
     }
 }

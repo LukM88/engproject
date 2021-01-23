@@ -56,7 +56,8 @@ public class DetailsFragment extends Fragment {
         durationOutput.setText(event.getDurationInMinutes() + " min");
         priority.setText(event.getPriority());
         notification.setText(event.getNotification());
-        //Ciężka operacja
+        description.setText(event.getDescription());
+
         if(!event.getImgPath().isEmpty()) {
             Bitmap bitmap = BitmapFactory.decodeFile(event.getImgPath());
             Bitmap bitmap2;

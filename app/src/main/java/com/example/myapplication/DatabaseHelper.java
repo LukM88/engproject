@@ -65,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(CATEGORIES_COLUMNS.get("color"), "#843CA9");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
         values.put(CATEGORIES_COLUMNS.get("name"), "sport");
-        values.put(CATEGORIES_COLUMNS.get("color"), "#8DFC19");
+        values.put(CATEGORIES_COLUMNS.get("color"), "#0000FF");
         db.insert(CATEGORIES_TABLE_NAME, null, values);
         db.execSQL("CREATE TABLE " +
                 EVENTS_TABLE + "("

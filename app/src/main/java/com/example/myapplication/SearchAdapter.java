@@ -74,7 +74,6 @@ public class SearchAdapter extends BaseAdapter {
 
         }
 
-// perform on Click Event Listener on CheckedTextView
 
         final View finalView = view;
         simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {

@@ -113,7 +113,7 @@ public class ToDo {
     }
 
     public void setImgPath(String imgPath) {
-        this.imgPath = imgPath == null ? new String() : imgPath;
+        this.imgPath = imgPath == null ? "" : imgPath;
     }
     public String getDurationInMinutes() {
         return durationInMinutes;
@@ -132,10 +132,7 @@ public class ToDo {
 
     public String getDate(){
         MyDate myDate = new MyDate();
-        myDate.setYear(getYear());
-        myDate.setMonth(getMonth());
-        myDate.setDay(getDay());
-
+        myDate.setDate(getDay(), getMonth(), getYear());
         return myDate.getDate();
     }
 }

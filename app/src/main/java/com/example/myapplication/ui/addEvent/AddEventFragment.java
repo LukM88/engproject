@@ -60,7 +60,7 @@ public class AddEventFragment extends Fragment {
     private Spinner notification;
     private String picturePath = "";
     private Spinner priority;
-    private Map<String, Integer> selectedDate = new HashMap<String, Integer>();
+    private final Map<String, Integer> selectedDate = new HashMap<String, Integer>();
     private ImageButton timeButt;
     private TimePickerDialog timePicker;
     private TextView timeView;
@@ -69,7 +69,6 @@ public class AddEventFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_add_event, container, false);
-        //final TextView textView = root.findViewById(R.id.text_slideshow);
         final ImageButton imgButt = root.findViewById(R.id.addImageButton);
         nameText = root.findViewById(R.id.eventNameText);
         imageView = root.findViewById(R.id.imageView);
@@ -179,10 +178,10 @@ public class AddEventFragment extends Fragment {
                     if(!nameText.getText().toString().isEmpty()
                             && nameText.getText().toString().length()!=1
                             && !selectedDate.isEmpty()
-                            && selectedDate.keySet().contains("hour")) {
+                            && selectedDate.containsKey("hour")) {
                         Map<String, String> data = new HashMap<String, String>(){{
                             put("name", nameText.getText().toString());
-                            put("description", descriptionText.getText().toString());
+                            put("descriptions", descriptionText.getText().toString());
                             put("HH", selectedDate.get("hour").toString());
                             if (selectedDate.get("minute")<10){
                                 put("MM", 0 + selectedDate.get("minute").toString());

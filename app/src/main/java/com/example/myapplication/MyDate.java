@@ -5,7 +5,9 @@ import com.example.myapplication.ui.calender.CalenderFragment;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class MyDate {
     private String day;
@@ -92,7 +94,7 @@ public class MyDate {
     public String getDate() {
         return date;
     }
-    public MyDate getLastWeekDayDate(String dayOfWeek) {
+    public MyDate getWeekDates(String dayOfWeek) {
         Calendar date = Calendar.getInstance();
         switch(dayOfWeek){
             case "mo":
@@ -114,11 +116,53 @@ public class MyDate {
                 date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.SATURDAY);
                 break;
             case "su":
-                date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + 8);
+                if(date.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+                    date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.SUNDAY);
+                } else{
+                    date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + 8);
+                }
+
                 break;
         }
         MyDate mydate = new MyDate();
         mydate.setDate(Integer.toString(date.get(Calendar.DATE)), Integer.toString(date.get(Calendar.MONTH) + 1), Integer.toString(date.get(Calendar.YEAR)));
         return mydate;
+    }
+
+    public Map<String, String> increaseDateByDays(int increaseBy) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, increaseBy);
+        setDate(Integer.toString(calendar.get(Calendar.DATE)),
+                Integer.toString(calendar.get(Calendar.MONTH) + 1),
+                Integer.toString(calendar.get(Calendar.YEAR)));
+        return new HashMap<String,String>(){{
+            put("day", getDay());
+            put("month", getMonth());
+            put("year", getYear());
+        }};
+    }
+    public Map<String, String> increaseDateByMonths(int increaseBy) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, increaseBy);
+        setDate(Integer.toString(calendar.get(Calendar.DATE)),
+                Integer.toString(calendar.get(Calendar.MONTH) + 1),
+                Integer.toString(calendar.get(Calendar.YEAR)));
+        return new HashMap<String, String>(){{
+            put("day", getDay());
+            put("month", getMonth());
+            put("year", getYear());
+        }};
+    }
+    public Map<String, String> increaseDateByYears(int increaseBy) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, increaseBy);
+        setDate(Integer.toString(calendar.get(Calendar.DATE)),
+                Integer.toString(calendar.get(Calendar.MONTH) + 1),
+                Integer.toString(calendar.get(Calendar.YEAR)));
+        return new HashMap<String, String>(){{
+            put("day", getDay());
+            put("month", getMonth());
+            put("year", getYear());
+        }};
     }
 }

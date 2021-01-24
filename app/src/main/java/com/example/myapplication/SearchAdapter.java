@@ -20,11 +20,9 @@ import androidx.navigation.Navigation;
 import java.util.ArrayList;
 
 public class SearchAdapter extends BaseAdapter {
-    ArrayList<ToDo> names=new ArrayList<ToDo>();
+    ArrayList<ToDo> names;
     Context context;
     LayoutInflater inflter;
-    String value;
-    ListView gridView;
     DatabaseHelper dbHelper;
 
 
@@ -32,7 +30,7 @@ public class SearchAdapter extends BaseAdapter {
         this.context = context;
         inflter = (LayoutInflater.from(context));
         dbHelper = new DatabaseHelper(context);
-        names=dbHelper.getEventsWithName(name);
+        names=dbHelper.getEventsWithNameLike(name);
         dbHelper.close();
     }
 
@@ -55,7 +53,7 @@ public class SearchAdapter extends BaseAdapter {
     public View getView(final int position, View view, ViewGroup parent) {
         view = inflter.inflate(R.layout.list_items, null);
         final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
-        simpleCheckedTextView.setText(names.get(position).getName()+" "+names.get(position).getDate());
+        simpleCheckedTextView.setText(new StringBuilder().append(names.get(position).getName()).append(" ").append(names.get(position).getDate()).toString());
         simpleCheckedTextView.setTextColor(Color.WHITE);
         //System.out.println(imageView.isShown());
         if (names.get(position).getState()) {

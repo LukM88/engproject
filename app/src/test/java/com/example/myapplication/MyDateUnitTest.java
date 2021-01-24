@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.VisibleForTesting;
-
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -21,9 +19,9 @@ public class MyDateUnitTest {
                 "-" + Calendar.getInstance().get(Calendar.DATE), new MyDate().getDate());
         Calendar date = Calendar.getInstance();
         date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE) - date.get(Calendar.DAY_OF_WEEK) + Calendar.MONDAY);
-        assertEquals(Integer.parseInt(new MyDate().getLastWeekDayDate("mo").getDay()), date.get(Calendar.DATE));
-        assertEquals(date.get(Calendar.MONTH) + 1, Integer.parseInt(new MyDate().getLastWeekDayDate("mo").getMonth()));
-        assertEquals(date.get(Calendar.YEAR), Integer.parseInt(new MyDate().getLastWeekDayDate("mo").getYear()));
+        assertEquals(Integer.parseInt(new MyDate().getWeekDates("mo").getDay()), date.get(Calendar.DATE));
+        assertEquals(date.get(Calendar.MONTH) + 1, Integer.parseInt(new MyDate().getWeekDates("mo").getMonth()));
+        assertEquals(date.get(Calendar.YEAR), Integer.parseInt(new MyDate().getWeekDates("mo").getYear()));
         }
     @Test
     public void MyDateSetterTest(){

@@ -41,8 +41,19 @@
         <item>2 hours</item>
         <item>3 hours</item>
         <item>1 week</item>
-        <item>2 week</item>
-        <item>3 week</item>
+        <item>2 weeks</item>
+        <item>3 weeks</item>
+    </string-array>
+    <string name="repeatability">Repeatability every:</string>
+    <string-array name='repeatability_array'>
+        <item>None</item>
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>weekend</item>
+        <item>week</item>
+        <item>1 month</item>
+        <item>3 months</item>
+        <item>year</item>
     </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="WeeklyPlan">Weekly Plan</string>s

@@ -16,16 +16,16 @@ public class ToDo {
     private String imgPath;
     private String notification;
     private String durationInMinutes;
-    ToDo(Date date){
-        this.name="ToDo";
-        this.description="description";
-        this.HH="24";
-        this.MM="00";
-        this.priority="High";
-    }
-    ToDo(){
+    private String repeat;
 
+    public String getRepeat() {
+        return repeat;
     }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
+
     public String getDescription() {
         return description;
     }

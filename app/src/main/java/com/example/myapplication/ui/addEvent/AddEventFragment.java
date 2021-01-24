@@ -45,7 +45,6 @@ import java.util.Map;
 
 public class AddEventFragment extends Fragment {
 
-
     private final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageView;
     private Button addButton;
@@ -58,6 +57,7 @@ public class AddEventFragment extends Fragment {
     private EditText durationText;
     private EditText nameText;
     private Spinner notification;
+    private Spinner repeater;
     private String picturePath = "";
     private Spinner priority;
     private final Map<String, Integer> selectedDate = new HashMap<String, Integer>();
@@ -144,7 +144,7 @@ public class AddEventFragment extends Fragment {
         priority = root.findViewById(R.id.prioritySpinner);
         notification = root.findViewById(R.id.notificationSpinner);
         category = root.findViewById(R.id.categorySpinber);
-
+        repeater = root.findViewById(R.id.repeaterSpiner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.priority_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -157,6 +157,9 @@ public class AddEventFragment extends Fragment {
         ArrayAdapter<String> adapter3 = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, categories);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(adapter3);
+        ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(getContext(), R.array.repeatability_array, android.R.layout.simple_spinner_item);
+        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        repeater.setAdapter(adapter4);
 
         imgButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +211,7 @@ public class AddEventFragment extends Fragment {
                             put("imgPath", picturePath);
                             put("notification", notification.getSelectedItem().toString());
                             put("category", category.getSelectedItem().toString());
+                            put("repeat", repeater.getSelectedItem().toString());
                             }};
                         if(data.get("duration").isEmpty()) data.put("duration", "00");
                             try {

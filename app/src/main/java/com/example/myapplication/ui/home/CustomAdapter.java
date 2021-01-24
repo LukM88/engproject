@@ -79,12 +79,12 @@ public class CustomAdapter extends BaseAdapter {
 
                 if (names.get(position).getState()) {
                     value = "un-Checked";
-                    dbHelper.updateTodoStatus(names.get(position));
+                    dbHelper.updateTodoStatus(names.get(position).getID(), names.get(position).getState());
                     names.get(position).setState(false);
                     simpleCheckedTextView.setCheckMarkDrawable(null);
                     simpleCheckedTextView.setChecked(false);
                 } else {
-                    dbHelper.updateTodoStatus(names.get(position));
+                    dbHelper.updateTodoStatus(names.get(position).getID(), names.get(position).getState());
 
                     value = "Checked";
                     simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);

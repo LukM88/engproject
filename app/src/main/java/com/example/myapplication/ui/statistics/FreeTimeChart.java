@@ -28,7 +28,6 @@ import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
 
-import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,60 +48,58 @@ private AnyChartView freeTimeChart;
         Cartesian3d column3d = AnyChart.column3d();
         column3d.yScale().stackMode(ScaleStackMode.VALUE);
         column3d.animation(true);
-        column3d.title("Time occupation");
+        column3d.title("Time occupation from " + new MyDate().getDay() + " to " + new MyDate().increaseDateByDays(7).get("day") + "-" + new MyDate().getMonth() + "-" + new MyDate().getYear());
         column3d.title().padding(0d, 0d, 15d, 0d);
         List<Category> categories = new DatabaseHelper(getContext()).getCategories();
         List<DataEntry> seriesData = new ArrayList<>();
         switch(categories.size()){
             case 3:
                 seriesData.add(new CustomDataEntry("Mo", 8,
-                                                    new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("mo")),
-                                                    new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("mo")),
-                                                    new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("mo")),
+                                                    new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getWeekDates("mo")),
+                                                    new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getWeekDates("mo")),
+                                                    new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getWeekDates("mo")),
                                                    null,
                                                    null));
                 seriesData.add(new CustomDataEntry("Tu", 8,
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("tu")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("tu")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("tu")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getWeekDates("tu")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getWeekDates("tu")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getWeekDates("tu")),
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("We", 8,
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("we")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("we")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("we")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getWeekDates("we")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getWeekDates("we")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getWeekDates("we")),
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("Th", 8,
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("th")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("th")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("th")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getWeekDates("th")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getWeekDates("th")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getWeekDates("th")),
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("Fr", 8,
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("fr")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("fr")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("fr")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getWeekDates("fr")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getWeekDates("fr")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getWeekDates("fr")),
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("Sa", 8,
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("sa")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("sa")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("sa")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getWeekDates("sa")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getWeekDates("sa")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getWeekDates("sa")),
                         null,
                         null));
                 seriesData.add(new CustomDataEntry("Su", 8,
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getLastWeekDayDate("su")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getLastWeekDayDate("su")),
-                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getLastWeekDayDate("su")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(0).getName(), new MyDate().getWeekDates("su")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(1).getName(), new MyDate().getWeekDates("su")),
+                        new DatabaseHelper(getContext()).getCategoryDayleDuration(categories.get(2).getName(), new MyDate().getWeekDates("su")),
                         null,
                         null));
                 break;
             case 4:
                 break;
             case 5:
-                break;
-            case 6:
                 break;
             default:
                 break;
@@ -113,7 +110,8 @@ private AnyChartView freeTimeChart;
         set.data(seriesData);
         Mapping series1Data = set.mapAs("{ x: 'x', value: 'value' }");
         Mapping series2Data = set.mapAs("{ x: 'x', value: 'freeTime' }");
-        //
+        Mapping series3Data = set.mapAs("{ x: 'x', value: 'others' }");
+
 
         int i = 2;
         for(Category category : new DatabaseHelper(getContext()).getCategories()){
@@ -137,6 +135,12 @@ private AnyChartView freeTimeChart;
         series2.fill(new SolidFill("#00ff00", 1d));
         series2.stroke("1 #f7f3f3");
         series2.hovered().stroke("3 #f7f3f3");
+
+        Column3d series3 = column3d.column(series3Data);
+        series3.name("others");
+        series3.fill(new SolidFill("#ff0000", 1d));
+        series3.stroke("1 #f7f3f3");
+        series3.hovered().stroke("3 #f7f3f3");
 
         column3d.legend().enabled(true);
         column3d.legend().fontSize(13d);
@@ -168,20 +172,8 @@ private AnyChartView freeTimeChart;
         freeTimeChart.setChart(column3d);
     }
 
-    private class CustomDataEntry extends ValueDataEntry {
-        CustomDataEntry(String dayOfWeek, Number sleep, Number work, Number relax, Number sport, Number value5, Number value6) {
-            super(dayOfWeek, sleep);
-            setValue("value2", work);
-            setValue("value3", relax);
-            setValue("value4", sport);
-            setValue("value5", value5);
-            setValue("value6", value6);
-            setValue("freeTime", getFreeTime(dayOfWeek));
-        }
-    }
-
     private Number getFreeTime(String dayName) {
-        List<ToDo> todoes = new DatabaseHelper(getContext()).getToDoes(new MyDate().getLastWeekDayDate(dayName.toLowerCase()));
+        List<ToDo> todoes = new DatabaseHelper(getContext()).getToDoes(new MyDate().getWeekDates(dayName.toLowerCase()));
         float tusksDuration = 0;
         for(ToDo todo : todoes){
             tusksDuration += Float.parseFloat(todo.getDurationInMinutes())/60;
@@ -190,6 +182,39 @@ private AnyChartView freeTimeChart;
             return 0;
         } else{
             return 24 - tusksDuration - 8;
+        }
+    }
+
+    private Number getOtherCategoriesTime(String dayName, Number[] timeOfFiveFirstCategories){
+        List<ToDo> todoes = new DatabaseHelper(getContext()).getToDoes(new MyDate().getWeekDates(dayName.toLowerCase()));
+        float tusksDuration = 0;
+        for(ToDo todo : todoes){
+            tusksDuration += Float.parseFloat(todo.getDurationInMinutes())/60;
+        }
+        for(Number num : timeOfFiveFirstCategories){
+            if(num == null){
+                num = 0;
+            }
+            tusksDuration -= num.floatValue();
+        }
+        if (new DatabaseHelper(getContext()).getCategories().size() <= 5){
+            return 0;
+        } else{
+            return tusksDuration;
+        }
+    }
+
+    private class CustomDataEntry extends ValueDataEntry {
+        CustomDataEntry(String dayOfWeek, Number sleep, Number work, Number relax, Number sport, Number value5, Number value6) {
+
+            super(dayOfWeek, sleep);
+            setValue("value2", work);
+            setValue("value3", relax);
+            setValue("value4", sport);
+            setValue("value5", value5);
+            setValue("value6", value6);
+            setValue("freeTime", getFreeTime(dayOfWeek));
+            setValue("others",  getOtherCategoriesTime(dayOfWeek, new Number[]{work, relax, sport, value5, value6}));
         }
     }
 }

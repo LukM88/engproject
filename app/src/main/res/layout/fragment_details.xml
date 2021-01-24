@@ -8,15 +8,15 @@
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout2"
-        android:layout_width="208dp"
-        android:layout_height="141dp"
+        android:layout_width="243dp"
+        android:layout_height="194dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="25dp"
         android:splitMotionEvents="false"
         app:columnCount="2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/nameText"
-        app:rowCount="5">
+        app:rowCount="8">
 
         <TextView
             android:id="@+id/textView4"
@@ -107,30 +107,66 @@
             android:textSize="18sp"
             app:layout_column="1"
             app:layout_row="4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/repeatability"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/repeatValueDisp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="repeatValueDisp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textSize="18sp"
+            app:layout_column="0"
+            app:layout_row="7" />
+
+        <TextView
+            android:id="@+id/categoryValueDisp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None"
+            android:textSize="18sp" />
+
     </androidx.gridlayout.widget.GridLayout>
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="143dp"
         android:layout_height="118dp"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="9dp"
         app:layout_constraintEnd_toStartOf="@+id/gridLayout2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText"
-        app:srcCompat="@drawable/check"
+        app:srcCompat="@drawable/ic_calender"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
         android:id="@+id/nameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="63dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:gravity="center"
         android:text="TextView"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -140,7 +176,7 @@
         android:layout_width="345dp"
         android:layout_height="137dp"
         android:layout_marginStart="37dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="124dp"
         android:layout_marginEnd="29dp"
         android:text="@string/todoDescription"
         android:textSize="18sp"
@@ -153,12 +189,14 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="13dp"
         android:layout_marginBottom="16dp"
         android:text="@string/description"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

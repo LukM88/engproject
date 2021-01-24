@@ -45,9 +45,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         put("year", "year");
         put("imgPath", "imgPath");
         put("notification", "notification");
+        put("repeat", "repeat");
     }};
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, 3);
     }
 
     @Override
@@ -81,7 +82,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                 + COLUMNS.get("month") + " TEXT, "
                                 + COLUMNS.get("year") + " TEXT, "
                                 + COLUMNS.get("imgPath") + " TEXT, "
-                                + COLUMNS.get("notification") + " TEXT)");
+                                + COLUMNS.get("notification") + " TEXT, "
+                                + COLUMNS.get("repeat") + " TEXT)");
         db.execSQL("CREATE TABLE " +
                 EVENT_CATEGORIES + "("
                 + EVENT_CATEGORIES_COLUMNS.get("eventID") + " INTEGER , "
@@ -97,25 +99,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public long insertEvent(Map<String, String> data){
-        SQLiteDatabase sqlDB = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        for(String column : COLUMNS.keySet()){
-            if (column == "state"){
-                contentValues.put(column, false);
-            } else{
-                contentValues.put(column, data.get(column));
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery( "SELECT * " +
+                        "                       FROM " + EVENTS_TABLE +
+                        " WHERE " + COLUMNS.get("name") + " = '" + data.get("name")
+                        + "' AND " + COLUMNS.get("day") + " = '" + data.get("day")
+                        + "' AND " + COLUMNS.get("month") + " = '" + data.get("month")
+                        + "'AND " + COLUMNS.get("year") + " = '" + data.get("year")
+                        + "' AND " + COLUMNS.get("descriptions") + " = '" + data.get("descriptions") + "';",
+                null );
+        if(result.isAfterLast()) {
+            db.close();
+            SQLiteDatabase sqlDB = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            for(String column : COLUMNS.keySet()){
+                if (column == "state"){
+                    contentValues.put(column, false);
+                } else{
+                    contentValues.put(column, data.get(column));
+                }
             }
+            long res = sqlDB.insert(EVENTS_TABLE, null, contentValues);
+            if(!data.get("category").equals("None")){
+                contentValues.clear();
+                contentValues.put(EVENT_CATEGORIES_COLUMNS.get("eventID"), res);
+                contentValues.put(EVENT_CATEGORIES_COLUMNS.get("categoryID"), getCategoriesNames().indexOf(data.get("category")) + 1);
+                res = sqlDB.insert(EVENT_CATEGORIES, null, contentValues);
+                showEventCategories();
+            }
+            sqlDB.close();
+            return res;
+        } else{
+            db.close();
+            return 0;
         }
-        long res = sqlDB.insert(EVENTS_TABLE, null, contentValues);
-        if(!data.get("category").equals("None")){
-            contentValues.clear();
-            contentValues.put(EVENT_CATEGORIES_COLUMNS.get("eventID"), res);
-            contentValues.put(EVENT_CATEGORIES_COLUMNS.get("categoryID"), getCategoriesNames().indexOf(data.get("category")) + 1);
-            res = sqlDB.insert(EVENT_CATEGORIES, null, contentValues);
-            showEventCategories();
-        }
-        sqlDB.close();
-        return res;
+
     }
     public ToDo getEvent(int id){
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -138,6 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                            setYear(res.getString(res.getColumnIndex("year")));
                            setImgPath(res.getString(res.getColumnIndex("imgPath")));
                            setNotification(res.getString(res.getColumnIndex("notification")));
+                           setRepeat(res.getString(res.getColumnIndex("repeat")));
                            }};
     }
     public ArrayList<ToDo> getEvents(){
@@ -148,11 +167,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return array_list2;
     }
 
-    public void updateTodoStatus(ToDo toDo) {
+    public void updateTodoStatus( String id, Boolean status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COLUMNS.get("state"), !toDo.getState());
-        db.update(EVENTS_TABLE, cv, COLUMNS.get("ID") + " = " + toDo.getID(), null);
+        cv.put(COLUMNS.get("state"), !status);
+        db.update(EVENTS_TABLE, cv, COLUMNS.get("ID") + " = " + id, null);
         db.close();
     }
 
@@ -232,8 +251,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqlDB = this.getReadableDatabase();
         ArrayList<ToDo> todoList = getToDoListFromCursor(sqlDB.rawQuery( "SELECT * " +
                                                                               "FROM " + EVENTS_TABLE +
-                                                                              " WHERE name LIKE '%" + name + "%'",
+                                                                              " WHERE name = " + name ,
                                                                  null ));
+        sqlDB.close();
+        return todoList;
+    }
+    public ArrayList<ToDo> getEventsWithNameLike(String name){
+        SQLiteDatabase sqlDB = this.getReadableDatabase();
+        ArrayList<ToDo> todoList = getToDoListFromCursor(sqlDB.rawQuery( "SELECT * " +
+                        "FROM " + EVENTS_TABLE +
+                        " WHERE name LIKE '%" + name + "%'",
+                null ));
         sqlDB.close();
         return todoList;
     }
@@ -255,6 +283,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 setYear(res.getString(res.getColumnIndex("year")));
                 setImgPath(res.getString(res.getColumnIndex("imgPath")));
                 setNotification(res.getString(res.getColumnIndex("notification")));
+                setRepeat(res.getString(res.getColumnIndex("repeat")));
             }});
             res.moveToNext();
         }
@@ -285,11 +314,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return new int[]{all - done, done};
     }
-    public ArrayList<ToDo> orderTodoes(ArrayList<ToDo> data){
+    public ArrayList<ToDo> orderTodoes(ArrayList<ToDo> todoesToOrder){
         ArrayList<ToDo> high = new ArrayList<ToDo>();
         ArrayList<ToDo> medium = new ArrayList<ToDo>();
         ArrayList<ToDo> low = new ArrayList<ToDo>();
-        for (ToDo todo : data) {
+        for (ToDo todo : todoesToOrder) {
             boolean added = false;
             switch(todo.getPriority()){
                 case "high":
@@ -366,18 +395,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     break;
             }
         }
-        for (int i = 0; i < data.size(); i++){
+        for (int i = 0; i < todoesToOrder.size(); i++){
             if(i < high.size()){
-                data.set(i, high.get(i));
+                todoesToOrder.set(i, high.get(i));
             }
             if(i >= high.size() && i-high.size() < medium.size()){
-                data.set(i , medium.get(i - high.size()));
+                todoesToOrder.set(i , medium.get(i - high.size()));
             }
             if(i >= high.size() + medium.size()){
-                data.set(i, low.get(i - (high.size() + medium.size())));
+                todoesToOrder.set(i, low.get(i - (high.size() + medium.size())));
             }
         }
-        return data;
+        return todoesToOrder;
     }
 
     public List<String> getCategoriesNames(){

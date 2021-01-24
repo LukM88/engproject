@@ -29,6 +29,8 @@ public class DetailsFragment extends Fragment {
     TextView priority;
     TextView notification;
     TextView durationOutput;
+    TextView repeat;
+    TextView category;
     ImageView img;
 
     @Override
@@ -48,6 +50,8 @@ public class DetailsFragment extends Fragment {
         notification = root.findViewById(R.id.notificationText);
         img = root.findViewById(R.id.imageView2);
         durationOutput = root.findViewById(R.id.durationOutput);
+        repeat = root.findViewById(R.id.repeatValueDisp);
+        category = root.findViewById(R.id.categoryValueDisp);
 
         name.setText(event.getName());
         description.setText(event.getDescription());
@@ -57,6 +61,8 @@ public class DetailsFragment extends Fragment {
         priority.setText(event.getPriority());
         notification.setText(event.getNotification());
         description.setText(event.getDescription());
+        repeat.setText(event.getRepeat());
+        category.setText(new DatabaseHelper(getContext()).getTodoCategory(event.getID()).getName());
 
         if(!event.getImgPath().isEmpty()) {
             Bitmap bitmap = BitmapFactory.decodeFile(event.getImgPath());

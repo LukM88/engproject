@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.details.DetailsFragment" >
 
+    <Button
+        android:id="@+id/editButt"
+        android:layout_width="113dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="128dp"
+        android:text="@string/Edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout2"
         android:layout_width="243dp"
@@ -198,5 +210,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/deleteButt"
+        android:layout_width="113dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginBottom="128dp"
+        android:text="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

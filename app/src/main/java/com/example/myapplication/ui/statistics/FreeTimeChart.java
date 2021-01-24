@@ -48,7 +48,7 @@ private AnyChartView freeTimeChart;
         Cartesian3d column3d = AnyChart.column3d();
         column3d.yScale().stackMode(ScaleStackMode.VALUE);
         column3d.animation(true);
-        column3d.title("Time occupation from " + new MyDate().getDay() + " to " + new MyDate().increaseDateByDays(7).get("day") + "-" + new MyDate().getMonth() + "-" + new MyDate().getYear());
+        column3d.title("Time occupation from " + new MyDate().getDay() + " to " + new MyDate().increaseDateByDays(6).get("day") + "-" + new MyDate().getMonth() + "-" + new MyDate().getYear());
         column3d.title().padding(0d, 0d, 15d, 0d);
         List<Category> categories = new DatabaseHelper(getContext()).getCategories();
         List<DataEntry> seriesData = new ArrayList<>();
@@ -197,11 +197,8 @@ private AnyChartView freeTimeChart;
             }
             tusksDuration -= num.floatValue();
         }
-        if (new DatabaseHelper(getContext()).getCategories().size() <= 5){
-            return 0;
-        } else{
             return tusksDuration;
-        }
+
     }
 
     private class CustomDataEntry extends ValueDataEntry {

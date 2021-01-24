@@ -85,7 +85,14 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.myapplication.ui.details.DetailsFragment"
         android:label="@string/detales"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment_to_editToDo"
+            app:destination="@id/editToDo" />
+        <action
+            android:id="@+id/action_detailsFragment_to_planForDay"
+            app:destination="@id/planForDay" />
+    </fragment>
     <activity
         android:id="@+id/mainActivity"
         android:name="com.example.myapplication.MainActivity"
@@ -113,4 +120,13 @@
         android:name="com.example.myapplication.ui.statistics.FreeTimeChart"
         android:label="@string/freeTimePerDayChartTitle"
         tools:layout="@layout/fragment_free_time_chart" />
+    <fragment
+        android:id="@+id/editToDo"
+        android:name="com.example.myapplication.ui.editEvent.EditToDo"
+        android:label="@string/Edit"
+        tools:layout="@layout/fragment_edit_to_do" >
+        <action
+            android:id="@+id/action_editToDo_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 </navigation>

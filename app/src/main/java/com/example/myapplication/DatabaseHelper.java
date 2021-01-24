@@ -152,6 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                            setDurationInMinutes(res.getString(res.getColumnIndex("duration")));
                            setPriority(res.getString(res.getColumnIndex("priority")));
                            setDay(res.getString(res.getColumnIndex("day")));
+                           setState(res.getString(res.getColumnIndex("state")) == "1");
                            setMonth(res.getString(res.getColumnIndex("month")));
                            setYear(res.getString(res.getColumnIndex("year")));
                            setImgPath(res.getString(res.getColumnIndex("imgPath")));
@@ -483,5 +484,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return duration;
+    }
+
+    public int deleteEvent(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(EVENTS_TABLE,COLUMNS.get("ID") + " = " + id, null);
+    }
+
+    public int updateTodo(Map<String, String> data) {
+        ContentValues contentValues = new ContentValues();
+        for (String key : data.keySet()){
+            if(key != "category"){
+                contentValues.put(key, data.get(key));
+            }
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        int res = db.update(EVENTS_TABLE, contentValues, COLUMNS.get("ID") + " = " + data.get("ID"),null);
+        if(res == 1){
+            contentValues.clear();
+            contentValues.put(EVENT_CATEGORIES_COLUMNS.get("categoryID"), getCategorieWithName(data.get("category")));
+            return db.update(EVENT_CATEGORIES, contentValues, COLUMNS.get("ID") + " = " + data.get("ID"),null);
+        } else{
+            return 0;
+        }
+    }
+
+    private String getCategorieWithName(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT " + CATEGORIES_COLUMNS.get("ID")
+                                    + " FROM " + CATEGORIES_TABLE_NAME
+                                    + " WHERE " + CATEGORIES_COLUMNS.get("name") + "=" + name + ";",null);
+        res.moveToFirst();
+        if(res.isAfterLast()){
+            return "0";
+        } else{
+            return res.getString(res.getColumnIndex("ID"));
+        }
     }
 }

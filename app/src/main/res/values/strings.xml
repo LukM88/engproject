@@ -2,11 +2,13 @@
     <string name="app_name">OrganizerING</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Łukasz Mrzygłód</string>
+    <string name="nav_header_subtitle">U14808</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">NOT YET DONE</string>
 
+    <string name="delete">Delete</string>
+    <string name="Edit">Edit</string>
     <string name="menu_home">TODO</string>
     <string name="menu_gallery">Calender</string>
     <string name="menu_slideshow">Add Event</string>

@@ -5,10 +5,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,11 +18,12 @@ import android.widget.Toast;
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class DetailsFragment extends Fragment {
 
-    int id;
     ToDo event ;
     TextView name;
     TextView description;
@@ -32,15 +35,16 @@ public class DetailsFragment extends Fragment {
     TextView repeat;
     TextView category;
     ImageView img;
+    Button deleteButt;
+    Button updateButt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_details, container, false);
-        id = getArguments().getInt("id");
         DatabaseHelper db = new DatabaseHelper(getContext());
-        event = db.getEvent(id);
+        event = db.getEvent(getArguments().getInt("id"));
         db.close();
         name = root.findViewById(R.id.nameText);
         description = root.findViewById(R.id.textView3);
@@ -52,6 +56,8 @@ public class DetailsFragment extends Fragment {
         durationOutput = root.findViewById(R.id.durationOutput);
         repeat = root.findViewById(R.id.repeatValueDisp);
         category = root.findViewById(R.id.categoryValueDisp);
+        deleteButt = root.findViewById(R.id.deleteButt);
+        updateButt = root.findViewById(R.id.editButt);
 
         name.setText(event.getName());
         description.setText(event.getDescription());
@@ -63,6 +69,44 @@ public class DetailsFragment extends Fragment {
         description.setText(event.getDescription());
         repeat.setText(event.getRepeat());
         category.setText(new DatabaseHelper(getContext()).getTodoCategory(event.getID()).getName());
+        deleteButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int results = new DatabaseHelper(getContext()).deleteEvent(event.getID());
+                if(results == 1){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("day", event.getDay());
+                    bundle.putString("month", event.getMonth());
+                    bundle.putString("year", event.getYear());
+                    Navigation.findNavController(root).navigate(R.id.action_detailsFragment_to_planForDay, bundle);
+                } else {
+                    Snackbar.make(getView(), "Something went wrong", BaseTransientBottomBar.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        updateButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ID", event.getID());
+                bundle.putString("name", event.getName());
+                bundle.putString("notification", event.getNotification());
+                bundle.putString("day", event.getDay());
+                bundle.putString("month", event.getMonth());
+                bundle.putString("year", event.getYear());
+                bundle.putString("HH", event.getHH());
+                bundle.putString("MM", event.getMM());
+                bundle.putString("priority", event.getPriority());
+                bundle.putString("duration", event.getDurationInMinutes());
+                bundle.putString("description", event.getDescription());
+                bundle.putString("imgPath", event.getImgPath());
+                bundle.putBoolean("state", event.getState());
+                bundle.putString("repeat", event.getRepeat());
+                bundle.putString("category", new DatabaseHelper(getContext()).getTodoCategory(event.getID()).getName());
+                Navigation.findNavController(root).navigate(R.id.action_detailsFragment_to_editToDo, bundle);
+            }
+        });
 
         if(!event.getImgPath().isEmpty()) {
             Bitmap bitmap = BitmapFactory.decodeFile(event.getImgPath());

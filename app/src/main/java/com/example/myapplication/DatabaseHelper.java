@@ -106,7 +106,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + "' AND " + COLUMNS.get("day") + " = '" + data.get("day")
                         + "' AND " + COLUMNS.get("month") + " = '" + data.get("month")
                         + "'AND " + COLUMNS.get("year") + " = '" + data.get("year")
-                        + "' AND " + COLUMNS.get("descriptions") + " = '" + data.get("descriptions") + "';",
+                        + "' AND " + COLUMNS.get("descriptions") + " = '" + data.get("descriptions")
+                        +"' AND " + COLUMNS.get("HH") + " = '" + data.get("HH")
+                        +"' AND " + COLUMNS.get("MM") + " = '" + data.get("MM") + "';",
                 null );
         if(result.isAfterLast()) {
             db.close();

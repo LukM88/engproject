@@ -2,11 +2,13 @@
     <string name="app_name">OrganizerING</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Łukasz Mrzygłód</string>
+    <string name="nav_header_subtitle">U14808</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Jakiś tam tekst</string>
+    <string name="action_settings">NOT YET DONE</string>
 
+    <string name="delete">Delete</string>
+    <string name="Edit">Edit</string>
     <string name="menu_home">TODO</string>
     <string name="menu_gallery">Calender</string>
     <string name="menu_slideshow">Add Event</string>
@@ -41,8 +43,25 @@
         <item>2 hours</item>
         <item>3 hours</item>
         <item>1 week</item>
-        <item>2 week</item>
-        <item>3 week</item>
+        <item>2 weeks</item>
+        <item>3 weeks</item>
     </string-array>
+    <string name="repeatability">Repeatability every:</string>
+    <string-array name='repeatability_array'>
+        <item>None</item>
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>weekend</item>
+        <item>week</item>
+        <item>1 month</item>
+        <item>3 months</item>
+        <item>year</item>
+    </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="WeeklyPlan">Weekly Plan</string>s
+    <string name="category">Category:</string>
+    <string name="duration">Duration:</string>
+    <string name="doneTasksChartTitle">Done tasks for today</string>
+    <string name="freeTimePerDayChartTitle">Free time for a week</string>
 
 </resources>

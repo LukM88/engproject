@@ -12,20 +12,20 @@ public class ToDo {
     private String day;
     private String month;
     private String year;
-    private String owner;
     private Boolean state;
     private String imgPath;
     private String notification;
-    ToDo(Date date){
-        this.name="ToDo";
-        this.description="description";
-        this.HH="24";
-        this.MM="00";
-        this.priority="High";
-    }
-    ToDo(){
+    private String durationInMinutes;
+    private String repeat;
 
+    public String getRepeat() {
+        return repeat;
     }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -100,13 +100,6 @@ public class ToDo {
         return getHH()+":"+getMM();
     }
 
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 
     public String getID() {
         return this.ID;
@@ -120,7 +113,14 @@ public class ToDo {
     }
 
     public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+        this.imgPath = imgPath == null ? "" : imgPath;
+    }
+    public String getDurationInMinutes() {
+        return durationInMinutes;
+    }
+
+    public void setDurationInMinutes(String duration) {
+        this.durationInMinutes = duration;
     }
 
     public void setNotification(String notification){
@@ -132,10 +132,7 @@ public class ToDo {
 
     public String getDate(){
         MyDate myDate = new MyDate();
-        myDate.setYear(getYear());
-        myDate.setMonth(getMonth());
-        myDate.setDay(getDay());
-
+        myDate.setDate(getDay(), getMonth(), getYear());
         return myDate.getDate();
     }
 }

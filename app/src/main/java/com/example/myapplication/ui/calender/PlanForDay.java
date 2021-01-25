@@ -40,10 +40,6 @@ public class PlanForDay extends Fragment {
         this.date.setYear(this.getArguments().getString("year"));
         final View root = inflater.inflate(R.layout.fragment_plan_for_day, container, false);
 
-
-        //date.setDay());
-        //d/ate.setMonth();
-        //date.setYear();
         title = root.findViewById(R.id.dateText);
         title.setText(date.getDate());
         lista = root.findViewById(R.id.listForDay);
@@ -56,11 +52,10 @@ public class PlanForDay extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String selectedDate = date.getDate();
                 Bundle bundle = new Bundle();
-                bundle.putString("day",date.getDay());
-                bundle.putString("month",date.getMonth());
-                bundle.putString("year",date.getYear());
+                bundle.putString("day", date.getDay());
+                bundle.putString("month", date.getMonth());
+                bundle.putString("year", date.getYear());
                 Navigation.findNavController(root).navigate(R.id.addPlanForDay,bundle);
             }
         });

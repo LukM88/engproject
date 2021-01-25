@@ -19,6 +19,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends BaseAdapter {
     ArrayList<ToDo> names=new ArrayList<ToDo>();
@@ -55,9 +56,9 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(final int position, View view, ViewGroup parent) {
         view = inflter.inflate(R.layout.list_items, null);
         final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
+        names = dbHelper.orderTodoes(names);
         simpleCheckedTextView.setText(names.get(position).getName());
 
-        //System.out.println(imageView.isShown());
         if (names.get(position).getState()) {
             simpleCheckedTextView.setChecked(true);
             simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
@@ -71,29 +72,25 @@ public class CustomAdapter extends BaseAdapter {
             simpleCheckedTextView.setBackgroundColor(Color.RED);
         }
 
-// perform on Click Event Listener on CheckedTextView
         simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dbHelper= new DatabaseHelper(context);
 
                 if (names.get(position).getState()) {
-// set cheek mark drawable and set checked property to false
                     value = "un-Checked";
-                    dbHelper.updateTodoStatus(names.get(position));
+                    dbHelper.updateTodoStatus(names.get(position).getID(), names.get(position).getState());
                     names.get(position).setState(false);
                     simpleCheckedTextView.setCheckMarkDrawable(null);
                     simpleCheckedTextView.setChecked(false);
                 } else {
-                    dbHelper.updateTodoStatus(names.get(position));
-// set cheek mark drawable and set checked property to true
+                    dbHelper.updateTodoStatus(names.get(position).getID(), names.get(position).getState());
 
                     value = "Checked";
                     simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
                     simpleCheckedTextView.setChecked(true);
                     names.get(position).setState(true);
                 }
-                //names.set(position,dbHelper.getEvent(Integer.parseInt(names.get(position).getID())));
                 dbHelper.close();
 
                 Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
@@ -118,4 +115,6 @@ public class CustomAdapter extends BaseAdapter {
         });
         return view;
     }
+
+
 }

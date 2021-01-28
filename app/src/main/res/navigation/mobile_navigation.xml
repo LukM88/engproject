@@ -90,8 +90,8 @@
             android:id="@+id/action_detailsFragment_to_editToDo"
             app:destination="@id/editToDo" />
         <action
-            android:id="@+id/action_detailsFragment_to_planForDay"
-            app:destination="@id/planForDay" />
+            android:id="@+id/action_detailsFragment_to_nav_calender"
+            app:destination="@id/nav_calender" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"

@@ -7,15 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.statistics.FinishedTasksGraph">
 
-    <com.anychart.AnyChartView
-        android:id="@+id/wykres"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="105dp"
-        android:layout_marginEnd="106dp"
-        android:layout_marginBottom="298dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="356dp"
+        android:layout_height="486dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

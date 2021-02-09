@@ -36,7 +36,7 @@ public class FreeTimeChart extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_free_time_chart, container, false);
         chart = root.findViewById(R.id.barChart);
-        setChart();
+        setUpChart();
         return root;
     }
 
@@ -61,7 +61,7 @@ public class FreeTimeChart extends Fragment {
         }
             return tasksDuration - categoriesDuration;
     }
-    private void setChart(){
+    private void setUpChart(){
         chart.setMaxVisibleValueCount(40);
         chart.setPinchZoom(false);
         chart.setDrawBarShadow(false);
@@ -103,8 +103,7 @@ public class FreeTimeChart extends Fragment {
             durations[j+1] = (float)getOtherCategoriesTime(week[i],totalDuration);
             yValues.add(new BarEntry(i, durations));
         }
-        BarDataSet set1;
-        set1 = new BarDataSet(yValues, null);
+        BarDataSet set1 = new BarDataSet(yValues, null);
 
         set1.setDrawIcons(false);
         set1.setValueTextSize(16f);

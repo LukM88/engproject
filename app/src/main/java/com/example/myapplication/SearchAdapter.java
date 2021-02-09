@@ -70,8 +70,6 @@ public class SearchAdapter extends BaseAdapter {
         }
         if(names.get(position).getPriority().equals("high")){
             simpleCheckedTextView.setBackgroundColor(Color.RED);
-
-
         }
 
 

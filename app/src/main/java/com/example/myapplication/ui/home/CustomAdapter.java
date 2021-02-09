@@ -70,6 +70,7 @@ public class CustomAdapter extends BaseAdapter {
         }
         if(names.get(position).getPriority().equals("high")){
             simpleCheckedTextView.setBackgroundColor(Color.RED);
+            simpleCheckedTextView.setTextColor(Color.WHITE);
         }
 
         simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {

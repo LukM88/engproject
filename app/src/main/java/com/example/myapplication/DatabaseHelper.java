@@ -293,7 +293,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return todoList;
     }
 
-    public int[] getDoneEventsStatistics(MyDate date){
+    public Map<String, Integer> getDoneEventsStatistics(MyDate date){
         int done = 0;
         int all = 0;
         SQLiteDatabase sqlDB = this.getReadableDatabase();
@@ -314,8 +314,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                     null );
         res.moveToFirst();
         done = Integer.parseInt(res.getString(res.getColumnIndex("done")));
-
-        return new int[]{all - done, done};
+        Map<String, Integer> finishedTasks = new HashMap<String, Integer>();
+        finishedTasks.put("Undone", all - done);
+        finishedTasks.put("Done", done);
+        return finishedTasks;
     }
     public ArrayList<ToDo> orderTodoes(ArrayList<ToDo> todoesToOrder){
         ArrayList<ToDo> high = new ArrayList<ToDo>();

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
-import android.widget.ListView;
 
 import androidx.navigation.Navigation;
 
@@ -24,7 +23,6 @@ public class AdapterForPlan extends BaseAdapter {
     Context context;
     LayoutInflater inflter;
     String value;
-    ListView gridView;
     DatabaseHelper dbHelper;
     int focuse=0;
     public AdapterForPlan(Context context, MyDate date){
@@ -83,7 +81,6 @@ public class AdapterForPlan extends BaseAdapter {
                     simpleCheckedTextView.setChecked(true);
                     names.get(position).setState(true);
                 }
-                //names.set(position,dbHelper.getEvent(Integer.parseInt(names.get(position).getID())));
                 dbHelper.close();
 
             }
@@ -93,6 +90,7 @@ public class AdapterForPlan extends BaseAdapter {
         }
         if(names.get(position).getPriority().equals("high")){
             simpleCheckedTextView.setBackgroundColor(Color.RED);
+            simpleCheckedTextView.setTextColor(Color.WHITE);
         }
 
         final View finalConvertView = convertView;

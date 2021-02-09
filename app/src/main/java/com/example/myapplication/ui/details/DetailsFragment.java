@@ -78,7 +78,7 @@ public class DetailsFragment extends Fragment {
                     bundle.putString("day", event.getDay());
                     bundle.putString("month", event.getMonth());
                     bundle.putString("year", event.getYear());
-                    Navigation.findNavController(root).navigate(R.id.action_detailsFragment_to_planForDay, bundle);
+                    Navigation.findNavController(root).navigate(R.id.action_detailsFragment_to_nav_calender, bundle);
                 } else {
                     Snackbar.make(getView(), "Something went wrong", BaseTransientBottomBar.LENGTH_SHORT).show();
                 }

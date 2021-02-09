@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import androidx.core.view.ViewParentCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import com.example.myapplication.ui.details.DetailsFragment;
 
 import java.util.ArrayList;
 
@@ -55,7 +58,6 @@ public class SearchAdapter extends BaseAdapter {
         final CheckedTextView simpleCheckedTextView = view.findViewById(R.id.simpleCheckedTextView);
         simpleCheckedTextView.setText(new StringBuilder().append(names.get(position).getName()).append(" ").append(names.get(position).getDate()).toString());
         simpleCheckedTextView.setTextColor(Color.WHITE);
-        //System.out.println(imageView.isShown());
         if (names.get(position).getState()) {
             simpleCheckedTextView.setChecked(true);
             simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
@@ -68,8 +70,6 @@ public class SearchAdapter extends BaseAdapter {
         }
         if(names.get(position).getPriority().equals("high")){
             simpleCheckedTextView.setBackgroundColor(Color.RED);
-
-
         }
 
 

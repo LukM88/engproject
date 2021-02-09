@@ -35,14 +35,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class EditToDo extends Fragment {
 
     private final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageView;
-    private Button addButton;
+    private Button editButt;
     private Spinner category;
     private ImageButton dateButt;
     private DatePickerDialog datePicker;
@@ -62,7 +61,7 @@ public class EditToDo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.fragment_add_event, container, false);
+        final View root = inflater.inflate(R.layout.fragment_edit_to_do, container, false);
         final ImageButton imgButt = root.findViewById(R.id.addImageButton);
         nameText = root.findViewById(R.id.eventNameText);
         nameText.setText(getArguments().getString("name"));
@@ -166,8 +165,8 @@ public class EditToDo extends Fragment {
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
-        addButton = root.findViewById(R.id.editEventButt);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        editButt = root.findViewById(R.id.editEventButt);
+        editButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {

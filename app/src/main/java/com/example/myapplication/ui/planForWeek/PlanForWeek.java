@@ -1,13 +1,12 @@
 package com.example.myapplication.ui.planForWeek;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.MyDate;

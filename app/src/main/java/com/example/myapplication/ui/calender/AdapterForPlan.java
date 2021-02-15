@@ -12,9 +12,9 @@ import android.widget.CheckedTextView;
 import androidx.navigation.Navigation;
 
 import com.example.myapplication.DatabaseHelper;
+import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
-import com.example.myapplication.MyDate;
 
 import java.util.ArrayList;
 

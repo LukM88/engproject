@@ -11,7 +11,6 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import androidx.navigation.Navigation;
 
 import com.example.myapplication.DatabaseHelper;
@@ -19,7 +18,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomAdapter extends BaseAdapter {
     ArrayList<ToDo> names=new ArrayList<ToDo>();

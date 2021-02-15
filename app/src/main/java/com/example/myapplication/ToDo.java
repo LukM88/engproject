@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import java.util.Date;
-
 public class ToDo {
     private String ID;
     private String name;

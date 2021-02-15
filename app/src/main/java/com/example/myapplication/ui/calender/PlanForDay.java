@@ -1,21 +1,17 @@
 package com.example.myapplication.ui.calender;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.myapplication.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
@@ -29,7 +25,7 @@ public class PlanForDay extends Fragment {
     protected TextView time;
     private FloatingActionButton addButt;
     private Button backButt;
-    private MyDate date = new MyDate();
+    private final MyDate date = new MyDate();
     private ToDo details;
 
     @Override

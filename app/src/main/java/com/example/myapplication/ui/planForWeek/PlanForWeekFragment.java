@@ -13,7 +13,7 @@ import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
 import com.example.myapplication.ToDo;
 
-public class PlanForWeek extends Fragment {
+public class PlanForWeekFragment extends Fragment {
     private final String[] week = new String[]{"mo", "tu", "we", "th", "fr", "sa", "su"};
     private ItemAdapter mAdapter;
     private ListView plan;

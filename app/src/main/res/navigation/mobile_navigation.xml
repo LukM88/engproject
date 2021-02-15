@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.myapplication.ui.statistics.FinishedTasksGraph"
+        android:name="com.example.myapplication.ui.statistics.FinishedTasksChartFragment"
         android:label="@string/menu_statistics"
         tools:layout="@layout/fragment_done_tasks" />
     <fragment
@@ -100,12 +100,12 @@
         tools:layout="@layout/app_bar_main" />
     <fragment
         android:id="@+id/planForWeek"
-        android:name="com.example.myapplication.ui.planForWeek.PlanForWeek"
+        android:name="com.example.myapplication.ui.planForWeek.PlanForWeekFragment"
         android:label="Plan for this week"
         tools:layout="@layout/fragment_plan_for_week" />
     <fragment
         android:id="@+id/statisticsSelector"
-        android:name="com.example.myapplication.ui.statistics.StatisticsSelector"
+        android:name="com.example.myapplication.ui.statistics.StatisticsSelectorFragment"
         android:label="@string/menu_statistics"
         tools:layout="@layout/fragment_statistics_selector" >
         <action
@@ -117,12 +117,12 @@
     </fragment>
     <fragment
         android:id="@+id/freeTimeChart"
-        android:name="com.example.myapplication.ui.statistics.FreeTimeChart"
+        android:name="com.example.myapplication.ui.statistics.FreeTimeChartFragment"
         android:label="@string/freeTimePerDayChartTitle"
         tools:layout="@layout/fragment_free_time_chart" />
     <fragment
         android:id="@+id/editToDo"
-        android:name="com.example.myapplication.ui.editEvent.EditToDo"
+        android:name="com.example.myapplication.ui.editEvent.EditToDoFragment"
         android:label="@string/Edit"
         tools:layout="@layout/fragment_edit_to_do" >
         <action

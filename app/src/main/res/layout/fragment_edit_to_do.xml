@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.editEvent.EditToDo">
+    tools:context=".ui.editEvent.EditToDoFragment">
 
     <ScrollView
         android:id="@+id/editEventFragment"

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FreeTimeChart extends Fragment {
+public class FreeTimeChartFragment extends Fragment {
     private BarChart chart;
     private final String[] week = new String[]{"mo", "tu", "we", "th", "fr", "sa", "su"};
     @Nullable

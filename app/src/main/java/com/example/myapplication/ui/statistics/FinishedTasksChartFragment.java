@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FinishedTasksGraph extends Fragment {
+public class FinishedTasksChartFragment extends Fragment {
     private final Map<String, Integer> complited = new HashMap<String, Integer>();
     private PieChart pieChart;
 
-    public static FinishedTasksGraph newInstance() {
-       return new FinishedTasksGraph();
+    public static FinishedTasksChartFragment newInstance() {
+       return new FinishedTasksChartFragment();
     }
 
     @Override

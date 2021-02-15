@@ -13,7 +13,7 @@ import androidx.navigation.Navigation;
 
 import com.example.myapplication.R;
 
-public class StatisticsSelector extends Fragment {
+public class StatisticsSelectorFragment extends Fragment {
 
     private ImageButton goToDoneTasksButt;
     private ImageButton goToDoneFreeTimeGraphButt;

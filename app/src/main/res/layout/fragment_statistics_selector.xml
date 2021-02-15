@@ -8,7 +8,7 @@
     android:foregroundGravity="center"
     app:layout_anchorGravity="center"
     app:layout_gravity="center"
-    tools:context=".ui.statistics.StatisticsSelector">
+    tools:context=".ui.statistics.StatisticsSelectorFragment">
 
     <androidx.gridlayout.widget.GridLayout
         android:layout_width="0dp"

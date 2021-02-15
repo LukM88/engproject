@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class EditToDo extends Fragment {
+public class EditToDoFragment extends Fragment {
 
     private final int RESULT_LOAD_IMAGE = 1;
     private ImageView imageView;

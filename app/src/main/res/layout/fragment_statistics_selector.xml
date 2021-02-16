@@ -33,7 +33,7 @@
             android:layout_width="157dp"
             android:layout_height="155dp"
             android:foregroundGravity="center"
-            android:src="@drawable/DONE_TASKS"
+            android:src="@drawable/done_tasks"
             app:layout_column="0"
             app:layout_row="0" />
 

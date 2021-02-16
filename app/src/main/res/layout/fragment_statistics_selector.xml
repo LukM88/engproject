@@ -33,7 +33,7 @@
             android:layout_width="157dp"
             android:layout_height="155dp"
             android:foregroundGravity="center"
-            android:src="@drawable/ic_menu_manage"
+            android:src="@drawable/DONE_TASKS"
             app:layout_column="0"
             app:layout_row="0" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/imageButton3"
             android:layout_width="146dp"
             android:layout_height="155dp"
-            android:src="@drawable/ic_menu_manage"
+            android:src="@drawable/free_time"
             app:layout_column="1"
             app:layout_row="0" />
 

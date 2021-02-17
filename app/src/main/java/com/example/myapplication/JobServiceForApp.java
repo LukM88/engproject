@@ -54,7 +54,7 @@ public class JobServiceForApp extends JobService {
                     }
                     startAlarm(date, todo.getName(), todo.getDescription());
                 }
-                for (ToDo todo : new DatabaseHelper(getApplicationContext()).getToDoes(new MyDate())){
+                for (ToDo todo : new DatabaseHelper(getApplicationContext()).getToDoes()){
 
                     MyDate date = new MyDate();
                     if(todo.getRepeat().contains("day")){

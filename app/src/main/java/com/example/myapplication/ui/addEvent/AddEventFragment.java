@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +39,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.myapplication.ui.details.DetailsFragment.scaleImage;
 
 //import android.support.v4.app.Fragment;
 
@@ -215,7 +216,6 @@ public class AddEventFragment extends Fragment {
                         if(data.get("duration").isEmpty()) data.put("duration", "00");
                             try {
                                 dbHelper.insertEvent(data);
-                                dbHelper.showEvents();
                             }catch (Exception e){
                                 Toast.makeText(getContext(),"Invalid data type!",Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
@@ -269,31 +269,8 @@ public class AddEventFragment extends Fragment {
             this.picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
-            Bitmap bitmap2;
+            imageView.setImageBitmap(scaleImage(BitmapFactory.decodeFile(picturePath)));
 
-            try {
-                bitmap2 = Bitmap.createScaledBitmap(bitmap, 4000, 4000, false);
-
-            }catch (OutOfMemoryError  e){
-                Toast.makeText(getContext(),"Invalid graphic try other",Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-                if(bitmap.getHeight()<4000||bitmap.getWidth()<4000){
-                    if(bitmap.getHeight()<4000 && bitmap.getWidth()<4000){
-                        bitmap2 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                    }else if(bitmap.getWidth()<4000){
-                        bitmap2 = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),4000,null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                    }
-                    else{
-                        bitmap2 = Bitmap.createBitmap(bitmap,0,0,4000,bitmap.getHeight(),null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                    }
-                }
-                else{
-                    bitmap2 = Bitmap.createBitmap(bitmap,0,0,4000,4000,null,true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-
-                }
-            }
-            imageView.setImageBitmap(bitmap2);
         }
     }
 

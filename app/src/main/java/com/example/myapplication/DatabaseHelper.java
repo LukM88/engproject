@@ -162,13 +162,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                            setRepeat(res.getString(res.getColumnIndex("repeat")));
                            }};
     }
-    public ArrayList<ToDo> getEvents(){
-        SQLiteDatabase sqlDB = this.getReadableDatabase();
-        ArrayList<ToDo> array_list2 = getToDoListFromCursor(sqlDB.rawQuery( "SELECT * FROM "+ EVENTS_TABLE,
-                                                                    null ));
-        sqlDB.close();
-        return array_list2;
-    }
 
     public void updateTodoStatus( String id, Boolean status) {
         SQLiteDatabase db = this.getWritableDatabase();

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -36,6 +35,29 @@ public class DetailsFragment extends Fragment {
     ImageView img;
     Button deleteButt;
     Button updateButt;
+
+    public static Bitmap scaleImage(Bitmap orginalBitmap){
+        Bitmap bitmap;
+        try {
+            bitmap = Bitmap.createScaledBitmap(orginalBitmap, 4000, 4000, false);
+
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            if (orginalBitmap.getHeight() < 4000 || orginalBitmap.getWidth() < 4000) {
+                if (orginalBitmap.getHeight() < 4000 && orginalBitmap.getWidth() < 4000) {
+                    bitmap = Bitmap.createBitmap(orginalBitmap, 0, 0, orginalBitmap.getWidth(), orginalBitmap.getHeight(), null, true);
+                } else if (orginalBitmap.getWidth() < 4000) {
+                    bitmap = Bitmap.createBitmap(orginalBitmap, 0, 0, orginalBitmap.getWidth(), 4000, null, true);
+                } else {
+                    bitmap = Bitmap.createBitmap(orginalBitmap, 0, 0, 4000, orginalBitmap.getHeight(), null, true);
+                }
+            } else {
+                bitmap = Bitmap.createBitmap(orginalBitmap, 0, 0, 4000, 4000, null, true);
+
+            }
+        }
+        return bitmap;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,29 +130,7 @@ public class DetailsFragment extends Fragment {
         });
 
         if(!event.getImgPath().isEmpty()) {
-            Bitmap bitmap = BitmapFactory.decodeFile(event.getImgPath());
-            Bitmap bitmap2;
-
-            try {
-                bitmap2 = Bitmap.createScaledBitmap(bitmap, 4000, 4000, false);
-
-            } catch (OutOfMemoryError e) {
-                Toast.makeText(getContext(), "Invalid graphic file", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-                if (bitmap.getHeight() < 4000 || bitmap.getWidth() < 4000) {
-                    if (bitmap.getHeight() < 4000 && bitmap.getWidth() < 4000) {
-                        bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), null, true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                    } else if (bitmap.getWidth() < 4000) {
-                        bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), 4000, null, true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                    } else {
-                        bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, 4000, bitmap.getHeight(), null, true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-                    }
-                } else {
-                    bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, 4000, 4000, null, true);// itmap(bitmap,imageView.getMaxWidth(),imageView.getMaxHeight(),false);
-
-                }
-            }
-            img.setImageBitmap(bitmap2);
+            img.setImageBitmap(scaleImage(BitmapFactory.decodeFile(event.getImgPath())));
         }
         return root;
     }

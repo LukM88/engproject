@@ -208,7 +208,6 @@ public class EditToDoFragment extends Fragment {
                         if(data.get("duration").isEmpty()) data.put("duration", "00");
                         try {
                             dbHelper.updateTodo(data);
-                            dbHelper.showEvents();
                         }catch (Exception e){
                             Toast.makeText(getContext(),"Something went wrong!",Toast.LENGTH_LONG).show();
                             e.printStackTrace();

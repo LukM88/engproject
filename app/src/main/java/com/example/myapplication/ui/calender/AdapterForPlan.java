@@ -29,7 +29,7 @@ public class AdapterForPlan extends BaseAdapter {
         this.context = context;
         inflter = (LayoutInflater.from(context));
         dbHelper = new DatabaseHelper(context);
-        names=dbHelper.getToDoes(date);
+        names = dbHelper.orderTodoes(dbHelper.getToDoes(date));
         dbHelper.close();
     }
 

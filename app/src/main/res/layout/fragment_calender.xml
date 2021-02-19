@@ -20,6 +20,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="31dp"
                 android:layout_marginBottom="300dp"
+                android:firstDayOfWeek="@integer/config_navAnimTime"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

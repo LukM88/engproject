@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,6 +14,8 @@ import androidx.navigation.Navigation;
 import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.MyDate;
 import com.example.myapplication.R;
+
+import java.util.Calendar;
 
 public class CalenderFragment extends Fragment {
 
@@ -28,6 +29,7 @@ public class CalenderFragment extends Fragment {
         DatabaseHelper db = new DatabaseHelper(getContext());
         //db.showEvents();
         calendar = root.findViewById(R.id.calendar);
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
         todoBtn = root.findViewById(R.id.todoBtn);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -37,14 +39,12 @@ public class CalenderFragment extends Fragment {
                 date.setMonth( String.valueOf(month + 1));
                 date.setYear(String.valueOf(year));
 
-                String selectedDate = date.getDate();
                 Bundle bundle = new Bundle();
                 bundle.putString("day",date.getDay());
                 bundle.putString("month",date.getMonth());
                 bundle.putString("year",date.getYear());
                 Navigation.findNavController(root).navigate(R.id.action_nav_calender_to_planForDay,bundle);
 
-                Toast.makeText(getContext(), selectedDate, Toast.LENGTH_LONG).show();
 
             }
         });

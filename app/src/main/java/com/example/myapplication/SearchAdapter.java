@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,17 +63,6 @@ public class SearchAdapter extends BaseAdapter {
 
 
         final View finalView = view;
-        simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                try{
-                    bundle.putInt("id",Integer.parseInt(names.get(position).getID()));
-                }catch (NumberFormatException e){
-                    e.printStackTrace();
-                }
-            }
-        });
         simpleCheckedTextView.setOnLongClickListener (new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v) {

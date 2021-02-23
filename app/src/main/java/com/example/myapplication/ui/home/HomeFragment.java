@@ -26,7 +26,6 @@ public class HomeFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         listView = root.findViewById(R.id.listView);
-        //ListView listView1 = root.findViewById(R.id.listView2);
         CustomAdapter customAdapter = new CustomAdapter(getContext());
         listView.setAdapter(customAdapter);
 
